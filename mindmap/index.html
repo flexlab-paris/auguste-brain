@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auguste Brain — Carte des Debats</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-left">
+            <h1>Auguste Brain</h1>
+            <p class="subtitle">Carte des Debats</p>
+        </div>
+        <div class="header-center" id="polarisation-dashboard">
+            <div class="gauge-row">
+                <div class="gauge" data-axis="gauche_droite">
+                    <span class="gauge-label-left">Gauche</span>
+                    <div class="gauge-bar"><div class="gauge-fill" id="gauge-gd"></div><div class="gauge-marker" id="marker-gd"></div></div>
+                    <span class="gauge-label-right">Droite</span>
+                </div>
+                <div class="gauge" data-axis="libertaire_autoritaire">
+                    <span class="gauge-label-left">Libertaire</span>
+                    <div class="gauge-bar"><div class="gauge-fill" id="gauge-la"></div><div class="gauge-marker" id="marker-la"></div></div>
+                    <span class="gauge-label-right">Autoritaire</span>
+                </div>
+                <div class="gauge" data-axis="rationnel_emotionnel">
+                    <span class="gauge-label-left">Rationnel</span>
+                    <div class="gauge-bar"><div class="gauge-fill" id="gauge-re"></div><div class="gauge-marker" id="marker-re"></div></div>
+                    <span class="gauge-label-right">Emotionnel</span>
+                </div>
+                <div class="gauge" data-axis="factuel_speculatif">
+                    <span class="gauge-label-left">Factuel</span>
+                    <div class="gauge-bar"><div class="gauge-fill" id="gauge-fs"></div><div class="gauge-marker" id="marker-fs"></div></div>
+                    <span class="gauge-label-right">Speculatif</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="objectivity-score">
+                <div class="score-circle" id="objectivity-circle">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="score-bg" cx="60" cy="60" r="52" />
+                        <circle class="score-fg" id="score-arc" cx="60" cy="60" r="52" />
+                    </svg>
+                    <span class="score-value" id="objectivity-value">--</span>
+                </div>
+                <span class="score-label">Objectivite</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Legend -->
+    <div id="legend">
+        <span class="legend-title">Modes rhetoriques :</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#DC143C"></span>Abrasif</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#FF8C00"></span>Combatif</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#DAA520"></span>Persuasif</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#228B22"></span>Inspirant</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#4169E1"></span>Socratique</span>
+    </div>
+
+    <!-- Main canvas -->
+    <div id="graph-container">
+        <svg id="graph"></svg>
+    </div>
+
+    <!-- Detail panel -->
+    <div id="detail-panel" class="panel-hidden">
+        <button id="panel-close">&times;</button>
+        <h2 id="panel-title"></h2>
+        <div class="panel-section">
+            <h3>These principale</h3>
+            <p id="panel-thesis"></p>
+        </div>
+        <div class="panel-section">
+            <h3>Chiffres cles</h3>
+            <ul id="panel-facts"></ul>
+        </div>
+        <div class="panel-section">
+            <h3>Polarisation</h3>
+            <div class="radar-container">
+                <canvas id="radar-chart" width="280" height="280"></canvas>
+            </div>
+        </div>
+        <div class="panel-section">
+            <h3>Fiche PDF</h3>
+            <a id="panel-pdf" href="#" target="_blank" class="pdf-link">Telecharger la fiche</a>
+        </div>
+        <div class="panel-section">
+            <h3>Pistes a explorer</h3>
+            <ul id="panel-suggestions" class="suggestions-list"></ul>
+        </div>
+    </div>
+
+    <!-- Overlay for closing panel on outside click -->
+    <div id="overlay" class="overlay-hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

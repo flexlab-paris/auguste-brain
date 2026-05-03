@@ -1,0 +1,675 @@
+\documentclass[a4paper,11pt]{article}
+
+% === ENCODAGE ET LANGUE ===
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amssymb}
+\usepackage{textcomp}
+
+% === MISE EN PAGE ===
+\usepackage[top=1.8cm, bottom=1.8cm, left=1.8cm, right=1.8cm, headheight=15pt]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+
+% === COULEURS ===
+\usepackage[dvipsnames,svgnames,x11names]{xcolor}
+
+% --- Mode ROUGE - Abrasif "Le Marteau" ---
+\definecolor{ModeRouge}{HTML}{C0392B}
+\definecolor{ModeRougeDark}{HTML}{922B21}
+\definecolor{ModeRougeBg}{HTML}{FDEDEC}
+
+% --- Mode ORANGE - Combatif "L'Epee" ---
+\definecolor{ModeOrange}{HTML}{E67E22}
+\definecolor{ModeOrangeDark}{HTML}{BA4A00}
+\definecolor{ModeOrangeBg}{HTML}{FEF3E2}
+
+% --- Mode JAUNE - Persuasif "L'Architecte" ---
+\definecolor{ModeJaune}{HTML}{D4A017}
+\definecolor{ModeJauneDark}{HTML}{7D6608}
+\definecolor{ModeJauneBg}{HTML}{FEF9E7}
+
+% --- Mode VERT - Inspirant "Le Phare" ---
+\definecolor{ModeVert}{HTML}{27AE60}
+\definecolor{ModeVertDark}{HTML}{1E8449}
+\definecolor{ModeVertBg}{HTML}{E8F8F5}
+
+% --- Mode BLEU - Socratique "Le Miroir" ---
+\definecolor{ModeBleu}{HTML}{2471A3}
+\definecolor{ModeBleuDark}{HTML}{1A5276}
+\definecolor{ModeBleuBg}{HTML}{EBF5FB}
+
+% --- Utilitaires ---
+\definecolor{FactBg}{HTML}{F0F3F4}
+\definecolor{FactBorder}{HTML}{2C3E50}
+\definecolor{ChapColor}{HTML}{1A237E}
+\definecolor{AngleMortBg}{HTML}{F9EBEA}
+\definecolor{AngleMortBorder}{HTML}{943126}
+
+% === GRAPHIQUES ===
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,positioning,arrows.meta,shapes.geometric,decorations.pathreplacing,backgrounds,fit,shadows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% === TABLEAUX ===
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+
+% === LISTES ===
+\usepackage{enumitem}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+% === ENCADRES ===
+\usepackage[most]{tcolorbox}
+
+% =============================================
+%  ENCADRES GENERIQUES PARAMETRABLES PAR MODE
+% =============================================
+
+% --- Fiche principale par mode ---
+\newtcolorbox{fichemode}[3][]{%
+  enhanced,
+  colback=#3,
+  colframe=#2,
+  fonttitle=\bfseries\Large,
+  arc=3mm,
+  boxrule=1.5pt,
+  left=5mm, right=5mm, top=4mm, bottom=4mm,
+  title={#1},
+  coltitle=white,
+  attach boxed title to top left={xshift=5mm, yshift=-3mm},
+  boxed title style={colback=#2, arc=2mm, boxrule=0pt},
+  shadow={2mm}{-2mm}{0mm}{black!20},
+}
+
+% --- Sous-encadre "These" ---
+\newtcolorbox{thesebox}[1][ModeRouge]{%
+  enhanced,
+  colback=white,
+  colframe=#1,
+  boxrule=2pt,
+  arc=2mm,
+  left=6mm, right=6mm, top=4mm, bottom=4mm,
+  borderline west={4pt}{-2pt}{#1},
+}
+
+% --- Encadre "Angle Mort" ---
+\newtcolorbox{anglemort}{%
+  enhanced,
+  colback=AngleMortBg,
+  colframe=AngleMortBorder,
+  fonttitle=\bfseries,
+  arc=1.5mm,
+  boxrule=0.8pt,
+  left=4mm, right=4mm, top=2mm, bottom=2mm,
+  title={\ding{46} Angle Mort --- Honnetete intellectuelle},
+  coltitle=AngleMortBorder,
+  attach boxed title to top left={xshift=4mm, yshift=-2mm},
+  boxed title style={colback=AngleMortBg, colframe=AngleMortBorder, arc=1mm},
+}
+
+% --- Encadre contre-argument ---
+\newtcolorbox{contrearg}[1][gray]{%
+  colback=gray!5,
+  colframe=#1!50,
+  fonttitle=\bfseries,
+  arc=1mm,
+  boxrule=0.5pt,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={Contre-arguments anticip\'es},
+  coltitle=#1!80!black,
+}
+
+% --- Citation forte ---
+\newcommand{\citfort}[2]{%
+  \begin{center}
+  \begin{tikzpicture}
+  \node[inner sep=8pt, text width=0.85\textwidth, align=center, font=\large\itshape] (q) {%
+    \og{}#1\fg{}};
+  \node[below=2pt of q, font=\small\bfseries, text=gray] {--- #2};
+  \end{tikzpicture}
+  \end{center}
+}
+
+% --- Phrase forte ---
+\newcommand{\phraseforte}[2][ModeRouge]{\textbf{\textcolor{#1}{\og{}#2\fg{}}}}
+\newcommand{\stat}[1]{\textbf{\textcolor{ChapColor}{#1}}}
+
+% --- Phrase de cloture ---
+\newcommand{\cloture}[2][ModeRouge]{%
+  \vspace{4mm}
+  \begin{center}
+  \begin{tikzpicture}
+  \node[draw=#1, fill=#1!10, rounded corners=3mm, inner sep=10pt, text width=0.88\textwidth, align=center, font=\large\bfseries, text=#1!90!black] {%
+    \ding{228}~#2};
+  \end{tikzpicture}
+  \end{center}
+}
+
+% === EN-TETES ===
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gray}\textsc{Fiches D\'ebat --- Taxe Zucman}}
+\fancyhead[R]{\small\color{gray}\textit{Auguste Pugnet --- Mai 2026}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+% === TITRES ===
+\usepackage{titlesec}
+\titleformat{\section}[block]
+  {\normalfont\huge\bfseries}
+  {}{0pt}{}
+\titlespacing*{\section}{0pt}{5pt}{15pt}
+
+% === HYPERLINKS ===
+\usepackage[colorlinks=true,linkcolor=ChapColor,urlcolor=ModeBleu,citecolor=ModeVert]{hyperref}
+
+% === EPIGRAPHE ===
+\usepackage{csquotes}
+
+% =============================================
+\begin{document}
+
+% ========== PAGE DE TITRE ==========
+\begin{titlepage}
+\centering
+\vspace*{1cm}
+\begin{tikzpicture}
+\node[inner sep=0pt] {
+  \begin{minipage}{0.9\textwidth}
+  \centering
+  {\fontsize{14}{18}\selectfont\color{gray}\scshape Arsenal Rh\'etorique}\\[0.6cm]
+  \rule{10cm}{0.5pt}\\[0.8cm]
+  {\fontsize{32}{38}\selectfont\bfseries\color{ChapColor} La Taxe Zucman}\\[0.4cm]
+  {\fontsize{32}{38}\selectfont\bfseries\color{ChapColor} et la Fiscalit\'e}\\[0.4cm]
+  {\fontsize{32}{38}\selectfont\bfseries\color{ChapColor} des Ultra-Riches}\\[1cm]
+  \rule{10cm}{0.5pt}\\[1cm]
+  {\Large\itshape 5 fiches rh\'etoriques $\cdot$ 5 modes de combat}\\[1.5cm]
+  {\Large Auguste Pugnet}\\[0.3cm]
+  {\large Mai 2026}
+  \end{minipage}
+};
+\end{tikzpicture}
+\vfill
+% Legende des 5 modes
+\begin{tikzpicture}
+\node[fill=ModeRougeBg, draw=ModeRouge, rounded corners, minimum width=2.6cm, minimum height=0.9cm, font=\footnotesize\bfseries, text=ModeRouge] at (0,0) {ABRASIF};
+\node[fill=ModeOrangeBg, draw=ModeOrange, rounded corners, minimum width=2.6cm, minimum height=0.9cm, font=\footnotesize\bfseries, text=ModeOrange] at (3.2,0) {COMBATIF};
+\node[fill=ModeJauneBg, draw=ModeJaune, rounded corners, minimum width=2.6cm, minimum height=0.9cm, font=\footnotesize\bfseries, text=ModeJaune] at (6.4,0) {PERSUASIF};
+\node[fill=ModeVertBg, draw=ModeVert, rounded corners, minimum width=2.6cm, minimum height=0.9cm, font=\footnotesize\bfseries, text=ModeVert] at (9.6,0) {INSPIRANT};
+\node[fill=ModeBleuBg, draw=ModeBleu, rounded corners, minimum width=2.6cm, minimum height=0.9cm, font=\footnotesize\bfseries, text=ModeBleu] at (12.8,0) {SOCRATIQUE};
+\end{tikzpicture}
+\vspace{1cm}
+\end{titlepage}
+
+% ========================================================
+%  GRAPHIQUE CENTRAL : DEPENSES PUBLIQUES / PIB
+% ========================================================
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    title={\textbf{\large D\'epenses publiques en \% du PIB --- Comparaison internationale}},
+    title style={at={(0.5,1.05)}},
+    ybar,
+    bar width=18pt,
+    width=0.95\textwidth,
+    height=8cm,
+    ymin=0, ymax=70,
+    ylabel={\% du PIB},
+    ylabel style={font=\small},
+    symbolic x coords={Vietnam, Suisse, Cor\'ee Sud, USA, Allemagne, Royaume-Uni, URSS 80s, France},
+    xtick=data,
+    x tick label style={rotate=25, anchor=east, font=\small},
+    ytick={0,10,20,30,40,50,60,70},
+    nodes near coords,
+    nodes near coords style={font=\footnotesize\bfseries, above},
+    every node near coord/.append style={anchor=south},
+    grid=major,
+    grid style={dashed, gray!30},
+    legend style={at={(0.02,0.98)}, anchor=north west, font=\small},
+    axis line style={gray},
+]
+\addplot[fill=ModeVert!70, draw=ModeVert!90!black] coordinates {
+    (Vietnam,20) (Suisse,34) (Cor\'ee Sud,35) (USA,38) (Allemagne,46) (Royaume-Uni,47) (URSS 80s,50) (France,57)
+};
+\end{axis}
+% Annotation
+\node[draw=ModeRouge, fill=ModeRougeBg, rounded corners=2mm, font=\small\bfseries, text=ModeRougeDark, inner sep=4pt, text width=5.5cm, align=center] at (12.5,6.5) {La France d\'epense plus\\que l'URSS des ann\'ees 80.\\Communiste \emph{de facto} ?};
+\end{tikzpicture}
+\end{center}
+
+\vspace{4mm}
+
+% ========================================================
+%  DIAGRAMME COURBE DE LAFFER
+% ========================================================
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    title={\textbf{\large Courbe de Laffer --- L'optimum fiscal}},
+    title style={at={(0.5,1.05)}},
+    width=0.7\textwidth,
+    height=7cm,
+    xlabel={Taux d'imposition (\%)},
+    ylabel={Recettes fiscales},
+    xmin=0, xmax=100,
+    ymin=0, ymax=110,
+    xtick={0,20,40,60,80,100},
+    ytick=\empty,
+    axis lines=left,
+    clip=false,
+    every axis x label/.style={at={(ticklabel* cs:1)}, anchor=west},
+    every axis y label/.style={at={(ticklabel* cs:1)}, anchor=south},
+]
+% Courbe de Laffer
+\addplot[very thick, ModeJaune!90!black, smooth, domain=0:100, samples=100] {100*sin(1.8*x)};
+% Optimum
+\addplot[dashed, ModeVert, thick] coordinates {(50,0) (50,100)};
+\node[font=\small\bfseries, text=ModeVert, above] at (axis cs:50,100) {Optimum};
+% Zone France
+\addplot[dashed, ModeRouge, thick] coordinates {(72,0) (72,72)};
+\node[font=\small\bfseries, text=ModeRouge, above, rotate=90, anchor=south] at (axis cs:74,40) {France ?};
+% Zone basse
+\draw[<->, thick, ModeBleu] (axis cs:55,85) -- (axis cs:85,85) node[midway, above, font=\footnotesize\bfseries, text=ModeBleu] {Zone de destruction};
+% Annotations
+\node[draw=ModeJaune, fill=ModeJauneBg, rounded corners=1mm, font=\scriptsize, text width=3.5cm, align=center, inner sep=3pt] at (axis cs:25,55) {Plus d'imp\^ot\\= plus de recettes};
+\node[draw=ModeRouge, fill=ModeRougeBg, rounded corners=1mm, font=\scriptsize, text width=3.5cm, align=center, inner sep=3pt] at (axis cs:80,35) {Plus d'imp\^ot\\= MOINS de recettes\\Fuite des capitaux};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+% ========================================================
+%  MODE 1 --- ROUGE : ABRASIF "Le Marteau"
+% ========================================================
+\section*{\textcolor{ModeRouge}{\rule{8pt}{8pt}\quad MODE ROUGE --- ABRASIF \og{}Le Marteau\fg{}}}
+\addcontentsline{toc}{section}{Mode Rouge --- Abrasif}
+
+\begin{fichemode}[\ding{54}~TH\`ESE]{ModeRouge}{ModeRougeBg}
+\begin{thesebox}[ModeRouge]
+{\large\bfseries La taxe Zucman est une escroquerie intellectuelle financ\'ee par un d\'elinquant financier condamn\'e, destin\'ee \`a abolir la propri\'et\'e priv\'ee des classes moyennes sous couvert de justice sociale.}
+\end{thesebox}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{fichemode}[\ding{54}~PILIERS FACTUELS]{ModeRouge}{ModeRougeBg}
+
+\textbf{\textcolor{ModeRougeDark}{\ding{72} Pilier 1 --- Le financeur est un criminel condamn\'e}}
+
+George Soros. Condamn\'e pour d\'elit d'initi\'e. A fait sauter la Banque d'Angleterre dans les ann\'ees 90. Il finance cette taxe. Lui-m\^eme \'evade ses imp\^ots via des fondations offshore.
+
+\phraseforte[ModeRouge]{Un d\'elinquant financier qui finance une taxe sur les riches. Vous ne voyez pas le probl\`eme ?}
+
+\vspace{3mm}
+\textbf{\textcolor{ModeRougeDark}{\ding{72} Pilier 2 --- Les chiffres qui tuent}}
+
+\begin{itemize}[label=\textcolor{ModeRouge}{\textbullet}, itemsep=2pt]
+  \item Rendement immobilier France : \stat{$\sim$5\%}. Taxe Zucman : \stat{2\%}. \textbf{C'est 40\% du chiffre d'affaires ponctionn\'e.}
+  \item La France est d\'ej\`a \`a \stat{57\% de d\'epenses publiques/PIB}. Le Vietnam communiste : \stat{20\%}. L'URSS des ann\'ees 80 : \stat{50\%}.
+  \item \stat{3\,300 milliards} de dette. Plus de \stat{120\%} dette/PIB. Et on veut \emph{encore} taxer ?
+\end{itemize}
+
+\vspace{3mm}
+\textbf{\textcolor{ModeRougeDark}{\ding{72} Pilier 3 --- L'ISF, preuve par l'\'echec}}
+
+L'ISF a \'et\'e essay\'e en Norv\`ege, en Espagne, en Suisse. R\'esultat : \stat{moins de 0.5\% du PIB collect\'e}. Fuite massive des capitaux. La France l'a v\'ecu. On recommence ?
+
+\end{fichemode}
+
+\vspace{3mm}
+
+\citfort{Tutto nello Stato, niente al di fuori dello Stato, nulla contro lo Stato.}{Mussolini --- \textit{et c'est exactement l\`a qu'on va}}
+
+\vspace{2mm}
+
+\begin{fichemode}[\ding{54}~CONTRE-ARGUMENTS ANTICIP\'ES]{ModeRouge}{ModeRougeBg}
+\begin{enumerate}[label=\textcolor{ModeRouge}{\textbf{Attaque \arabic*.}}, itemsep=4pt, leftmargin=*]
+  \item \textbf{\og{}Les riches doivent payer leur juste part\fg{}}\\
+  \textcolor{ModeRougeDark}{\ding{224}} Elon Musk est le plus gros contribuable fiscal de l'histoire des \'Etats-Unis. Il paie. Soros, non. Qui propose la taxe, d\'ej\`a ?
+
+  \item \textbf{\og{}La taxe ne concerne que les milliardaires\fg{}}\\
+  \textcolor{ModeRougeDark}{\ding{224}} C'est ce qu'on disait pour l'ISF. R\'esultat : les milliardaires sont partis, les classes moyennes ont pay\'e. \textbf{Mobilit\'e du capital.} Point final.
+
+  \item \textbf{\og{}Il faut redistribuer\fg{}}\\
+  \textcolor{ModeRougeDark}{\ding{224}} \stat{57\%} du PIB en d\'epenses publiques et on veut \emph{redistribuer encore} ? Paris sous Hidalgo : \stat{+7 milliards} de dette, \stat{1.4 milliard} pour la Seine, \stat{52\,000 agents}. Autolib : \stat{75 millions} \`a Bollor\'e. Ecotax : \stat{1 milliard} dont 800M de d\'edit. Sarkozy a vendu \stat{589 tonnes d'or} au plus bas. \textbf{L'argent public est GASPILL\'E.}
+\end{enumerate}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{anglemort}
+La strat\'egie \emph{buy-borrow-die} des milliardaires am\'ericains est r\'eelle : emprunter sur ses actifs pour ne jamais r\'ealiser de plus-value, mourir sans imp\^ot. C'est un vrai probl\`eme. Mais la r\'eponse n'est pas une taxe sur le patrimoine mondial --- c'est une r\'eforme de la fiscalit\'e successorale et des plus-values latentes.
+\end{anglemort}
+
+\cloture[ModeRouge]{Vous voulez une taxe sur la richesse ? Commencez par arr\^eter de br\^uler l'argent que vous avez d\'ej\`a.}
+
+\newpage
+
+% ========================================================
+%  MODE 2 --- ORANGE : COMBATIF "L'Epee"
+% ========================================================
+\section*{\textcolor{ModeOrange}{\rule{8pt}{8pt}\quad MODE ORANGE --- COMBATIF \og{}L'\'Ep\'ee\fg{}}}
+\addcontentsline{toc}{section}{Mode Orange --- Combatif}
+
+\begin{fichemode}[\ding{220}~TH\`ESE]{ModeOrange}{ModeOrangeBg}
+\begin{thesebox}[ModeOrange]
+{\large\bfseries La question n'est pas \emph{s'il faut} taxer les ultra-riches, mais \emph{comment} le faire sans d\'etruire l'\'economie. La taxe Zucman \'echoue \`a ce test --- des alternatives sup\'erieures existent et fonctionnent.}
+\end{thesebox}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{fichemode}[\ding{220}~PILIERS FACTUELS]{ModeOrange}{ModeOrangeBg}
+
+\textbf{\textcolor{ModeOrangeDark}{\ding{72} Pilier 1 --- Le retournement logique : on taxe d\'ej\`a trop et trop mal}}
+
+L'optimum fiscal est un th\'eor\`eme math\'ematique, pas une opinion politique. La courbe de Laffer montre qu'au-del\`a d'un certain seuil, les recettes \emph{baissent}. Avec \stat{57\% de d\'epenses publiques/PIB}, la France est potentiellement d\'ej\`a au-del\`a. Ajouter 2\% de taxe sur le patrimoine, c'est acc\'el\'erer la fuite des capitaux, pas remplir les caisses.
+
+\vspace{3mm}
+\textbf{\textcolor{ModeOrangeDark}{\ding{72} Pilier 2 --- Les alternatives qui marchent}}
+
+\begin{itemize}[label=\textcolor{ModeOrange}{\ding{224}}, itemsep=3pt]
+  \item \textbf{Taxe Tobin} : \stat{0.01\%} sur les transactions financi\`eres. Micro-taux, macro-rendement. Potentiellement \stat{20 milliards/an}. Impossible \`a \'evader car pr\'elev\'ee \`a la source.
+  \item \textbf{Flat tax} sur les revenus du capital : simplicit\'e, lisibilit\'e, pas de niche.
+  \item \textbf{TVA sur consommation de luxe} : yacht, jet priv\'e, \'editions limit\'ees. Taxe le \emph{comportement}, pas le \emph{patrimoine}. Imm\'ediatement applicable.
+\end{itemize}
+
+\vspace{3mm}
+\textbf{\textcolor{ModeOrangeDark}{\ding{72} Pilier 3 --- La contradiction Soros}}
+
+L'homme qui finance la taxe Zucman est un sp\'eculateur condamn\'e pour d\'elit d'initi\'e qui a fait sauter la Banque d'Angleterre. Il utilise des fondations pour prot\'eger son patrimoine de l'imp\^ot. C'est un renard qui propose de garder le poulailler.
+
+\end{fichemode}
+
+\vspace{3mm}
+
+\citfort{I could end the deficit in 5 minutes. You just pass a law that says that anytime there is a deficit of more than 3\% of GDP, all sitting members of Congress are ineligible for re-election.}{Warren Buffett}
+
+\vspace{2mm}
+
+\begin{fichemode}[\ding{220}~CONTRE-ARGUMENTS ANTICIP\'ES]{ModeOrange}{ModeOrangeBg}
+\begin{enumerate}[label=\textcolor{ModeOrange}{\textbf{Objection \arabic*.}}, itemsep=4pt, leftmargin=*]
+  \item \textbf{\og{}C'est de la justice sociale\fg{}}\\
+  \textcolor{ModeOrangeDark}{\ding{224}} Retournement : la \og{}justice sociale\fg{} financ\'ee par Soros --- lui-m\^eme \'evaseur fiscal --- c'est du \emph{marketing politique}, pas de la justice. La vraie justice, c'est taxer les \emph{flux} (transactions, consommation de luxe), pas le \emph{stock} (patrimoine).
+
+  \item \textbf{\og{}Les in\'egalit\'es augmentent\fg{}}\\
+  \textcolor{ModeOrangeDark}{\ding{224}} Les in\'egalit\'es ne se r\`eglent pas en taxant \emph{plus}, mais en taxant \emph{mieux}. La taxe Tobin \`a 0.01\% rapporte plus que l'ISF \`a 1.5\% parce qu'on ne peut pas la fuir.
+
+  \item \textbf{\og{}2\%, c'est rien\fg{}}\\
+  \textcolor{ModeOrangeDark}{\ding{224}} 2\% de patrimoine quand le rendement est 5\%, c'est \stat{40\% du revenu}. Sur l'immobilier, c'est la destruction. Demandez aux propri\'etaires fran\c{c}ais.
+\end{enumerate}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{anglemort}
+La strat\'egie \emph{buy-borrow-die} est un vrai angle mort du syst\`eme fiscal am\'ericain. Taxer les plus-values latentes \`a la succession (comme propos\'e par Biden) serait plus efficace et plus cibl\'e que la taxe Zucman. Il faut le conna\^itre pour le dire.
+\end{anglemort}
+
+\cloture[ModeOrange]{Ne me dites pas qu'il faut taxer les riches. Dites-moi COMMENT sans que les classes moyennes finissent par payer l'addition.}
+
+\newpage
+
+% ========================================================
+%  MODE 3 --- JAUNE : PERSUASIF "L'Architecte"
+% ========================================================
+\section*{\textcolor{ModeJaune}{\rule{8pt}{8pt}\quad MODE JAUNE --- PERSUASIF \og{}L'Architecte\fg{}}}
+\addcontentsline{toc}{section}{Mode Jaune --- Persuasif}
+
+\begin{fichemode}[\ding{70}~TH\`ESE]{ModeJaune}{ModeJauneBg}
+\begin{thesebox}[ModeJaune]
+{\large\bfseries La taxe Zucman repose sur un diagnostic correct (l'\'evasion fiscale des ultra-riches) mais propose un rem\`ede dont l'histoire d\'emontre syst\'ematiquement l'\'echec, alors que des m\'ecanismes plus efficaces existent et sont imm\'ediatement d\'eployables.}
+\end{thesebox}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{fichemode}[\ding{70}~PILIERS FACTUELS]{ModeJaune}{ModeJauneBg}
+
+\textbf{\textcolor{ModeJauneDark}{\ding{72} Pilier 1 --- Th\`ese : le probl\`eme est r\'eel}}
+
+\begin{itemize}[label=\textcolor{ModeJaune}{\textbullet}, itemsep=2pt]
+  \item La strat\'egie \emph{buy-borrow-die} permet aux milliardaires d'emprunter contre leurs actifs, de vivre sans revenu imposable, et de transmettre un patrimoine d\'efiscalis\'e \`a leur mort.
+  \item L'optimisation fiscale agressive r\'eduit l'assiette fiscale et cr\'ee un sentiment l\'egitime d'injustice.
+  \item Gabriel Zucman, \'economiste s\'erieux, a raison de poser le probl\`eme.
+\end{itemize}
+
+\vspace{3mm}
+\textbf{\textcolor{ModeJauneDark}{\ding{72} Pilier 2 --- Antith\`ese : la solution Zucman ne fonctionne pas}}
+
+\begin{itemize}[label=\textcolor{ModeJaune}{\textbullet}, itemsep=2pt]
+  \item \textbf{Preuve empirique} : l'ISF a \'et\'e essay\'e en Norv\`ege, Espagne, Suisse --- collecte inf\'erieure \`a \stat{0.5\% du PIB}, fuite des capitaux.
+  \item \textbf{Preuve math\'ematique} : avec un rendement immobilier de \stat{$\sim$5\%}, une taxe de 2\% repr\'esente \stat{40\%} du revenu brut. C'est confiscatoire.
+  \item \textbf{Preuve th\'eorique} : la courbe de Laffer, th\'eor\`eme math\'ematique, d\'emontre l'existence d'un optimum. La France \`a \stat{57\% de d\'epenses publiques/PIB} est probablement au-del\`a.
+  \item \textbf{Preuve par le financeur} : Soros, condamn\'e pour d\'elit d'initi\'e, qui a sp\'ecul\'e contre la livre sterling, finance la promotion de cette taxe. \emph{Cui bono ?}
+\end{itemize}
+
+\vspace{3mm}
+\textbf{\textcolor{ModeJauneDark}{\ding{72} Pilier 3 --- Synth\`ese : les alternatives sup\'erieures}}
+
+\begin{center}
+\begin{tabularx}{0.95\textwidth}{>{\bfseries}l X c}
+\toprule
+\rowcolor{ModeJauneBg} \textbf{M\'ecanisme} & \textbf{Principe} & \textbf{Rendement estim\'e} \\
+\midrule
+Taxe Tobin & 0.01\% sur chaque transaction financi\`ere & 20 Md\texteuro/an \\
+\rowcolor{gray!5}
+TVA luxe & TVA major\'ee sur yachts, jets, biens >100k\texteuro & 3--5 Md\texteuro/an \\
+Flat tax capital & Taux unique sur revenus du capital, z\'ero niche & Variable \\
+\rowcolor{gray!5}
+R\'eforme successorale & Taxation des plus-values latentes au d\'ec\`es & Cibl\'ee \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\end{fichemode}
+
+\vspace{3mm}
+
+\citfort{Les idiots apprennent de leur exp\'erience. Les gens intelligents apprennent de l'exp\'erience des autres.}{Bismarck}
+
+\vspace{2mm}
+
+\begin{fichemode}[\ding{70}~CONTRE-ARGUMENTS ANTICIP\'ES]{ModeJaune}{ModeJauneBg}
+\begin{enumerate}[label=\textcolor{ModeJaune}{\textbf{Point \arabic*.}}, itemsep=4pt, leftmargin=*]
+  \item \textbf{\og{}Les riches doivent payer leur juste part\fg{}}\\
+  \textcolor{ModeJauneDark}{\ding{224}} Accord total sur le principe. D\'esaccord sur le m\'ecanisme. L'optimum fiscal existe : au-del\`a, les recettes baissent et les riches partent. La taxe Tobin, elle, est impossible \`a fuir.
+
+  \item \textbf{\og{}La taxe Tobin est utopique\fg{}}\\
+  \textcolor{ModeJauneDark}{\ding{224}} La France applique d\'ej\`a une taxe sur les transactions financi\`eres depuis 2012 (0.3\% sur les grandes capitalisations). C'est op\'erationnel. Il suffit de l'\'etendre.
+
+  \item \textbf{\og{}Il faut redistribuer\fg{}}\\
+  \textcolor{ModeJauneDark}{\ding{224}} La France redistribue d\'ej\`a plus que tout pays de l'OCDE (\stat{57\% PIB}). La question n'est plus \og{}combien\fg{} mais \og{}comment\fg{}. Exemples de gaspillage : Ecotax (\stat{1 Md\texteuro{} perdu}), Autolib (\stat{75M\texteuro{}} \`a Bollor\'e), Seine d'Hidalgo (\stat{1.4 Md\texteuro}).
+\end{enumerate}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{anglemort}
+Zucman propose aussi une coop\'eration internationale pour \'eviter l'arbitrage fiscal. Sur ce point pr\'ecis, il a raison : sans coordination, toute taxe nationale sera contourn\'ee. Mais c'est pr\'ecis\'ement parce que cette coordination est quasi-impossible qu'il faut pr\'ef\'erer des taxes sur les \emph{flux} (transactions, consommation), non d\'elocalisables par nature.
+\end{anglemort}
+
+\cloture[ModeJaune]{Le probl\`eme est r\'eel. La solution Zucman est fausse. L'intelligence, c'est de taxer ce qui ne peut pas fuir.}
+
+\newpage
+
+% ========================================================
+%  MODE 4 --- VERT : INSPIRANT "Le Phare"
+% ========================================================
+\section*{\textcolor{ModeVert}{\rule{8pt}{8pt}\quad MODE VERT --- INSPIRANT \og{}Le Phare\fg{}}}
+\addcontentsline{toc}{section}{Mode Vert --- Inspirant}
+
+\begin{fichemode}[\ding{168}~TH\`ESE]{ModeVert}{ModeVertBg}
+\begin{thesebox}[ModeVert]
+{\large\bfseries Nous pouvons construire un syst\`eme fiscal intelligent qui finance nos ambitions collectives sans d\'etruire le moteur de cr\'eation de richesse --- \`a condition d'avoir le courage de penser autrement que par la punition.}
+\end{thesebox}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{fichemode}[\ding{168}~PILIERS FACTUELS]{ModeVert}{ModeVertBg}
+
+\textbf{\textcolor{ModeVertDark}{\ding{72} Pilier 1 --- L'analogie du jardinier}}
+
+Imaginez un jardinier qui veut plus de fruits. Il a deux options : couper les branches les plus hautes pour \og{}redistribuer\fg{} la s\`eve, ou am\'eliorer la terre pour que tout pousse mieux. La taxe Zucman coupe les branches. La taxe Tobin am\'eliore la terre.
+
+Un arbre \'elag\'e trop court ne produit plus. Un \'ecosyst\`eme bien nourri, si.
+
+\vspace{3mm}
+\textbf{\textcolor{ModeVertDark}{\ding{72} Pilier 2 --- L'histoire nous montre le chemin}}
+
+\begin{itemize}[label=\textcolor{ModeVert}{\ding{51}}, itemsep=3pt]
+  \item Le \textbf{Vietnam}, pays communiste, a compris que la l\'eg\`eret\'e fiscale (\stat{20\% PIB}) cr\'ee de la croissance. R\'esultat : sorti de la pauvret\'e en une g\'en\'eration.
+  \item La \textbf{Suisse}, avec \stat{34\%} de d\'epenses publiques, offre les meilleurs services publics d'Europe. Moins d'imp\^ot, mieux d\'epens\'e.
+  \item Warren Buffett ne demande pas plus d'imp\^ots --- il demande des \emph{politiciens responsables} qui \'equilibrent le budget.
+\end{itemize}
+
+\vspace{3mm}
+\textbf{\textcolor{ModeVertDark}{\ding{72} Pilier 3 --- La vision : une fiscalit\'e du XXI\textsuperscript{e} si\`ecle}}
+
+\begin{itemize}[label=\textcolor{ModeVert}{\ding{224}}, itemsep=3pt]
+  \item \textbf{Taxe sur les flux financiers} (Tobin) : invisible pour le citoyen, impossible \`a fuir pour le sp\'eculateur.
+  \item \textbf{Taxation de la consommation de luxe} : chacun paie en proportion de ce qu'il \emph{consomme}, pas de ce qu'il \emph{poss\`ede}.
+  \item \textbf{Responsabilisation politique} : loi Buffett --- si le d\'eficit d\'epasse 3\%, interdiction de se repr\'esenter. Alignement des int\'er\^ets.
+\end{itemize}
+
+\end{fichemode}
+
+\vspace{3mm}
+
+\citfort{I could end the deficit in 5 minutes. You just pass a law that says that anytime there is a deficit of more than 3\% of GDP, all sitting members of Congress are ineligible for re-election.}{Warren Buffett}
+
+\vspace{2mm}
+
+\begin{fichemode}[\ding{168}~CONTRE-ARGUMENTS ANTICIP\'ES]{ModeVert}{ModeVertBg}
+\begin{enumerate}[label=\textcolor{ModeVert}{\textbf{D\'efi \arabic*.}}, itemsep=4pt, leftmargin=*]
+  \item \textbf{\og{}Vous d\'efendez les riches\fg{}}\\
+  \textcolor{ModeVertDark}{\ding{224}} Je d\'efends l'intelligence. Elon Musk est le plus gros contribuable fiscal de l'histoire. Les entrepreneurs qui cr\'eent de la valeur ne sont pas l'ennemi. L'ennemi, c'est le gaspillage public.
+
+  \item \textbf{\og{}Les in\'egalit\'es sont insoutenables\fg{}}\\
+  \textcolor{ModeVertDark}{\ding{224}} Absolument. Et c'est \emph{pr\'ecis\'ement} pour cela qu'il faut des solutions qui \emph{fonctionnent}. Pas des mesures symboliques dont on \emph{sait} qu'elles \'echouent.
+
+  \item \textbf{\og{}C'est du lib\'eralisme\fg{}}\\
+  \textcolor{ModeVertDark}{\ding{224}} La Suisse n'est pas un pays lib\'eral sauvage. C'est un pays o\`u chaque centime public est vot\'e par le peuple. Responsabilit\'e + d\'emocratie directe = efficacit\'e.
+\end{enumerate}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{anglemort}
+La comparaison avec le Vietnam est puissante mais incompl\`ete : le Vietnam part d'un niveau de d\'eveloppement tr\`es bas, et son \og{}miracle\fg{} s'accompagne de conditions de travail discutables. La Suisse est un meilleur mod\`ele, mais b\'en\'eficie d'un effet taille et d'un secret bancaire historique. Le reconna\^itre renforce la cr\'edibilit\'e.
+\end{anglemort}
+
+\cloture[ModeVert]{La grandeur d'un pays ne se mesure pas \`a combien il prend, mais \`a combien il b\^atit avec ce qu'il a.}
+
+\newpage
+
+% ========================================================
+%  MODE 5 --- BLEU : SOCRATIQUE "Le Miroir"
+% ========================================================
+\section*{\textcolor{ModeBleu}{\rule{8pt}{8pt}\quad MODE BLEU --- SOCRATIQUE \og{}Le Miroir\fg{}}}
+\addcontentsline{toc}{section}{Mode Bleu --- Socratique}
+
+\begin{fichemode}[\ding{46}~TH\`ESE]{ModeBleu}{ModeBleuBg}
+\begin{thesebox}[ModeBleu]
+{\large\bfseries Et si la taxe Zucman \'etait la mauvaise r\'eponse \`a la bonne question ? Une s\'erie de questions pour amener l'interlocuteur \`a d\'ecouvrir par lui-m\^eme les failles du raisonnement.}
+\end{thesebox}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{fichemode}[\ding{46}~PILIERS FACTUELS --- Par la question]{ModeBleu}{ModeBleuBg}
+
+\textbf{\textcolor{ModeBleuDark}{\ding{72} Pilier 1 --- D\'econstruire la pr\'emisse}}
+
+\begin{enumerate}[label=\textcolor{ModeBleu}{\textbf{Q\arabic*.}}, itemsep=5pt, leftmargin=*]
+  \item \og{}Si la France d\'epense d\'ej\`a \stat{57\%} de son PIB en d\'epenses publiques, et que l'URSS des ann\'ees 80 \'etait \`a \stat{50\%}\ldots{} \`a quel moment consid\`ere-t-on qu'on est d\'ej\`a dans un syst\`eme de redistribution massive ?\fg{}
+
+  \item \og{}L'ISF a \'et\'e test\'e en Norv\`ege, en Espagne, en Suisse, en France. \`A chaque fois, il a rapport\'e moins de \stat{0.5\% du PIB} et provoqu\'e la fuite des capitaux. Qu'est-ce qui te fait penser que cette fois sera diff\'erente ?\fg{}
+
+  \item \og{}Si le rendement immobilier est de \stat{5\%} et qu'on prend \stat{2\%} du patrimoine, est-ce que tu r\'ealises que c'est \stat{40\%} du revenu brut ? Tu accepterais qu'on te prenne 40\% de ton salaire \emph{en plus} de l'imp\^ot sur le revenu ?\fg{}
+\end{enumerate}
+
+\vspace{3mm}
+\textbf{\textcolor{ModeBleuDark}{\ding{72} Pilier 2 --- Interroger le financeur}}
+
+\begin{enumerate}[label=\textcolor{ModeBleu}{\textbf{Q\arabic*.}}, itemsep=5pt, leftmargin=*, start=4]
+  \item \og{}Sais-tu qui finance la promotion de la taxe Zucman ? George Soros. Sais-tu qu'il a \'et\'e condamn\'e pour d\'elit d'initi\'e ? Qu'il a fait sauter la Banque d'Angleterre par sp\'eculation ? Qu'il utilise des fondations pour \'eviter l'imp\^ot ? Est-ce que \c{c}a ne t'interroge pas, un \'evaseur fiscal qui milite pour taxer les autres ?\fg{}
+
+  \item \og{}Warren Buffett ne demande pas plus d'imp\^ots --- il demande qu'on interdise de se repr\'esenter aux \'elus qui ne savent pas \'equilibrer un budget. Pourquoi on ne parle jamais de \emph{responsabiliser les d\'epenseurs} ?\fg{}
+\end{enumerate}
+
+\vspace{3mm}
+\textbf{\textcolor{ModeBleuDark}{\ding{72} Pilier 3 --- Ouvrir sur les alternatives}}
+
+\begin{enumerate}[label=\textcolor{ModeBleu}{\textbf{Q\arabic*.}}, itemsep=5pt, leftmargin=*, start=6]
+  \item \og{}Pourquoi taxer le \emph{patrimoine} plut\^ot que les \emph{transactions} ? Une taxe Tobin \`a \stat{0.01\%} sur les flux financiers est impossible \`a fuir et rapporterait \stat{20 milliards par an}. Pourquoi personne n'en parle ?\fg{}
+
+  \item \og{}Si on taxait la \emph{consommation de luxe} (yachts, jets, diamants) plut\^ot que la \emph{possession}, les riches paieraient quand m\^eme --- mais sans pouvoir fuir. Pourquoi cette solution est-elle ignor\'ee ?\fg{}
+
+  \item \og{}Derni\`ere question. Sarkozy a vendu \stat{589 tonnes d'or} au plus bas. Hidalgo a cr\'e\'e \stat{7 milliards de dette} \`a Paris. L'Ecotax a co\^ut\'e \stat{1 milliard} pour rien. S\'egol\`ene Royal a surendett\'e le Poitou-Charentes. Avant de demander plus d'argent aux citoyens, est-ce qu'on ne devrait pas d'abord demander des comptes \`a ceux qui le d\'epensent ?\fg{}
+\end{enumerate}
+
+\end{fichemode}
+
+\vspace{3mm}
+
+\citfort{Les idiots apprennent de leur exp\'erience. Les gens intelligents apprennent de l'exp\'erience des autres.}{Bismarck}
+
+\vspace{2mm}
+
+\begin{fichemode}[\ding{46}~CONTRE-ARGUMENTS ANTICIP\'ES]{ModeBleu}{ModeBleuBg}
+\begin{enumerate}[label=\textcolor{ModeBleu}{\textbf{Si on vous dit \arabic* :}}, itemsep=4pt, leftmargin=*]
+  \item \textbf{\og{}Vous posez des questions mais vous ne proposez rien\fg{}}\\
+  \textcolor{ModeBleuDark}{\ding{224}} \og{}Je propose la taxe Tobin, la TVA de luxe, la flat tax sur le capital, et la loi Buffett. Quatre propositions concr\`etes. Et toi, \`a part r\'ep\'eter \og{}taxer les riches\fg{}, tu proposes quoi de \emph{nouveau} ?\fg{}
+
+  \item \textbf{\og{}Ce sont des questions orient\'ees\fg{}}\\
+  \textcolor{ModeBleuDark}{\ding{224}} \og{}Chaque question contient un fait v\'erifiable. \stat{57\% du PIB}, \stat{3\,300 milliards de dette}, \stat{0.5\% de rendement ISF}. Lesquels sont faux ? V\'erifie.\fg{}
+
+  \item \textbf{\og{}Vous d\'efendez le statu quo\fg{}}\\
+  \textcolor{ModeBleuDark}{\ding{224}} \og{}Le statu quo, c'est r\'ep\'eter les m\^emes erreurs. L'ISF a \'echou\'e. Je propose des solutions \emph{diff\'erentes}. Qui d\'efend le statu quo, vraiment ?\fg{}
+\end{enumerate}
+\end{fichemode}
+
+\vspace{3mm}
+
+\begin{anglemort}
+Le mode socratique peut \^etre per\c{c}u comme condescendant si mal dos\'e. Les questions doivent \^etre pos\'ees avec une curiosit\'e sinc\`ere, pas comme un interrogatoire. L'humilit\'e est la cl\'e : \og{}je ne sais pas tout, mais ces chiffres m'interrogent --- et toi ?\fg{}
+\end{anglemort}
+
+\cloture[ModeBleu]{La bonne question n'est pas \og{}faut-il taxer les riches ?\fg{} --- c'est \og{}pourquoi r\'ep\'eter ce qui a toujours \'echou\'e ?\fg{}}
+
+\vspace{1cm}
+
+% ========================================================
+%  SYNTHESE FINALE
+% ========================================================
+\begin{center}
+\begin{tikzpicture}
+\node[draw=ChapColor, fill=ChapColor!5, rounded corners=4mm, inner sep=12pt, text width=0.9\textwidth, align=center] {
+  {\Large\bfseries\color{ChapColor} R\`egle d'or du d\'ebat fiscal}\\[8pt]
+  {\large Ne jamais accepter le cadrage \og{}pour ou contre taxer les riches\fg{}.}\\[4pt]
+  {\large Recadrer \emph{toujours} sur : \textbf{comment taxer intelligemment}}\\[2pt]
+  {\large \textbf{et comment d\'epenser responsablement.}}\\[8pt]
+  \textcolor{ModeRouge}{\rule{2cm}{2pt}}\quad
+  \textcolor{ModeOrange}{\rule{2cm}{2pt}}\quad
+  \textcolor{ModeJaune}{\rule{2cm}{2pt}}\quad
+  \textcolor{ModeVert}{\rule{2cm}{2pt}}\quad
+  \textcolor{ModeBleu}{\rule{2cm}{2pt}}
+};
+\end{tikzpicture}
+\end{center}
+
+\end{document}

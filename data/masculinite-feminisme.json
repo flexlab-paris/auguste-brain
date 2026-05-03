@@ -1,0 +1,397 @@
+{
+  "id": "masculinite-feminisme",
+  "titre": "Masculinite, Feminisme et Wokisme -- La Crise Identitaire Contemporaine",
+  "these_principale": "Les hommes, en particulier les jeunes, traversent une crise multidimensionnelle (suicide, decrochage scolaire, incarceration, addictions, sans-abrisme, baisse de testosterone) largement ignoree par le discours dominant, tandis que le feminisme de quatrieme vague et le mouvement woke, en pathologisant la masculinite, aggravent le probleme au lieu de le resoudre.",
+  "faits": [
+    {
+      "claim": "En France, 8 848 deces par suicide en 2023, 75,1% concernent des hommes",
+      "chiffre": "8 848 deces, 75.1% hommes",
+      "source_citee": "DREES / Sante publique France",
+      "verifiable": true,
+      "note": "Donnees institutionnelles francaises"
+    },
+    {
+      "claim": "Taux de suicide 2022 France : 20,8 pour 100 000 hommes contre 6,3 pour 100 000 femmes (ratio 3,3:1)",
+      "chiffre": "20.8 vs 6.3 pour 100 000",
+      "source_citee": "DREES",
+      "verifiable": true,
+      "note": "Ratio homme/femme de 3,3 pour 1"
+    },
+    {
+      "claim": "Chez les 10% les plus modestes, le taux de suicide atteint 25,7 pour 100 000 hommes",
+      "chiffre": "25.7 pour 100 000",
+      "source_citee": "DREES",
+      "verifiable": true,
+      "note": "Inegalites sociales majeures dans le suicide"
+    },
+    {
+      "claim": "73% des suicides mondiaux sont masculins (OMS 2024)",
+      "chiffre": "73%",
+      "source_citee": "OMS 2024",
+      "verifiable": true,
+      "note": "Ratio mondial ~3:1"
+    },
+    {
+      "claim": "Taux mondial suicide 2021 : 12,3 pour 100 000 hommes vs 5,9 femmes",
+      "chiffre": "12.3 vs 5.9 pour 100 000",
+      "source_citee": "OMS",
+      "verifiable": true,
+      "note": "Donnee mondiale"
+    },
+    {
+      "claim": "Aux USA, le taux de suicide masculin est 4 fois celui des femmes",
+      "chiffre": "4x",
+      "source_citee": "OMS",
+      "verifiable": true,
+      "note": "Ratio americain plus eleve que la moyenne mondiale"
+    },
+    {
+      "claim": "Taux baccalaureat 2016 France : 83,8% filles vs 74,0% garcons (ecart de 10 points)",
+      "chiffre": "83.8% vs 74.0%",
+      "source_citee": "INSEE/DEPP",
+      "verifiable": true,
+      "note": "Ecart persistant en faveur des filles"
+    },
+    {
+      "claim": "20% des jeunes hommes sortent du systeme scolaire sans diplome vs 11% des jeunes femmes",
+      "chiffre": "20% vs 11%",
+      "source_citee": "INSEE/DEPP",
+      "verifiable": true,
+      "note": "Decrochage scolaire masculin presque double"
+    },
+    {
+      "claim": "Les garcons sont 50% moins susceptibles que les filles d'atteindre les competences de base en lecture, maths et sciences (mondial)",
+      "chiffre": "50% moins susceptibles",
+      "source_citee": "Warren Farrell & John Gray, The Boy Crisis (2018)",
+      "verifiable": true,
+      "note": "A croiser avec les donnees PISA"
+    },
+    {
+      "claim": "Au 1er fevrier 2024 France : 76 258 detenus dont 2 380 femmes (3,4%)",
+      "chiffre": "76 258 detenus, 3.4% femmes",
+      "source_citee": "Ministere de la Justice 2024",
+      "verifiable": true,
+      "note": "96,6% de la population carcerale est masculine"
+    },
+    {
+      "claim": "Au 1er mars 2026 : 87 126 detenus (surpopulation carcerale record)",
+      "chiffre": "87 126",
+      "source_citee": "Ministere de la Justice",
+      "verifiable": true,
+      "note": "Chiffre recent"
+    },
+    {
+      "claim": "Cannabis : 57,6% des hommes ont experimente vs 43,4% des femmes (18-64 ans, France)",
+      "chiffre": "57.6% vs 43.4%",
+      "source_citee": "Barometres Sante / INRS",
+      "verifiable": true,
+      "note": "Ecart significatif"
+    },
+    {
+      "claim": "Drogues illicites hors cannabis : 20,1% hommes vs 9,3% femmes",
+      "chiffre": "20.1% vs 9.3%",
+      "source_citee": "Barometres Sante",
+      "verifiable": true,
+      "note": "Ratio ~2:1"
+    },
+    {
+      "claim": "77% des sans-abri en France sont des hommes ; parmi les SDF a la rue, ~95% sont des hommes",
+      "chiffre": "77% (global), ~95% (rue)",
+      "source_citee": "INSEE 2022",
+      "verifiable": true,
+      "note": "Invisibilisation masculine dans la precarite"
+    },
+    {
+      "claim": "Declin de la testosterone de ~1,2% par an, independamment de l'age (etude Travison et al. 2007)",
+      "chiffre": "~1.2% par an",
+      "source_citee": "Travison et al., J Clin Endocrinol Metab, 2007",
+      "verifiable": true,
+      "note": "Massachusetts Male Aging Study, 3 cohortes 1987-2004"
+    },
+    {
+      "claim": "Etude E-S Baron-Cohen : 671 606 participants, femmes superieures en empathie, hommes en systemisation",
+      "chiffre": "671 606 participants",
+      "source_citee": "Baron-Cohen et al., PNAS 2018",
+      "verifiable": true,
+      "note": "Etude a tres grande echelle"
+    },
+    {
+      "claim": "Force membres superieurs : femmes = 50-60% de la force masculine",
+      "chiffre": "50-60%",
+      "source_citee": "Etudes physiologiques",
+      "verifiable": true,
+      "note": "Ecart plus prononce pour le haut du corps"
+    },
+    {
+      "claim": "Gender Equality Paradox : les pays les plus egalitaires ont des differences de choix professionnels plus prononcees",
+      "chiffre": null,
+      "source_citee": "Stoet & Geary, 2018, Psychological Science",
+      "verifiable": true,
+      "note": "Paradoxe documente mais conteste"
+    },
+    {
+      "claim": "Cancel culture : au moins 1 000 tentatives de sanctionner des professeurs US de 2014 a 2023, ~2/3 ont abouti",
+      "chiffre": "1 000+ tentatives, ~66% reussies",
+      "source_citee": "FIRE (Foundation for Individual Rights in Education)",
+      "verifiable": true,
+      "note": "Comparable au maccarthysme des annees 1950"
+    },
+    {
+      "claim": "591 cas de represailles envers des universitaires documentes par FIRE depuis 2015",
+      "chiffre": "591",
+      "source_citee": "FIRE",
+      "verifiable": true,
+      "note": "Base de donnees FIRE"
+    },
+    {
+      "claim": "Pres de la moitie des etudiants americains ne se sentent pas a l'aise pour partager leurs opinions politiques en classe",
+      "chiffre": "~50%",
+      "source_citee": "Sondage FIRE",
+      "verifiable": true,
+      "note": "Effet de la cancel culture sur la liberte d'expression"
+    },
+    {
+      "claim": "6 Americains sur 10 estiment que la democratie est menacee car les gens ont peur d'exprimer leurs opinions",
+      "chiffre": "60%",
+      "source_citee": "Sondage FIRE",
+      "verifiable": true,
+      "note": "Perception de menace sur la liberte d'expression"
+    },
+    {
+      "claim": "Big Brothers Big Sisters : jeunes mentores 46% moins susceptibles de consommer des drogues, 27% moins d'alcool, 32% moins de comportements antisociaux",
+      "chiffre": "46%, 27%, 32%",
+      "source_citee": "BBBSA (essais controles randomises)",
+      "verifiable": true,
+      "note": "Efficacite documentee du mentorat"
+    },
+    {
+      "claim": "19 millions d'enfants americains (1 sur 4) grandissent sans leur pere",
+      "chiffre": "19 millions, 1/4",
+      "source_citee": "National Fatherhood Initiative (USA)",
+      "verifiable": true,
+      "note": "Crise de l'absence paternelle"
+    },
+    {
+      "claim": "70% des jeunes en etablissements penitentiaires proviennent de foyers monoparentaux",
+      "chiffre": "70%",
+      "source_citee": "National Fatherhood Initiative",
+      "verifiable": true,
+      "note": "Correlation forte mais prudence sur la causalite"
+    },
+    {
+      "claim": "World Athletics exclut depuis mars 2023 toutes les femmes trans ayant traverse la puberte masculine",
+      "chiffre": null,
+      "source_citee": "World Athletics, 2023",
+      "verifiable": true,
+      "note": "Politique restrictive depuis le 31 mars 2023"
+    },
+    {
+      "claim": "Femmes breadwinners : 56% de 'tres satisfaites' vs 70% pour les non-breadwinners",
+      "chiffre": "56% vs 70%",
+      "source_citee": "Institute for Family Studies",
+      "verifiable": true,
+      "note": "Satisfaction inferieure quand la femme est soutien principal"
+    },
+    {
+      "claim": "Revue systematique 2025 (51 etudes, 6 434 participants) : force similaire entre femmes trans et femmes cisgenres",
+      "chiffre": "51 etudes, 6 434 participants",
+      "source_citee": "Revue systematique 2025",
+      "verifiable": true,
+      "note": "Mais VO2max et detente verticale inferieurs chez femmes trans"
+    }
+  ],
+  "citations": [
+    {
+      "auteur": "Warren Farrell",
+      "citation": "Le pouvoir, pour les hommes, c'est le sentiment d'etre oblige de gagner de l'argent que quelqu'un d'autre depense pendant qu'ils meurent plus tot. Se sentir oblige n'est pas du pouvoir.",
+      "contexte": "The Myth of Male Power (1993), sur la redefinition du pouvoir masculin"
+    },
+    {
+      "auteur": "Warren Farrell",
+      "citation": "Chaque societe qui a survecu l'a fait en persuadant ses fils d'etre jetables -- jetables a la guerre, jetables au travail -- et donc, indirectement, jetables en tant que peres.",
+      "contexte": "The Myth of Male Power, sur la jetabilite masculine"
+    },
+    {
+      "auteur": "Warren Farrell",
+      "citation": "Au niveau mondial, les garcons sont 50% moins susceptibles que les filles d'atteindre les niveaux de competence de base en lecture, mathematiques et sciences.",
+      "contexte": "The Boy Crisis (2018), sur le decrochage scolaire masculin mondial"
+    },
+    {
+      "auteur": "Christina Hoff Sommers",
+      "citation": "C'est une mauvaise epoque pour etre un garcon en Amerique.",
+      "contexte": "The War Against Boys, Atlantic, mai 2000"
+    },
+    {
+      "auteur": "Christina Hoff Sommers",
+      "citation": "Les garcons portent aujourd'hui le fardeau de plusieurs tendances culturelles puissantes : une approche therapeutique de l'education qui valorise les sentiments et denigre la competition et le risque, des politiques de tolerance zero qui punissent les comportements normaux des jeunes males, et un mouvement pour l'equite de genre qui voit la masculinite comme predatrice.",
+      "contexte": "The War Against Boys, sur la pathologisation de la masculinite"
+    },
+    {
+      "auteur": "Christina Hoff Sommers",
+      "citation": "De plus en plus, dans nos ecoles et dans nos foyers, la masculinite ordinaire du garcon est vue comme aberrante, toxique -- une pathologie necessitant un remede.",
+      "contexte": "Sur le concept de masculinite toxique applique aux garcons"
+    },
+    {
+      "auteur": "Camille Paglia",
+      "citation": "Ce que le feminisme appelle patriarcat n'est rien d'autre que la civilisation, un systeme abstrait concu par les hommes mais augmente et desormais codetenu par les femmes.",
+      "contexte": "Sexual Personae (1990)"
+    },
+    {
+      "auteur": "Camille Paglia",
+      "citation": "La masculinite est risquee et insaisissable. Elle est atteinte par une revolte contre la femme, et elle n'est confirmee que par d'autres hommes. La virilite contrainte a la sensibilite n'est plus de la virilite.",
+      "contexte": "Sur la nature de la masculinite"
+    },
+    {
+      "auteur": "Camille Paglia",
+      "citation": "Debarrassons-nous du feminisme d'infirmerie, avec son asile de pleurnicheuses, d'anorexiques, de boulimiques, de depressives, de victimes de viol et de survivantes de l'inceste. Le feminisme est devenu un tiroir a legumes fourre-tout ou des bandes de pleureuses peuvent stocker leurs nevroses moisies.",
+      "contexte": "Vamps & Tramps (1994), critique acerbe du feminisme victimaire"
+    },
+    {
+      "auteur": "Camille Paglia",
+      "citation": "La masculinite ne fait plus que s'imiter depuis les films. Il ne reste rien. Il n'y a plus de place pour quoi que ce soit de viril actuellement.",
+      "contexte": "Sur la disparition de la masculinite authentique"
+    },
+    {
+      "auteur": "Jonathan Haidt",
+      "citation": "Les trois grandes contre-verites : 'Ce qui ne te tue pas te rend plus faible', 'Fais toujours confiance a tes sentiments', 'La vie est un combat entre les bons et les mechants'.",
+      "contexte": "The Coddling of the American Mind (2018, avec Greg Lukianoff)"
+    },
+    {
+      "auteur": "Jordan Peterson",
+      "citation": "Les garcons souffrent, dans le monde moderne. Ils sont plus desobeissants -- negativement -- ou plus independants -- positivement -- que les filles, et ils en souffrent tout au long de leur parcours educatif pre-universitaire.",
+      "contexte": "12 Rules for Life (2018)"
+    },
+    {
+      "auteur": "Jordan Peterson",
+      "citation": "Ne rendez pas les garcons honteux de leur masculinite. Ne les poussez pas a se feminiser, de peur qu'ils ne repoussent et ne deviennent machistes.",
+      "contexte": "Sur le risque de la honte de la masculinite"
+    },
+    {
+      "auteur": "Jordan Peterson",
+      "citation": "Quand la douceur et l'inoffensivite deviennent les seules vertus consciemment acceptables, alors la durete et la domination commencent a exercer une fascination inconsciente.",
+      "contexte": "12 Rules for Life, sur le refoulement de l'agressivite"
+    },
+    {
+      "auteur": "Jordan Peterson",
+      "citation": "Si les hommes sont pousses trop fort a se feminiser, ils deviendront de plus en plus interesses par les ideologies politiques dures et fascistes.",
+      "contexte": "Avertissement sur la radicalisation masculine"
+    }
+  ],
+  "arguments_cles": [
+    "Les hommes sont en crise sur tous les indicateurs sociaux majeurs : suicide (75% des deces), decrochage scolaire (20% vs 11%), incarceration (96,6%), sans-abrisme (77-95%), addictions",
+    "La baisse seculaire de testosterone (~1,2%/an depuis les annees 1980) est un phenomene biologique independant de l'age, lie aux perturbateurs endocriniens et aux modes de vie modernes",
+    "Les differences homme-femme ont une base biologique documentee (theorie E-S de Baron-Cohen, differences de force physique, Big Five) et ne sont pas purement des constructions sociales",
+    "Le Gender Equality Paradox montre que dans les societes les plus egalitaires, les differences de choix entre hommes et femmes s'amplifient plutot que de diminuer",
+    "Le feminisme a connu quatre vagues progressivement plus radicales, passant de droits fondamentaux legitimes (vote, propriete) a une ideologie qui pathologise la masculinite",
+    "Le wokisme, issu de l'Ecole de Francfort et du postmodernisme, fonctionne comme une ideologie quasi-religieuse qui divise la societe en oppresseurs et opprimes",
+    "La cancel culture a un impact mesurable sur la liberte d'expression universitaire (~50% des etudiants US se censurent) et professionnelle (1 000+ tentatives de sanctions contre des professeurs)",
+    "La question trans dans le sport montre que les federations sportives adoptent des restrictions croissantes, reconnaissant un avantage residuel apres transition",
+    "L'absence paternelle est un facteur majeur de delinquance et de mal-etre chez les garcons (70% des jeunes en prison viennent de foyers monoparentaux)",
+    "Le mentorat (type Big Brothers Big Sisters) est une solution documentee par des essais controles randomises : -46% drogues, -27% alcool, -32% comportements antisociaux",
+    "Les universaux culturels (Donald Brown) montrent que la division sexuelle du travail et la dominance masculine du domaine public sont observees dans toutes les cultures etudiees",
+    "La theorie de l'investissement parental (Trivers) fournit un cadre evolutionniste pour comprendre la complementarite des roles"
+  ],
+  "contre_arguments_anticipes": [
+    {
+      "objection": "La 'crise de la masculinite' est un narratif conservateur pour resister au progres feministe",
+      "reponse": "Les donnees sont institutionnelles (OMS, INSEE, DREES, Ministere de la Justice) et ne sont contestees par personne. 75% des suicides masculins, 96,6% de detenus hommes, 77-95% de SDF hommes ne sont pas un narratif mais des faits"
+    },
+    {
+      "objection": "Les differences biologiques homme-femme sont minimes et largement sociales",
+      "reponse": "L'etude Baron-Cohen sur 671 606 participants et le Gender Equality Paradox montrent que les differences persistent et s'amplifient dans les societes les plus egalitaires, ce qui contredit l'hypothese purement sociale"
+    },
+    {
+      "objection": "Le feminisme aide aussi les hommes en combattant les stereotypes de genre",
+      "reponse": "Les premiere et deuxieme vagues ont obtenu des avancees cruciales. Mais la quatrieme vague, en qualifiant la masculinite de 'toxique', aggrave la honte et le desengagement des garcons au lieu de les aider"
+    },
+    {
+      "objection": "La cancel culture est exageree, ce ne sont que des consequences sociales normales",
+      "reponse": "591 cas de represailles documentes par FIRE, 1 000+ tentatives de sanctions, 50% des etudiants qui s'autocensurent : ce sont des ordres de grandeur comparables au maccarthysme"
+    },
+    {
+      "objection": "Les femmes trans n'ont pas d'avantage significatif dans le sport",
+      "reponse": "Les federations sportives (World Athletics, World Aquatics, World Rugby, British Cycling) ont adopte des restrictions croissantes precisement parce que les donnees montrent un avantage residuel apres transition"
+    },
+    {
+      "objection": "La baisse de testosterone peut etre expliquee par des changements methodologiques de mesure",
+      "reponse": "L'etude Travison et al. controle les facteurs confondants (age, IMC, tabagisme, alcool) et les methodes de mesure. Le declin residuel reste significatif meme apres ajustements"
+    }
+  ],
+  "zones_douteuses": [
+    "Le chiffre de 72% des meurtriers adolescents provenant de foyers sans pere (National Fatherhood Initiative) est souvent cite mais la source primaire est difficile a verifier",
+    "La reanalyse PNAS 2025 du Gender Equality Paradox suggere que l'effet pourrait etre un artefact de regroupement culturel occidental",
+    "L'affirmation que le wokisme 'n'existe pratiquement pas en France' (CEVIPOF) merite d'etre nuancee au vu des evenements recents",
+    "Les donnees sur les femmes trans dans le sport sont encore limitees en taille d'echantillon",
+    "Le lien causal entre perturbateurs endocriniens et baisse de testosterone reste debattu (correlation vs causalite)",
+    "Les chiffres de 120t matiere seche/ha pour les macroalgues (debate 2) meritent verification"
+  ],
+  "a_approfondir": [
+    "Etudes longitudinales sur l'impact des programmes scolaires integrant la question masculine",
+    "Meta-analyse des effets de l'absence paternelle en controlant rigoureusement les variables confondantes",
+    "Comparaison internationale des politiques de soutien aux garcons en difficulte scolaire",
+    "Etudes sur les perturbateurs endocriniens et la fertilite masculine (concentration spermatique)",
+    "Impact mesure du mouvement #MeToo sur les relations professionnelles homme-femme",
+    "Efficacite comparee des programmes de mentorat masculin dans differents contextes culturels",
+    "Evolution des taux de suicide masculin dans les pays ayant adopte des politiques specifiques de prevention",
+    "Analyse detaillee des politiques sportives pour les athletes trans : resultats et consequences",
+    "Etude des cohortes de garcons exposes aux discours sur la masculinite toxique vs ceux non exposes",
+    "Le role de la pornographie en ligne dans la crise de la masculinite chez les adolescents"
+  ],
+  "references_mentionnees": [
+    {"type": "study", "name": "Travison et al. (2007)", "detail": "Declin populationnel de la testosterone, J Clin Endocrinol Metab, Massachusetts Male Aging Study"},
+    {"type": "study", "name": "Baron-Cohen et al. (2018)", "detail": "Theorie Empathisation-Systemisation, PNAS, 671 606 participants"},
+    {"type": "study", "name": "Stoet & Geary (2018)", "detail": "Gender-Equality Paradox in STEM Education, Psychological Science"},
+    {"type": "study", "name": "Falk & Hermle (2018)", "detail": "Differences de genre et developpement economique, Science"},
+    {"type": "study", "name": "Gonalons-Pons & Gangl (2021)", "detail": "Marriage and Masculinity: Male-Breadwinner Culture, American Sociological Review"},
+    {"type": "study", "name": "Harper (2025)", "detail": "Performance changes in transgender women athletes, European Journal of Sport Science"},
+    {"type": "study", "name": "Revue systematique 2025", "detail": "51 etudes, 6 434 participants sur athletes trans"},
+    {"type": "study", "name": "Cas Lia Thomas", "detail": "Etude natation, Journal of Applied Physiology, declins 0.5-7.3%"},
+    {"type": "book", "name": "The Myth of Male Power", "detail": "Warren Farrell, 1993, Simon & Schuster"},
+    {"type": "book", "name": "The Boy Crisis", "detail": "Warren Farrell & John Gray, 2018, BenBella Books"},
+    {"type": "book", "name": "The War Against Boys", "detail": "Christina Hoff Sommers, 2000/2013, Simon & Schuster"},
+    {"type": "book", "name": "Sexual Personae", "detail": "Camille Paglia, 1990, Yale University Press"},
+    {"type": "book", "name": "Vamps & Tramps", "detail": "Camille Paglia, 1994"},
+    {"type": "book", "name": "The Coddling of the American Mind", "detail": "Jonathan Haidt & Greg Lukianoff, 2018, Penguin Press"},
+    {"type": "book", "name": "12 Rules for Life", "detail": "Jordan Peterson, 2018, Random House Canada"},
+    {"type": "book", "name": "Human Universals", "detail": "Donald E. Brown, 1991, McGraw-Hill"},
+    {"type": "book", "name": "The Essential Difference", "detail": "Simon Baron-Cohen, 2003, Allen Lane"},
+    {"type": "person", "name": "Warren Farrell", "detail": "Auteur de The Myth of Male Power et The Boy Crisis, defenseur des droits des hommes"},
+    {"type": "person", "name": "Christina Hoff Sommers", "detail": "Philosophe, feministe d'equite, auteur de The War Against Boys"},
+    {"type": "person", "name": "Camille Paglia", "detail": "Intellectuelle feministe disidente, critique du feminisme victimaire"},
+    {"type": "person", "name": "Jonathan Haidt", "detail": "Psychologue social, coauteur de The Coddling of the American Mind"},
+    {"type": "person", "name": "Greg Lukianoff", "detail": "Juriste, president de FIRE, coauteur de The Coddling of the American Mind"},
+    {"type": "person", "name": "Jordan Peterson", "detail": "Psychologue clinicien canadien, auteur de 12 Rules for Life"},
+    {"type": "person", "name": "Simon Baron-Cohen", "detail": "Neuroscientifique, auteur de la theorie Empathisation-Systemisation"},
+    {"type": "person", "name": "Donald E. Brown", "detail": "Anthropologue, auteur de Human Universals (1991)"},
+    {"type": "person", "name": "Robert Trivers", "detail": "Biologiste evolutif, theorie de l'investissement parental (1972)"},
+    {"type": "person", "name": "Kimberle Crenshaw", "detail": "Juriste, a conceptualise l'intersectionnalite (1989)"},
+    {"type": "person", "name": "Simone de Beauvoir", "detail": "Philosophe, auteur de Le Deuxieme Sexe, figure de la deuxieme vague feministe"},
+    {"type": "person", "name": "Betty Friedan", "detail": "Auteur de The Feminine Mystique, figure de la deuxieme vague feministe"},
+    {"type": "person", "name": "Emmeline Pankhurst", "detail": "Leader des suffragettes britanniques, premiere vague feministe"},
+    {"type": "person", "name": "Max Horkheimer", "detail": "Philosophe, Ecole de Francfort, theorie critique"},
+    {"type": "person", "name": "Theodor Adorno", "detail": "Philosophe, Ecole de Francfort"},
+    {"type": "person", "name": "Herbert Marcuse", "detail": "Philosophe, Ecole de Francfort, influence majeure sur la Nouvelle Gauche"},
+    {"type": "person", "name": "Michel Foucault", "detail": "Philosophe postmoderne, savoir et pouvoir"},
+    {"type": "person", "name": "Jacques Derrida", "detail": "Philosophe, deconstruction"},
+    {"type": "person", "name": "Harvey Weinstein", "detail": "Producteur condamne, declencheur du mouvement #MeToo"},
+    {"type": "event", "name": "#MeToo (2017)", "detail": "Mouvement mondial de denonciation des violences sexuelles"},
+    {"type": "event", "name": "Black Lives Matter", "detail": "Mouvement qui a popularise le terme 'woke' dans les annees 2010"},
+    {"type": "event", "name": "Meurtre de George Floyd (2020)", "detail": "Evenement declencheur de la diffusion mondiale du wokisme"},
+    {"type": "event", "name": "Loi Veil (1975)", "detail": "Legalisation de l'avortement en France"},
+    {"type": "person", "name": "Jean-Michel Blanquer", "detail": "Ministre de l'Education, a denonce le wokisme comme importation americaine"},
+    {"type": "person", "name": "Emmanuel Macron", "detail": "President francais, a publiquement critique le wokisme"},
+    {"type": "study", "name": "FIRE (Foundation for Individual Rights in Education)", "detail": "Organisation documentant 591 cas de represailles academiques et les atteintes a la liberte d'expression"},
+    {"type": "study", "name": "Big Brothers Big Sisters of America", "detail": "Programme de mentorat, 109 254 jeunes en 2020, resultats documentes par essais controles randomises"},
+    {"type": "study", "name": "National Fatherhood Initiative", "detail": "Organisation documentant l'impact de l'absence paternelle aux USA"},
+    {"type": "study", "name": "DREES / Sante publique France", "detail": "Donnees institutionnelles francaises sur le suicide"},
+    {"type": "study", "name": "CIO Cadre 2021", "detail": "Delegation de la politique trans aux federations individuelles"},
+    {"type": "study", "name": "World Athletics politique 2023", "detail": "Exclusion des femmes trans ayant traverse la puberte masculine"},
+    {"type": "study", "name": "World Aquatics politique 2022", "detail": "Restriction aux femmes trans ayant transitionne avant stade 2 de Tanner"}
+  ],
+  "score_polarisation": {
+    "gauche_droite": 35,
+    "libertaire_autoritaire": -30,
+    "rationnel_emotionnel": 75,
+    "factuel_speculatif": 80
+  }
+}

@@ -1,0 +1,797 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FICHES RHETORIQUES — 5 MODES
+% La Science comme Religion Politique — Rationnement vs Abondance
+% Auguste Pugnet — Mai 2026
+% Compile avec : pdflatex fiches-science-abondance.tex (x2)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,11pt]{article}
+
+% === ENCODAGE ET LANGUE ===
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amssymb}
+\usepackage{textcomp}
+
+% === MISE EN PAGE ===
+\usepackage[top=1.8cm, bottom=1.8cm, left=1.8cm, right=1.8cm, headheight=15pt]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+
+% === COULEURS — 5 MODES ===
+\usepackage[dvipsnames,svgnames,x11names]{xcolor}
+
+% Rouge Abrasif
+\definecolor{ModeRouge}{HTML}{C0392B}
+\definecolor{ModeRougeBg}{HTML}{FDEDEC}
+% Orange Combatif
+\definecolor{ModeOrange}{HTML}{E67E22}
+\definecolor{ModeOrangeBg}{HTML}{FEF3E2}
+% Jaune Persuasif
+\definecolor{ModeJaune}{HTML}{D4AC0D}
+\definecolor{ModeJauneBg}{HTML}{FEF9E7}
+% Vert Inspirant
+\definecolor{ModeVert}{HTML}{27AE60}
+\definecolor{ModeVertBg}{HTML}{E8F8F5}
+% Bleu Socratique
+\definecolor{ModeBleu}{HTML}{2471A3}
+\definecolor{ModeBleuBg}{HTML}{EBF5FB}
+% Utilitaires
+\definecolor{FactBg}{HTML}{F0F3F4}
+\definecolor{FactBorder}{HTML}{2C3E50}
+\definecolor{ChapColor}{HTML}{1A237E}
+
+% === GRAPHIQUES ===
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,positioning,arrows.meta,shapes.geometric,decorations.pathreplacing,backgrounds,fit,shadows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% === TABLEAUX ===
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{colortbl}
+
+% === LISTES ===
+\usepackage{enumitem}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+% === ENCADRES ===
+\usepackage[most]{tcolorbox}
+
+% -- Fiche ROUGE ABRASIF --
+\newtcolorbox{ficherouge}[1][]{
+  colback=ModeRougeBg,
+  colframe=ModeRouge,
+  fonttitle=\bfseries\large,
+  arc=3mm,
+  boxrule=1.5pt,
+  left=5mm, right=5mm, top=3mm, bottom=3mm,
+  title={\color{ModeRouge}\ding{54}~ROUGE ABRASIF --- #1},
+  coltitle=ModeRouge,
+  breakable,
+}
+
+% -- Fiche ORANGE COMBATIF --
+\newtcolorbox{ficheorange}[1][]{
+  colback=ModeOrangeBg,
+  colframe=ModeOrange,
+  fonttitle=\bfseries\large,
+  arc=3mm,
+  boxrule=1.5pt,
+  left=5mm, right=5mm, top=3mm, bottom=3mm,
+  title={\color{ModeOrange}\ding{220}~ORANGE COMBATIF --- #1},
+  coltitle=ModeOrange,
+  breakable,
+}
+
+% -- Fiche JAUNE PERSUASIF --
+\newtcolorbox{fichejaune}[1][]{
+  colback=ModeJauneBg,
+  colframe=ModeJaune,
+  fonttitle=\bfseries\large,
+  arc=3mm,
+  boxrule=1.5pt,
+  left=5mm, right=5mm, top=3mm, bottom=3mm,
+  title={\color{ModeJaune}\ding{72}~JAUNE PERSUASIF --- #1},
+  coltitle=ModeJaune,
+  breakable,
+}
+
+% -- Fiche VERT INSPIRANT --
+\newtcolorbox{fichevert}[1][]{
+  colback=ModeVertBg,
+  colframe=ModeVert,
+  fonttitle=\bfseries\large,
+  arc=3mm,
+  boxrule=1.5pt,
+  left=5mm, right=5mm, top=3mm, bottom=3mm,
+  title={\color{ModeVert}\ding{169}~VERT INSPIRANT --- #1},
+  coltitle=ModeVert,
+  breakable,
+}
+
+% -- Fiche BLEU SOCRATIQUE --
+\newtcolorbox{fichebleu}[1][]{
+  colback=ModeBleuBg,
+  colframe=ModeBleu,
+  fonttitle=\bfseries\large,
+  arc=3mm,
+  boxrule=1.5pt,
+  left=5mm, right=5mm, top=3mm, bottom=3mm,
+  title={\color{ModeBleu}\ding{46}~BLEU SOCRATIQUE --- #1},
+  coltitle=ModeBleu,
+  breakable,
+}
+
+% -- Encadre contre-argument --
+\newtcolorbox{contrearg}[1][Contre-arguments pr\'{e}par\'{e}s]{
+  colback=gray!5,
+  colframe=gray!50,
+  fonttitle=\bfseries,
+  arc=1mm,
+  boxrule=0.5pt,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={#1},
+  coltitle=gray!80!black,
+}
+
+% -- Encadre angle mort --
+\newtcolorbox{anglemort}{
+  colback=red!3,
+  colframe=ModeRouge!40,
+  fonttitle=\bfseries,
+  arc=1mm,
+  boxrule=0.5pt,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  title={\ding{46}~Angle mort \`{a} surveiller},
+  coltitle=ModeRouge!70!black,
+}
+
+% -- Encadre fait objectif --
+\newtcolorbox{factbox}[1][]{
+  colback=FactBg,
+  colframe=FactBorder,
+  fonttitle=\bfseries\large,
+  arc=3mm,
+  boxrule=1pt,
+  left=5mm, right=5mm, top=3mm, bottom=3mm,
+  title={#1},
+  coltitle=white,
+  attach boxed title to top left={xshift=5mm, yshift=-3mm},
+  boxed title style={colback=FactBorder, arc=2mm},
+}
+
+% -- Citation forte --
+\newcommand{\citfort}[2]{%
+  \begin{center}
+  \begin{tikzpicture}
+  \node[inner sep=8pt, text width=0.85\textwidth, align=center, font=\large\itshape] (q) {<<~#1~>>};
+  \node[below=2pt of q, font=\small\bfseries, text=gray] {--- #2};
+  \end{tikzpicture}
+  \end{center}
+}
+
+% -- Phrase forte inline --
+\newcommand{\phraseforte}[1]{\textbf{\textcolor{ModeRouge}{<<~#1~>>}}}
+\newcommand{\stat}[1]{\textbf{\textcolor{ChapColor}{#1}}}
+
+% === EN-TETES ===
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gray}Science comme Religion Politique --- Rationnement vs Abondance}
+\fancyhead[R]{\small\color{gray}Fiches Rh\'{e}toriques}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+% === TITRES ===
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{ChapColor}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{ChapColor!80}}
+  {\thesubsection}{1em}{}
+
+% === HYPERLINKS ===
+\usepackage[colorlinks=true,linkcolor=ChapColor,urlcolor=ModeBleu,citecolor=ModeVert]{hyperref}
+
+% ==========================================================================
+\begin{document}
+
+% ========== PAGE DE TITRE ==========
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+\begin{tikzpicture}
+\node[inner sep=0pt] {
+  \begin{minipage}{0.88\textwidth}
+  \centering
+  {\fontsize{30}{36}\selectfont\bfseries\color{ChapColor} La Science comme}\\[0.3cm]
+  {\fontsize{30}{36}\selectfont\bfseries\color{ChapColor} Religion Politique}\\[0.8cm]
+  {\Large\color{gray} Rationnement vs Abondance}\\[0.3cm]
+  {\large\color{gray} Algues $\cdot$ M\'{e}thane $\cdot$ Chanvre $\cdot$ ZEE $\cdot$ Souverainet\'{e}}\\[1.5cm]
+  \rule{10cm}{0.5pt}\\[0.8cm]
+  {\large\itshape Arsenal rh\'{e}torique complet --- 5 modes}\\[0.2cm]
+  {\large\itshape Faits, strat\'{e}gies, calculs, contre-arguments}\\[1.2cm]
+  \rule{10cm}{0.5pt}\\[0.8cm]
+  {\Large Auguste Pugnet}\\[0.3cm]
+  {\large Mai 2026}
+  \end{minipage}
+};
+\end{tikzpicture}
+
+\vfill
+
+% L\'{e}gende des 5 modes
+\begin{tikzpicture}
+\node[fill=ModeRougeBg, draw=ModeRouge, rounded corners, minimum width=2.4cm, minimum height=0.8cm, font=\footnotesize\bfseries, text=ModeRouge] at (0,0) {ABRASIF};
+\node[fill=ModeOrangeBg, draw=ModeOrange, rounded corners, minimum width=2.4cm, minimum height=0.8cm, font=\footnotesize\bfseries, text=ModeOrange] at (3.2,0) {COMBATIF};
+\node[fill=ModeJauneBg, draw=ModeJaune, rounded corners, minimum width=2.4cm, minimum height=0.8cm, font=\footnotesize\bfseries, text=ModeJaune] at (6.4,0) {PERSUASIF};
+\node[fill=ModeVertBg, draw=ModeVert, rounded corners, minimum width=2.4cm, minimum height=0.8cm, font=\footnotesize\bfseries, text=ModeVert] at (9.6,0) {INSPIRANT};
+\node[fill=ModeBleuBg, draw=ModeBleu, rounded corners, minimum width=2.4cm, minimum height=0.8cm, font=\footnotesize\bfseries, text=ModeBleu] at (12.8,0) {SOCRATIQUE};
+\end{tikzpicture}
+
+\vspace{1cm}
+
+% Th\`{e}se centrale
+\begin{tcolorbox}[colback=ChapColor!5, colframe=ChapColor, arc=3mm, boxrule=1pt, left=6mm, right=6mm, top=4mm, bottom=4mm]
+\textbf{\color{ChapColor}TH\`{E}SE :} La science moderne a \'{e}t\'{e} captur\'{e}e par le pouvoir politique exactement comme la religion l'a \'{e}t\'{e} par les Borgias \`{a} la Renaissance. Les mod\`{e}les scientifiques instrumentalis\'{e}s servent une id\'{e}ologie du rationnement (enfermisme, d\'{e}croissance) alors que la France poss\`{e}de les ressources et l'intelligence pour devenir une puissance de l'abondance.
+\end{tcolorbox}
+
+\end{titlepage}
+
+% ========== SYNTH\`{E}SE VISUELLE ==========
+\section*{Synth\`{e}se : de la mer \`{a} l'\'{e}nergie}
+
+\begin{center}
+\begin{tikzpicture}[
+  node distance=1.2cm and 2.2cm,
+  block/.style={draw, rounded corners=3mm, minimum height=1.2cm, minimum width=3.2cm, align=center, font=\small\bfseries, drop shadow},
+  arrow/.style={-{Stealth[length=3mm]}, thick, color=ChapColor!70},
+]
+% Cha\^{i}ne de valeur
+\node[block, fill=ModeBleuBg, draw=ModeBleu, text width=3cm] (zee) {ZEE fran\c{c}aise\\11\,M\,km$^2$};
+\node[block, fill=ModeVertBg, draw=ModeVert, text width=3cm, right=of zee] (algues) {Culture\\macro-algues\\120\,t/ha/an};
+\node[block, fill=ModeJauneBg, draw=ModeJaune, text width=3cm, right=of algues] (methane) {M\'{e}thanisation\\40\% rendement\\$\rightarrow$\,CH$_4$};
+\node[block, fill=ModeOrangeBg, draw=ModeOrange, text width=3.5cm, right=of methane] (energie) {\stat{400\,Mds\,m$^3$/an}\\= conso gaz UE};
+
+\draw[arrow] (zee) -- (algues);
+\draw[arrow] (algues) -- (methane);
+\draw[arrow] (methane) -- (energie);
+
+% Branches secondaires
+\node[block, fill=ModeVertBg!60, draw=ModeVert!60, text width=2.8cm, below=of algues] (bio) {Bio-rem\'{e}diation\\fixe m\'{e}taux lourds\\absorbe CO$_2$};
+\node[block, fill=ModeJauneBg!60, draw=ModeJaune!60, text width=2.8cm, below=of methane] (nh3) {NH$_3$ maritime\\carburant\\z\'{e}ro-carbone};
+\node[block, fill=ModeRougeBg!60, draw=ModeRouge!60, text width=2.8cm, below left=1.2cm and -0.5cm of zee] (chanvre) {Chanvre\\6\,t/ha terre\\construction};
+
+\draw[arrow, dashed] (algues) -- (bio);
+\draw[arrow, dashed] (methane) -- (nh3);
+\draw[arrow, dashed] (zee.south) -- ++(0,-0.5) -| (chanvre.north);
+\end{tikzpicture}
+\end{center}
+
+% Bar chart ZEE
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar, width=14cm, height=6cm, bar width=14pt,
+    ylabel={ZEE (millions de km$^2$)},
+    symbolic x coords={France,USA,Australie,Russie,UK,Indon\'{e}sie,Japon,Cor\'{e}e Sud},
+    xtick=data, x tick label style={rotate=35, anchor=east, font=\small},
+    ymin=0, ymax=13, nodes near coords, nodes near coords style={font=\tiny, above},
+    title style={font=\bfseries},
+    title={Zones \'{E}conomiques Exclusives compar\'{e}es},
+    every axis plot/.append style={fill opacity=0.85},
+]
+\addplot[fill=ChapColor] coordinates {
+    (France,11.0) (USA,11.4) (Australie,8.5) (Russie,7.6)
+    (UK,6.8) (Indon\'{e}sie,6.2) (Japon,4.5) (Cor\'{e}e Sud,0.3)
+};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{factbox}[Chiffres-cl\'{e}s du calcul d'abondance]
+\begin{itemize}[nosep, leftmargin=*]
+  \item Macro-algues en surface : \stat{120\,t mati\`{e}re s\`{e}che/ha/an} --- en profondeur (30\,m) : potentiellement \stat{900\,t/ha}
+  \item 0{,}5\,\% de la ZEE en production = \stat{55\,000\,km$^2$} = 5{,}5 millions d'hectares
+  \item M\'{e}thanisation rendement 40\,\% $\rightarrow$ production potentielle : $\sim$\stat{400\,milliards\,m$^3$/an} de CH$_4$
+  \item Consommation gaz UE : $\sim$400\,milliards\,m$^3$/an --- Russie exportait : $\sim$300\,milliards\,m$^3$
+  \item Investissement estim\'{e} : \stat{200--400\,milliards\,\texteuro} (vs 3\,300\,milliards de dette existante)
+  \item Chanvre terrestre : $\sim$6\,t/ha --- 30\,\% des \'{e}missions CO$_2$ mondiales = secteur construction
+  \item NH$_3$ : carburant naval z\'{e}ro-carbone, technologie connue depuis 20\,ans
+  \item 4\,000 m\'{e}thaniers n\'{e}cessaires pour remplacer le gaz russe par du GNL am\'{e}ricain
+\end{itemize}
+\end{factbox}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FICHE 1 : ROUGE ABRASIF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{ficherouge}{La science captur\'{e}e --- l'hypocrisie d\'{e}masqu\'{e}e}
+
+\textbf{OBJECTIF :} Frapper fort. D\'{e}masquer la capture de la science par le politique. Mettre l'adversaire en position d\'{e}fensive d\`{e}s les premi\`{e}res secondes.
+
+\textbf{STRAT\'{E}GIE RH\'{E}TORIQUE :} Pathos agressif + faits imparables. Analogies violentes. Ton direct, m\'{e}prisant pour l'hypocrisie, jamais pour l'interlocuteur na\"{\i}f.
+
+\rule{\textwidth}{0.3pt}
+
+\textbf{\color{ModeRouge}TH\`{E}SE EXPRESS :}\\
+La science n'est pas corrompue par accident. Elle est \emph{syst\'{e}matiquement} instrument\-alis\'{e}e par le pouvoir, exactement comme la religion l'\'{e}tait par les Borgias. Ceux qui disent <<\,the science is clear\,>> sont les nouveaux cur\'{e}s d'une \'{e}glise qui ne tol\`{e}re pas le doute.
+
+\vspace{0.3cm}
+\textbf{\color{ModeRouge}PILIER 1 --- Bernays et la fabrique du consentement}
+
+\begin{itemize}[nosep, label=\color{ModeRouge}\ding{54}]
+  \item Edward Bernays a vendu les cigarettes aux femmes comme <<\,flambeaux de la libert\'{e}\,>> (1929). Il a pay\'{e} des m\'{e}decins pour promouvoir bacon \& eggs comme <<\,le petit-d\'{e}jeuner am\'{e}ricain\,>>. \textbf{M\^{e}me m\'{e}thode, m\^{e}me arnaque, un si\`{e}cle plus tard.}
+  \item L'industrie sucri\`{e}re a pay\'{e} des chercheurs pour publier dans le \textbf{JAMA} --- le journal m\'{e}dical le plus prestigieux du monde --- accusant les graisses au lieu du sucre. R\'{e}sultat : 50 ans de politique nutritionnelle bas\'{e}e sur un \textbf{mensonge scientifique}.
+  \item \phraseforte{Quand quelqu'un te dit <<\,la science dit que\,>>, demande-lui : qui a pay\'{e} l'\'{e}tude\,?}
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{\color{ModeRouge}PILIER 2 --- Le paquet de cigarettes}
+
+L'analogie du paquet de cigarettes (Guy Ritchie, \textit{RocknRolla}) : sur la face avant, les insignes royaux --- noblesse, autorit\'{e}, confiance. Retourne le paquet : <<\,fumer tue\,>>. Les mod\`{e}les scientifiques, c'est pareil. \textbf{La conclusion est devant. Les hypoth\`{e}ses --- les vraies limites --- sont cach\'{e}es derri\`{e}re.}
+
+\begin{itemize}[nosep, label=\color{ModeRouge}\ding{54}]
+  \item Neil Ferguson, Imperial College : mod\`{e}le COVID pr\'{e}disant des centaines de milliers de morts. \textbf{Largement surestim\'{e}.} Mais les d\'{e}cisions politiques \'{e}taient d\'{e}j\`{a} prises.
+  \item \phraseforte{Un mod\`{e}le n'est pas la r\'{e}alit\'{e}. C'est une opinion math\'{e}matique. Et les opinions, \c{c}a s'ach\`{e}te.}
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{\color{ModeRouge}PILIER 3 --- Le rationnement comme projet politique}
+
+\begin{itemize}[nosep, label=\color{ModeRouge}\ding{54}]
+  \item L'id\'{e}ologie du rationnement --- d\'{e}croissance, enfermisme, culpabilisation --- sert ceux qui veulent \textbf{contr\^{o}ler}, pas ceux qui veulent lib\'{e}rer.
+  \item La France a \stat{11 millions de km$^2$} de ZEE. On pourrait produire \stat{400 milliards m$^3$ de m\'{e}thane/an}. Mais on pr\'{e}f\`{e}re acheter du gaz am\'{e}ricain avec 4\,000 m\'{e}thaniers.
+  \item \phraseforte{Ils te disent de te serrer la ceinture pendant qu'ils bradent ton h\'{e}ritage maritime.}
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{CITATIONS :}
+\begin{itemize}[nosep, font=\itshape]
+  \item <<~La plus belle des ruses du diable est de vous persuader qu'il n'existe pas.~>> --- Baudelaire
+  \item <<~Les lois c'est comme les saucisses, on veut surtout pas voir comment elles sont fabriqu\'{e}es.~>> --- Bismarck
+\end{itemize}
+
+\begin{contrearg}
+\textbf{<<\,Tu es complotiste\,!~>>}\\
+$\rightarrow$ Non. Je cite le JAMA, je cite Bernays, je cite Ferguson. Ce sont des \emph{faits document\'{e}s}. Le complotiste, c'est celui qui refuse de regarder les preuves.
+
+\textbf{<<\,La science se corrige d'elle-m\^{e}me~>>}\\
+$\rightarrow$ Apr\`{e}s 50 ans de mensonge sur le sucre ? Apr\`{e}s des mod\`{e}les COVID jamais audit\'{e}s publiquement ? Elle se corrige, oui. En 2070. Tu peux attendre ?
+\end{contrearg}
+
+\begin{anglemort}
+Attention \`{a} ne pas basculer dans le rejet \emph{total} de la m\'{e}thode scientifique. L'attaque porte sur la \textbf{capture politique} de la science, pas sur la science elle-m\^{e}me. Toujours distinguer la m\'{e}thode (sacr\'{e}e) de l'institution (corruptible).
+\end{anglemort}
+
+\vspace{0.3cm}
+\textbf{\color{ModeRouge}PHRASE DE CL\^{O}TURE :}\\
+\phraseforte{Quand le pr\^{e}tre te dit <<\,c'est la parole de Dieu\,>>, tu as le droit de douter. Quand le politique te dit <<\,the science is clear\,>>, tu as le \emph{devoir} de douter. Parce que derri\`{e}re les deux, il y a quelqu'un qui veut ton ob\'{e}issance.}
+
+\end{ficherouge}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FICHE 2 : ORANGE COMBATIF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{ficheorange}{Retournements logiques --- d\'{e}clarez vos hypoth\`{e}ses}
+
+\textbf{OBJECTIF :} Retourner les arguments adverses. Forcer la transparence des hypoth\`{e}ses. Gagner le terrain logique.
+
+\textbf{STRAT\'{E}GIE RH\'{E}TORIQUE :} Logos offensif. Chaque argument adverse est retourn\'{e} en pi\`{e}ge. Ton combatif mais ma\^{i}tris\'{e} --- le boxeur technique, pas le cogneur.
+
+\rule{\textwidth}{0.3pt}
+
+\textbf{\color{ModeOrange}TH\`{E}SE EXPRESS :}\\
+Tout mod\`{e}le repose sur des hypoth\`{e}ses. Celui qui refuse de d\'{e}clarer ses hypoth\`{e}ses ne fait pas de la science --- il fait de la \textbf{politique d\'{e}guis\'{e}e}. Exigeons la transparence : <<\,retournez le paquet de cigarettes\,>>.
+
+\vspace{0.3cm}
+\textbf{\color{ModeOrange}PILIER 1 --- Le 6\textsuperscript{e} probl\`{e}me de Hilbert}
+
+\begin{itemize}[nosep, label=\color{ModeOrange}$\blacktriangleright$]
+  \item En 1900, David Hilbert a pos\'{e} 23 probl\`{e}mes fondamentaux. Le 6\textsuperscript{e} : \textbf{peut-on axiomatiser la physique\,?} R\'{e}ponse en 2026 : \textbf{NON R\'{E}SOLU.}
+  \item Cons\'{e}quence : \emph{aucun} mod\`{e}le physique n'a de fondement axiomatique d\'{e}montr\'{e}. Toute mod\'{e}lisation repose sur des hypoth\`{e}ses \emph{choisies}, pas \emph{prouv\'{e}es}.
+  \item \textbf{Retournement :} Quand quelqu'un dit <<\,the science is clear\,>>, r\'{e}pondez : <<\,Montrez-moi les axiomes. Hilbert attend encore.\,>>
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{\color{ModeOrange}PILIER 2 --- La calculette du marchand}
+
+L'analogie de la calculette : quand le marchand te montre l'\'{e}cran \`{a} cristaux liquides avec le prix, le chiffre para\^{i}t \textbf{non-n\'{e}gociable}. C'est un \'{e}cran, pas un argument. <<\,The science is clear\,>> fonctionne pareil : on te montre un \'{e}cran, pas un raisonnement.
+
+\begin{itemize}[nosep, label=\color{ModeOrange}$\blacktriangleright$]
+  \item \textbf{Technique de d\'{e}bat :} Face \`{a} <<\,la science dit que\,>>, posez \textbf{trois questions} :
+  \begin{enumerate}[nosep, label=\textbf{\arabic*.}]
+    \item Quelles sont les hypoth\`{e}ses du mod\`{e}le\,?
+    \item Qui a financ\'{e} l'\'{e}tude\,?
+    \item Quel est l'intervalle de confiance\,?
+  \end{enumerate}
+  \item Si votre interlocuteur ne peut pas r\'{e}pondre \`{a} ces trois questions, \textbf{il n'a pas compris ce qu'il cite}.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{\color{ModeOrange}PILIER 3 --- Les saucisses de Bismarck}
+
+<<\,Les lois c'est comme les saucisses\,>> --- les mod\`{e}les aussi. Retournement syst\'{e}matique :
+
+\begin{center}
+\begin{tabular}{>{\bfseries}l p{9cm}}
+\toprule
+\textbf{Argument adverse} & \textbf{Retournement} \\
+\midrule
+<<\,La science est claire\,>> & Quelles hypoth\`{e}ses\,? Le 6\textsuperscript{e} probl\`{e}me de Hilbert est non r\'{e}solu. \\
+<<\,Il faut r\'{e}duire l'empreinte\,>> & Les algues \emph{s\'{e}questrent} le CO$_2$. Le chanvre absorbe plus qu'il n'\'{e}met. L'abondance \emph{est} la solution \'{e}cologique. \\
+<<\,Les ressources sont limit\'{e}es\,>> & 11\,M\,km$^2$ de ZEE. 0{,}5\,\% suffit. Vous confondez Malthus et la r\'{e}alit\'{e}. \\
+<<\,C'est utopique\,>> & La Cor\'{e}e du Sud le fait d\'{e}j\`{a}. Visible par satellite. \\
+<<\,Les mod\`{e}les sont fiables\,>> & Ferguson COVID : des centaines de milliers de morts pr\'{e}dits, r\'{e}alit\'{e} tr\`{e}s diff\'{e}rente. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.3cm}
+\textbf{CITATIONS :}
+\begin{itemize}[nosep, font=\itshape]
+  \item <<~Les idiots apprennent de leur exp\'{e}rience. Les gens intelligents apprennent de l'exp\'{e}rience des autres.~>> --- Bismarck
+  \item <<~Ce qui va sans dire va mieux en le disant.~>> --- Talleyrand
+\end{itemize}
+
+\begin{contrearg}
+\textbf{<<\,Tu remets en cause le consensus scientifique\,?~>>}\\
+$\rightarrow$ Je remets en cause l'usage \emph{politique} du consensus. Un consensus n'est pas un vote. En science, un seul fait suffit \`{a} invalider une th\'{e}orie. C'est Popper, pas Twitter.
+
+\textbf{<<\,Tu n'es pas scientifique, tu ne peux pas juger~>>}\\
+$\rightarrow$ Je n'ai pas besoin d'\^{e}tre boulanger pour savoir que le pain est br\^{u}l\'{e}. Je demande les hypoth\`{e}ses. C'est un droit, pas une comp\'{e}tence.
+\end{contrearg}
+
+\begin{anglemort}
+Le retournement logique peut para\^{i}tre \textbf{purement n\'{e}gatif} si on ne propose pas d'alternative. Toujours cha\^{i}ner avec le mode Jaune (calculs) ou Vert (vision) imm\'{e}diatement apr\`{e}s avoir d\'{e}mont\'{e} l'argument adverse.
+\end{anglemort}
+
+\vspace{0.3cm}
+\textbf{\color{ModeOrange}PHRASE DE CL\^{O}TURE :}\\
+\textbf{\textcolor{ModeOrange}{<<~Talleyrand disait : ce qui va sans dire va mieux en le disant. Moi je dis : ce qui va sans hypoth\`{e}se va mieux en la d\'{e}clarant. D\'{e}clarez vos hypoth\`{e}ses, et on discutera de science. Sinon, on discute de religion.~>>}}
+
+\end{ficheorange}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FICHE 3 : JAUNE PERSUASIF
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{fichejaune}{Les calculs de l'abondance --- la France puissance maritime}
+
+\textbf{OBJECTIF :} Convaincre par la pr\'{e}cision des chiffres. Chaque affirmation est soutenue par un calcul v\'{e}rifiable. Le public doit repartir avec des \textbf{nombres en t\^{e}te}.
+
+\textbf{STRAT\'{E}GIE RH\'{E}TORIQUE :} Logos pur. Tableaux, calculs, comparaisons. Ton p\'{e}dagogique, m\'{e}thodique --- le professeur qui d\'{e}montre au tableau.
+
+\rule{\textwidth}{0.3pt}
+
+\textbf{\color{ModeJaune}TH\`{E}SE EXPRESS :}\\
+Les calculs d\'{e}montrent que la France peut devenir \'{e}nerg\'{e}tiquement souveraine et exportatrice nette, en mobilisant moins de 1\,\% de sa Zone \'{E}conomique Exclusive. Ce n'est pas un r\^{e}ve --- c'est de l'arithm\'{e}tique.
+
+\vspace{0.3cm}
+\textbf{\color{ModeJaune}PILIER 1 --- Le calcul des algues}
+
+\begin{center}
+\begin{tikzpicture}[
+  node distance=0.5cm,
+  calcbox/.style={draw=ModeJaune, rounded corners=2mm, fill=ModeJauneBg, minimum width=12cm, align=left, font=\small, inner sep=4mm},
+]
+\node[calcbox] (a) {
+  \textbf{\'{E}tape 1 :} Culture macro-algues en surface = 120\,t mati\`{e}re s\`{e}che / ha / an\\
+  En profondeur (30\,m, colonnes verticales) : potentiellement \textbf{900\,t / ha / an}
+};
+\node[calcbox, below=of a] (b) {
+  \textbf{\'{E}tape 2 :} 0{,}5\,\% de la ZEE = 55\,000\,km$^2$ = 5\,500\,000\,ha\\
+  Production prudente (120\,t/ha) : \textbf{660 millions de tonnes / an}
+};
+\node[calcbox, below=of b] (c) {
+  \textbf{\'{E}tape 3 :} M\'{e}thanisation 40\,\% rendement\\
+  1\,m$^3$ CH$_4$ $\approx$ 700\,g $\rightarrow$ 50\,t = 72\,000\,m$^3$\\
+  \textbf{Production : $\sim$400 milliards m$^3$ CH$_4$ / an}
+};
+\node[calcbox, below=of c, draw=ModeRouge, fill=ModeRougeBg!40] (d) {
+  \textbf{R\'{e}sultat :} Consommation gaz UE $\approx$ 400\,Mds\,m$^3$/an --- \textbf{Couverture totale.}\\
+  Russie exportait $\sim$300\,Mds\,m$^3$. La France seule peut remplacer la Russie.
+};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.3cm}
+\textbf{\color{ModeJaune}PILIER 2 --- Comparaison internationale}
+
+\begin{center}
+\begin{tabular}{lrrp{5cm}}
+\toprule
+\textbf{Pays} & \textbf{ZEE (M\,km$^2$)} & \textbf{Culture algues} & \textbf{Observation} \\
+\midrule
+France & 11{,}0 & N\'{e}gligeable & 2\textsuperscript{e} ZEE mondiale, inexploit\'{e}e \\
+Cor\'{e}e du Sud & 0{,}3 & \textbf{Leader mondial} & Visible par satellite \\
+Japon & 4{,}5 & Significative & Int\'{e}gr\'{e}e \`{a} la culture alimentaire \\
+Indon\'{e}sie & 6{,}2 & En croissance & 3\textsuperscript{e} producteur mondial \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+La Cor\'{e}e du Sud, avec \stat{36$\times$ moins} de surface maritime que la France, est le leader mondial. \textbf{Ce n'est pas une question de moyens. C'est une question de volont\'{e}.}
+
+\vspace{0.3cm}
+\textbf{\color{ModeJaune}PILIER 3 --- Le co\^{u}t de l'inaction vs l'investissement}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar, width=12cm, height=5.5cm, bar width=22pt,
+    ylabel={Milliards \texteuro},
+    symbolic x coords={Investissement algues, Dette fran\c{c}aise, GNL am\'{e}ricain (10 ans), Guerre Ukraine (UE)},
+    xtick=data, x tick label style={rotate=30, anchor=east, font=\footnotesize, text width=3cm, align=right},
+    ymin=0, ymax=3800, nodes near coords, nodes near coords style={font=\footnotesize, above},
+    title style={font=\bfseries\small},
+    title={Ordres de grandeur financiers},
+    every axis plot/.append style={fill opacity=0.85},
+    legend style={at={(0.98,0.95)}, anchor=north east, font=\small},
+]
+\addplot[fill=ModeVert] coordinates {
+    (Investissement algues,300) (Dette fran\c{c}aise,3300) (GNL am\'{e}ricain (10 ans),800) (Guerre Ukraine (UE),500)
+};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}[nosep, label=\color{ModeJaune}$\blacktriangleright$]
+  \item Investissement estim\'{e} : \stat{200--400\,Mds\,\texteuro} pour l'infrastructure algoculture.
+  \item La France a d\'{e}j\`{a} \stat{3\,300\,Mds\,\texteuro} de dette. Pour \textbf{10\,\%} de cette dette, on peut devenir exportateur net d'\'{e}nergie.
+  \item \textbf{Chanvre :} $\sim$6\,t mati\`{e}re s\`{e}che/ha, construction carbone-n\'{e}gative, 30\,\% des \'{e}missions mondiales = b\^{a}timent.
+  \item \textbf{Engrais :} 1/5 du gaz UE sert \`{a} produire des engrais azot\'{e}s. Les algues sont un fertilisant naturel.
+  \item Il faudrait \stat{4\,000 m\'{e}thaniers} pour remplacer le gaz russe par du GNL am\'{e}ricain. Ou \textbf{0{,}5\,\% de notre mer}.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{CITATION :}
+\begin{itemize}[nosep, font=\itshape]
+  \item <<~Il n'y a qu'un seul homme de trop sur terre, c'est Monsieur Malthus.~>> --- Proudhon
+\end{itemize}
+
+\begin{contrearg}
+\textbf{<<\,Ces chiffres sont th\'{e}oriques~>>}\\
+$\rightarrow$ Ils sont prudents. 120\,t/ha est le chiffre de surface, pas de profondeur (900\,t). Et la Cor\'{e}e du Sud produit \emph{d\'{e}j\`{a}} \`{a} ces rendements. C'est de l'agro-industrie, pas de la fus\'{e}e.
+
+\textbf{<<\,Le m\'{e}thane c'est un gaz \`{a} effet de serre~>>}\\
+$\rightarrow$ Le CH$_4$ issu de la m\'{e}thanisation est du cycle court --- le carbone vient des algues qui l'ont fix\'{e}. C'est neutre en carbone. Contrairement au gaz fossile qui d\'{e}stocke du carbone enfoui depuis des millions d'ann\'{e}es.
+
+\textbf{<<\,\c{C}a prendra 20 ans~>>}\\
+$\rightarrow$ Le nucl\'{e}aire fran\c{c}ais a \'{e}t\'{e} b\^{a}ti en 15\,ans (1975--1990). Le Canal de Suez en 10\,ans. Quand la volont\'{e} politique est l\`{a}, les d\'{e}lais fondent.
+\end{contrearg}
+
+\begin{anglemort}
+Les rendements de 900\,t/ha en profondeur sont des \textbf{estimations th\'{e}oriques} encore peu valid\'{e}es \`{a} \'{e}chelle industrielle. Toujours pr\'{e}senter le calcul avec le chiffre prudent (120\,t) et mentionner le potentiel en profondeur comme horizon.
+\end{anglemort}
+
+\vspace{0.3cm}
+\textbf{\color{ModeJaune}PHRASE DE CL\^{O}TURE :}\\
+\textbf{\textcolor{ModeJaune}{<<~0{,}5\,\% de notre mer. 10\,\% de notre dette. 100\,\% de notre \'{e}nergie. Les chiffres sont l\`{a}. Le seul obstacle, c'est l'ignorance organis\'{e}e.~>>}}
+
+\end{fichejaune}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FICHE 4 : VERT INSPIRANT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{fichevert}{La France r\'{e}publique maritime --- de Venise \`{a} l'avenir}
+
+\textbf{OBJECTIF :} \'{E}lever le d\'{e}bat. Donner une vision grandiose qui d\'{e}passe la pol\'{e}mique. Faire r\^{e}ver tout en restant ancr\'{e} dans le r\'{e}el. Faire sentir la \textbf{fiert\'{e}} et la \textbf{possibilit\'{e}}.
+
+\textbf{STRAT\'{E}GIE RH\'{E}TORIQUE :} Ethos + Pathos \'{e}l\'{e}vateur. R\'{e}cits historiques, grandes figures, projection dans l'avenir. Ton enthousiaste, visionnaire, lyrique quand n\'{e}cessaire.
+
+\rule{\textwidth}{0.3pt}
+
+\textbf{\color{ModeVert}TH\`{E}SE EXPRESS :}\\
+La France n'est pas un pays continental qui a une fa\c{c}ade maritime. C'est une \textbf{puissance oc\'{e}anique} qui s'est oubli\'{e}e. Avec 11\,millions de km$^2$ de mer, elle poss\`{e}de le plus grand territoire du monde --- si elle ose le voir.
+
+\vspace{0.3cm}
+\textbf{\color{ModeVert}PILIER 1 --- Venise : du camp de r\'{e}fugi\'{e}s \`{a} la splendeur}
+
+\begin{itemize}[nosep, label=\color{ModeVert}\ding{169}]
+  \item Venise a commenc\'{e} comme un \textbf{camp de r\'{e}fugi\'{e}s} --- des populations fuyant les invasions barbares, r\'{e}fugi\'{e}es sur des \^{i}lots boueux dans une lagune.
+  \item Par l'\textbf{intelligence dans les infrastructures}, ils ont transform\'{e} ces \^{i}lots en la plus belle ville d'Europe et la premi\`{e}re puissance commerciale de la M\'{e}diterran\'{e}e.
+  \item \textbf{La le\c{c}on :} ce ne sont pas les ressources naturelles qui font la puissance. C'est la \textbf{volont\'{e} d'ing\'{e}nierie} --- transformer ce qu'on a en ce qu'on veut.
+  \item La France a infiniment plus que Venise n'a jamais eu. Il ne manque que la vision.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{\color{ModeVert}PILIER 2 --- Ferdinand de Lesseps et la projection de puissance}
+
+\begin{itemize}[nosep, label=\color{ModeVert}\ding{169}]
+  \item Le Canal de Suez (1869) : un Fran\c{c}ais transforme la g\'{e}ographie du monde. Ce n'est pas un ouvrage d'ing\'{e}nierie --- c'est une \textbf{projection de puissance culturelle}.
+  \item Colbert encourageait la culture du chanvre pour les cordages de la marine fran\c{c}aise. \textbf{La Canebi\`{e}re} \`{a} Marseille vient de <<\,cannabis\,>> --- chanvre en proven\c{c}al. L'abondance est dans notre ADN toponymique.
+  \item \textbf{L'ammoniac (NH$_3$)} : carburant naval z\'{e}ro-carbone, technologie connue depuis 20\,ans. La France pourrait propulser la plus grande flotte marchande du monde avec une \'{e}nergie produite dans ses propres eaux.
+  \item CRISPR-Cas9 : technologie r\'{e}volutionnaire avec participation fran\c{c}aise fondamentale --- non valoris\'{e}e. Les brevets sont am\'{e}ricains. M\^{e}me sch\'{e}ma : l'intelligence fran\c{c}aise, le profit d'ailleurs.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{\color{ModeVert}PILIER 3 --- La vision int\'{e}gr\'{e}e}
+
+\begin{center}
+\begin{tikzpicture}[
+  node distance=1cm and 1.5cm,
+  vbox/.style={draw=ModeVert, rounded corners=2mm, fill=ModeVertBg, minimum height=1cm, minimum width=3cm, align=center, font=\small\bfseries},
+  arrow/.style={-{Stealth[length=2.5mm]}, thick, color=ModeVert!70},
+]
+\node[vbox, text width=2.5cm] (algues) {Algues\\(mer)};
+\node[vbox, text width=2.5cm, right=of algues] (chanvre) {Chanvre\\(terre)};
+\node[vbox, text width=2.5cm, below=of algues] (energie) {\'{E}nergie\\CH$_4$ + NH$_3$};
+\node[vbox, text width=2.5cm, below=of chanvre] (construction) {Construction\\carbone-n\'{e}gatif};
+\node[vbox, text width=3cm, below right=1cm and 0.3cm of energie, draw=ChapColor, fill=ChapColor!10] (souv) {\textbf{Souverainet\'{e}}\\alimentaire,\\\'{e}nerg\'{e}tique,\\industrielle};
+\node[vbox, text width=2.5cm, above right=0cm and 1.5cm of chanvre] (bio) {Bio-rem\'{e}diation\\d\'{e}pollution};
+
+\draw[arrow] (algues) -- (energie);
+\draw[arrow] (chanvre) -- (construction);
+\draw[arrow] (energie) -- (souv);
+\draw[arrow] (construction) -- (souv);
+\draw[arrow] (algues.east) -- (chanvre.west) node[midway, above, font=\tiny\itshape] {synergie};
+\draw[arrow] (algues.north east) -- (bio.west);
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}[nosep, label=\color{ModeVert}\ding{169}]
+  \item Les algues sont des \textbf{bio-rem\'{e}diateurs} : elles fixent les m\'{e}taux lourds, absorbent le CO$_2$, d\'{e}gradent certains polluants.
+  \item \textbf{Nodules polym\'{e}talliques} dans la ZEE fran\c{c}aise : mati\`{e}res premi\`{e}res strat\'{e}giques pour les batteries et l'\'{e}lectronique.
+  \item Une fili\`{e}re int\'{e}gr\'{e}e algues--chanvre--m\'{e}thane--ammoniac cr\'{e}e un \textbf{cercle vertueux} : \'{e}nergie, mat\'{e}riaux, d\'{e}pollution, emplois, souverainet\'{e}.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{CITATIONS :}
+\begin{itemize}[nosep, font=\itshape]
+  \item <<~Les idiots apprennent de leur exp\'{e}rience. Les gens intelligents apprennent de l'exp\'{e}rience des autres.~>> --- Bismarck
+\end{itemize}
+
+\begin{contrearg}
+\textbf{<<\,C'est un r\^{e}ve de grandeur d\'{e}connect\'{e}~>>}\\
+$\rightarrow$ Venise \'{e}tait un r\^{e}ve b\^{a}ti sur la boue. Le Canal de Suez \'{e}tait un r\^{e}ve b\^{a}ti sur le sable. La diff\'{e}rence entre un r\^{e}ve et un plan, c'est un tableur Excel et de la volont\'{e} politique.
+
+\textbf{<<\,La France n'a plus les moyens de ses ambitions~>>}\\
+$\rightarrow$ Elle a 3\,300 milliards de dette pour \textbf{rien}. 300 milliards pour la souverainet\'{e} \'{e}nerg\'{e}tique, c'est le meilleur investissement de l'histoire de France.
+\end{contrearg}
+
+\begin{anglemort}
+Le lyrisme peut agacer un public technique. Toujours avoir les \textbf{chiffres du mode Jaune} en r\'{e}serve pour ancrer la vision dans le concret d\`{e}s qu'on sent le scepticisme.
+\end{anglemort}
+
+\vspace{0.3cm}
+\textbf{\color{ModeVert}PHRASE DE CL\^{O}TURE :}\\
+\textbf{\textcolor{ModeVert}{<<~Venise a b\^{a}ti un empire depuis un mar\'{e}cage. Ferdinand de Lesseps a coup\'{e} un continent en deux. Colbert a plant\'{e} du chanvre pour conqu\'{e}rir les oc\'{e}ans. La France a 11\,millions de km$^2$ de mer et une dette de 3\,300\,milliards pour rien. L'histoire nous jugera : avions-nous les moyens, ou nous manquait-il le courage\,?~>>}}
+
+\end{fichevert}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FICHE 5 : BLEU SOCRATIQUE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{fichebleu}{Ma\"{\i}eutique --- les questions qui d\'{e}truisent les certitudes}
+
+\textbf{OBJECTIF :} Ne rien affirmer. Tout questionner. Amener l'adversaire \`{a} d\'{e}couvrir lui-m\^{e}me les failles de ses propres arguments. Le public doit quitter le d\'{e}bat avec des \textbf{doutes f\'{e}conds}.
+
+\textbf{STRAT\'{E}GIE RH\'{E}TORIQUE :} Ma\"{\i}eutique socratique pure. Questions enchaîn\'{e}es. Jamais d'affirmation --- uniquement des interrogations qui forcent la r\'{e}flexion. Ton calme, curieux, presque na\"{\i}f.
+
+\rule{\textwidth}{0.3pt}
+
+\textbf{\color{ModeBleu}TH\`{E}SE EXPRESS :}\\
+Je ne vais rien affirmer. Je vais poser des questions. Si les r\'{e}ponses vous d\'{e}rangent, ce n'est pas ma faute --- c'est celle de la r\'{e}alit\'{e}.
+
+\vspace{0.3cm}
+\textbf{\color{ModeBleu}PILIER 1 --- Questions sur la neutralit\'{e} scientifique}
+
+\begin{itemize}[nosep, label=\color{ModeBleu}\ding{46}]
+  \item <<\,Vous dites que la science est neutre. Pouvez-vous me citer une \'{e}tude majeure qui n'a \'{e}t\'{e} financ\'{e}e par personne\,?~>>
+  \item <<\,Si l'industrie sucri\`{e}re a pu acheter des publications dans le JAMA pendant 50\,ans, qu'est-ce qui vous garantit que ce n'est pas le cas aujourd'hui\,?~>>
+  \item <<\,Bernays a pay\'{e} des m\'{e}decins pour dire que fumer \'{e}tait sain. Il a pay\'{e} des m\'{e}decins pour vendre du bacon. Quand exactement la m\'{e}thode a-t-elle cess\'{e} de fonctionner\,?~>>
+  \item <<\,Le 6\textsuperscript{e} probl\`{e}me de Hilbert demande : peut-on axiomatiser la physique\,? Il est pos\'{e} depuis 1900 et non r\'{e}solu. Sur quoi \emph{exactement} repose votre certitude\,?~>>
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{\color{ModeBleu}PILIER 2 --- Questions sur le rationnement}
+
+\begin{itemize}[nosep, label=\color{ModeBleu}\ding{46}]
+  \item <<\,La France a 11\,millions de km$^2$ de zone maritime. Pouvez-vous m'expliquer pourquoi on parle de <<\,ressources limit\'{e}es\,>>\,?~>>
+  \item <<\,La Cor\'{e}e du Sud, avec 300\,000\,km$^2$ de mer, est leader mondial en culture d'algues. La France en a 36 fois plus. Pourquoi ne le fait-elle pas\,?~>>
+  \item <<\,Il faudrait 4\,000 m\'{e}thaniers pour remplacer le gaz russe par du GNL am\'{e}ricain. Ou 0{,}5\,\% de notre mer. Quelle option vous semble la plus rationnelle\,?~>>
+  \item <<\,Le Qatar a soutenu la d\'{e}stabilisation de la Syrie pour faire passer son gazoduc vers l'Europe. Si nous produisions notre propre gaz, ces guerres auraient-elles encore lieu\,?~>>
+  \item <<\,On vous dit de manger 5\,g de microplastiques par semaine. On vous dit de r\'{e}duire votre empreinte. Mais qui vous dit comment \emph{nettoyer}\,? Les algues fixent les m\'{e}taux lourds et d\'{e}gradent certains plastiques. Pourquoi n'en parle-t-on pas\,?~>>
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{\color{ModeBleu}PILIER 3 --- Questions sur l'alternative}
+
+\begin{itemize}[nosep, label=\color{ModeBleu}\ding{46}]
+  \item <<\,200 \`{a} 400\,milliards d'investissement pour la souverainet\'{e} \'{e}nerg\'{e}tique, contre 3\,300\,milliards de dette accumul\'{e}e. Lequel de ces deux chiffres vous semble le plus irresponsable\,?~>>
+  \item <<\,30\,\% des \'{e}missions de CO$_2$ mondiales viennent de la construction. Le chanvre est carbone-n\'{e}gatif. Colbert l'encourageait d\'{e}j\`{a} pour la marine. Pourquoi l'a-t-on abandonn\'{e}\,?~>>
+  \item <<\,L'ammoniac est un carburant naval z\'{e}ro-carbone connu depuis 20\,ans. Combien de conf\'{e}rences COP faut-il pour le d\'{e}couvrir\,?~>>
+  \item <<\,CRISPR-Cas9 : la France a contribu\'{e} \`{a} la d\'{e}couverte, les Am\'{e}ricains d\'{e}tiennent les brevets. Est-ce un probl\`{e}me de science ou un probl\`{e}me de strat\'{e}gie\,?~>>
+\end{itemize}
+
+\vspace{0.3cm}
+
+% Diagramme : cha\^{i}ne de questions
+\begin{center}
+\begin{tikzpicture}[
+  qbox/.style={draw=ModeBleu, rounded corners=2mm, fill=ModeBleuBg, minimum height=0.9cm, text width=4cm, align=center, font=\footnotesize},
+  arrow/.style={-{Stealth[length=2.5mm]}, thick, color=ModeBleu!70},
+]
+\node[qbox] (q1) {Qui finance\\la recherche\,?};
+\node[qbox, right=1cm of q1] (q2) {Quelles sont\\les hypoth\`{e}ses\,?};
+\node[qbox, right=1cm of q2] (q3) {Qui profite\\des conclusions\,?};
+\node[qbox, below=0.8cm of q2, draw=ModeRouge, fill=ModeRougeBg!50, text width=5cm] (q4) {\textbf{Est-ce de la science\\ou de la politique\,?}};
+\draw[arrow] (q1) -- (q2);
+\draw[arrow] (q2) -- (q3);
+\draw[arrow] (q2) -- (q4);
+\draw[arrow] (q1.south) -- ++(0,-0.3) -| (q4.west);
+\draw[arrow] (q3.south) -- ++(0,-0.3) -| (q4.east);
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.3cm}
+\textbf{CITATIONS :}
+\begin{itemize}[nosep, font=\itshape]
+  \item <<~La plus belle des ruses du diable est de vous persuader qu'il n'existe pas.~>> --- Baudelaire
+  \item <<~Il n'y a qu'un seul homme de trop sur terre, c'est Monsieur Malthus.~>> --- Proudhon
+\end{itemize}
+
+\begin{contrearg}
+\textbf{<<\,Tu poses des questions mais tu n'apportes pas de r\'{e}ponses~>>}\\
+$\rightarrow$ <<\,Socrate non plus. Et pourtant, il a invent\'{e} la pens\'{e}e occidentale. La bonne question vaut mieux que la mauvaise r\'{e}ponse. Mais puisque vous insistez : 0{,}5\,\% de notre ZEE, 400\,milliards de m$^3$ de gaz. Voil\`{a} la r\'{e}ponse.\,>>
+
+\textbf{<<\,Tes questions sont orient\'{e}es~>>}\\
+$\rightarrow$ <<\,Toutes les questions sont orient\'{e}es. La diff\'{e}rence, c'est que les miennes attendent une r\'{e}ponse. Les v\^{o}tres attendent du silence.\,>>
+\end{contrearg}
+
+\begin{anglemort}
+Le mode socratique peut para\^{i}tre \textbf{passif-agressif} si les questions sont trop rh\'{e}toriques. Ins\'{e}rer des questions \textbf{sinc\`{e}rement ouvertes} (<<\,je ne sais pas, aidez-moi \`{a} comprendre\,>>) pour maintenir la posture de curiosit\'{e} authentique.
+\end{anglemort}
+
+\vspace{0.3cm}
+\textbf{\color{ModeBleu}PHRASE DE CL\^{O}TURE :}\\
+\textbf{\textcolor{ModeBleu}{<<~Je n'ai rien affirm\'{e} ce soir. J'ai pos\'{e} des questions. Si ces questions vous ont d\'{e}rang\'{e}, demandez-vous pourquoi. Baudelaire disait que la plus belle ruse du diable est de vous persuader qu'il n'existe pas. La plus belle ruse du rationnement, c'est de vous persuader que l'abondance est impossible. Elle est sous vos pieds. \`{A} 11\,millions de km$^2$.~>>}}
+
+\end{fichebleu}
+
+\vspace{1cm}
+
+% ========== R\'{E}F\'{E}RENCES ==========
+\begin{center}
+\rule{12cm}{0.5pt}
+\end{center}
+
+\section*{Sources et r\'{e}f\'{e}rences}
+\begin{itemize}[nosep, font=\small]
+  \item Edward Bernays, \textit{Propaganda} (1928)
+  \item Kearns, Schmidt \& Glantz, <<\,Sugar Industry and Coronary Heart Disease Research\,>>, \textit{JAMA Internal Medicine} (2016)
+  \item Neil Ferguson \textit{et al.}, <<\,Impact of non-pharmaceutical interventions\,>>, Imperial College COVID-19 Response Team (2020)
+  \item David Hilbert, <<\,Mathematical Problems\,>>, ICM Paris (1900), Probl\`{e}me 6
+  \item FAO, <<\,The State of World Fisheries and Aquaculture\,>> (2024) --- donn\'{e}es algoculture mondiale
+  \item SHOM / IFREMER --- Donn\'{e}es ZEE fran\c{c}aise
+  \item Eurostat --- Consommation gaz naturel UE
+  \item WWF, <<\,No Plastic in Nature\,>> (2019) --- estimation microplastiques
+  \item Guy Ritchie, \textit{RocknRolla} (2008) --- sc\`{e}ne du paquet de cigarettes
+\end{itemize}
+
+\end{document}
