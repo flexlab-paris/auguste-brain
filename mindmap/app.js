@@ -183,6 +183,42 @@ const debates = [
         modes: ["rouge", "orange", "jaune", "vert", "bleu"],
         pdf_path: "fiches/sept-debats/sept-debats.pdf",
         suggestions: ["Lire The Precipice (Toby Ord)", "Suivre P(doom) et timelines AGI", "Etudier AI Safety Clock"]
+    },
+    {
+        id: "levee-friction",
+        titre: "Levee de Fonds — Friction Administrative France vs US",
+        these: "La friction juridico-administrative francaise protege les parties mais detruit la vitesse, condamnant les seeds a payer 5 a 10% du tour en intermediaires la ou les US standardisent a moins d'1%. La vraie revolution n'est pas moins de droit, mais du droit pre-emballe.",
+        faits_cles: [
+            "SAFE Y Combinator: closing en 24h pour ~5K USD vs France 15-30K EUR + 3 mois",
+            "5-10% du tour en frais juridiques en seed France vs <1% aux US",
+            "Commissaire aux avantages particuliers obligatoire si actions de preference",
+            "Suppression du DPS exige PV special + parfois rapport commissaire",
+            "Estonie: levee 100% en ligne via e-residency, registre numerique"
+        ],
+        sources_count: 8,
+        explored: true,
+        polarisation: { gauche_droite: -10, libertaire_autoritaire: -45, rationnel_emotionnel: 75, factuel_speculatif: 80 },
+        modes: ["rouge", "orange", "jaune", "vert", "bleu"],
+        pdf_path: null,
+        suggestions: ["Etudier le BSA-Air et son standard", "Comparer SEIS/EIS britannique", "Analyser le notaire allemand", "Mesurer cout reel d'une seed FR moyenne"]
+    },
+    {
+        id: "dilution-fondateur",
+        titre: "Dilution — Sacrifice ou Erreur Strategique ?",
+        these: "La dilution n'est ni vertu ni vice : c'est un outil mathematique. 70% d'une boite a 50M vaut infiniment plus que 100% d'une boite a 500K. Mais chaque pourcent cede l'est pour toujours, et les clauses asymetriques transforment souvent un fondateur majoritaire en spectateur.",
+        faits_cles: [
+            "Jeff Bezos: 16% d'Amazon au IPO, fortune massive grace au scale",
+            "Liquidation preference 1x non-participatif vs 2x participatif: ecart de 5M sur exit 30M",
+            "Bootstrapped exemples: Mailchimp vendu 12 Mds, Basecamp profitable, Patagonia rentable",
+            "Regle empirique: ne pas ceder >20% en seed, >25% en Series A",
+            "Anti-dilution full ratchet vs weighted average: difference de 10pts sur down round"
+        ],
+        sources_count: 6,
+        explored: true,
+        polarisation: { gauche_droite: -20, libertaire_autoritaire: -30, rationnel_emotionnel: 60, factuel_speculatif: 85 },
+        modes: ["rouge", "orange", "jaune", "vert", "bleu"],
+        pdf_path: null,
+        suggestions: ["Etudier cap tables Stripe, Airbnb, Figma", "Analyser drag-along et tag-along", "Comparer SAFE post-money vs pre-money"]
     }
 ];
 
@@ -250,6 +286,60 @@ const fichesContent = {
             these: "Qui a finance l'etude ? Quelles sont les hypotheses ? Quel est l'intervalle de confiance ?",
             stats: ["Si la science est neutre, pourquoi Ferguson n'a pas ete audite?", "Si les ressources sont limitees, pourquoi ignorer 11M km2 de ZEE?", "Si c'est utopique, pourquoi la Coree du Sud le fait deja?"],
             cloture: "La science appartient a tout le monde. C'est une methode, pas une eglise."
+        }
+    },
+    "levee-friction": {
+        rouge: {
+            these: "La France a invente un capitalisme de notaires. Pendant qu'un fondateur parisien remplit son 17e formulaire INPI, son concurrent californien a leve, embauche, et tue le marche.",
+            stats: ["SAFE YC: 24h, 5K USD vs FR: 3 mois, 30K EUR", "5 a 10% du tour englouti en juridique seed France", "Une seed FR moyenne mobilise le fondateur 200h en compliance"],
+            cloture: "Vous avez le droit d'aimer le droit. Vous n'avez pas le droit de tuer les entrepreneurs sous le poids du formulaire."
+        },
+        orange: {
+            these: "Le vrai cout d'une levee francaise n'est pas dans les honoraires d'avocats. Il est dans les semaines de cerveau fondateur drainees au lieu d'etre concentrees sur le produit, les clients, l'execution.",
+            stats: ["Temps fondateur = ressource la plus rare d'une startup", "100h en compliance = 100h non passees a vendre", "Aux US, le SAFE a industrialise le seed: cout marginal quasi nul"],
+            cloture: "On ne mesure pas la friction en euros. On la mesure en startups qui n'ont jamais leve parce que c'etait trop lourd."
+        },
+        jaune: {
+            these: "La protection juridique francaise est reelle. Elle a une valeur. Mais son cout marginal est devenu superieur a sa valeur marginale pour les tours sous 1 million d'euros.",
+            stats: ["Code de commerce: protections fortes minoritaires", "Delaware: standardisation NVCA, vitesse maximale", "BSA-Air FR existe mais 0 standardisation reelle"],
+            cloture: "Le bon arbitrage n'est pas friction vs vitesse. C'est friction calibree vs friction aveugle."
+        },
+        vert: {
+            these: "La France pourrait creer un SAFE national, un BSA-Air standardise, un greffe accelere pour les seeds. Pas moins de droit, mais du droit pre-emballe. C'est ce que YC a fait. C'est imitable.",
+            stats: ["UK SEIS: credit d'impot 50% pour BA, closing 4 a 6 semaines", "Estonie: levee 100% en ligne, e-residency, registre numerique", "Singapour: hub mondial, fiscalite startup-friendly, common law"],
+            cloture: "Si les Estoniens peuvent faire mieux que nous, la question n'est plus 'pouvons-nous?' mais 'pourquoi ne le faisons-nous pas?'"
+        },
+        bleu: {
+            these: "Si la friction protege, pourquoi les fondateurs les plus serieux choisissent-ils Delaware ? Si elle filtre les escrocs, pourquoi y a-t-il quand meme des fraudes ? Si elle institutionnalise, pourquoi rassure-t-elle si peu les LPs etrangers ?",
+            stats: ["50% des startups francaises Series B+ ont une holding US", "Les meilleurs avocats francais pretent le SAFE en interne", "0 deal seed francais ne ferme en moins de 4 semaines"],
+            cloture: "La friction est-elle une protection ou une rente d'intermediaires deguisee en garde-fou ?"
+        }
+    },
+    "dilution-fondateur": {
+        rouge: {
+            these: "On vous vend la dilution comme une elevation. On oublie de vous dire que les clauses asymetriques peuvent transformer votre majorite formelle en spectacle, et votre exit en disparition.",
+            stats: ["Liquidation preference 2x participating: fondateur peut sortir avec 0 sur exit 30M", "Drag-along: votre 60% peut etre force a vendre par vos 40%", "Anti-dilution full ratchet: down round = annihilation"],
+            cloture: "Le term sheet, ce n'est pas un contrat. C'est un piege en costume."
+        },
+        orange: {
+            these: "Le bon question n'est pas combien tu cedes, mais a qui et avec quelles clauses. Un partner premium a 25% vaut mieux qu'un fonds mediocre a 15%.",
+            stats: ["Top-tier VCs apportent 3 a 10x leur cheque en reseau/credibilite", "Mais 80% des fonds VCs sous-performent l'index public", "Le mauvais investisseur peut detruire en 6 mois 5 ans de travail"],
+            cloture: "Ne demande pas 'combien je dilue?' Demande 'qui suis-je en train d'inviter dans mon mariage?'"
+        },
+        jaune: {
+            these: "La dilution est une operation mathematique. 70% d'une boite a 50M vaut infiniment plus que 100% d'une boite a 500K. Mais cela suppose que la boite scale -- ce qui n'est ni automatique ni garanti.",
+            stats: ["Bezos: 16% Amazon IPO, fortune massive grace au scale", "Mailchimp bootstrapped: 12 Mds USD a la sortie", "Regle empirique: <20% par tour seed, <25% Series A"],
+            cloture: "Diluer pour scale = noble. Diluer pour exister = parfois necessaire. Diluer pour exhiber un term sheet = faute."
+        },
+        vert: {
+            these: "Le vrai capital n'est pas l'argent. C'est le couple capital + reseau + gouvernance. Le bon investisseur transforme une boite. Le mauvais la fossilise.",
+            stats: ["Sequoia, Benchmark, Accel: ratio de transformation x10 vs cheque moyen", "Stripe a Sequoia 2010 = inflexion definitive", "Pacte fondateur blinde = condition non-negociable"],
+            cloture: "Le meilleur investisseur n'est pas celui qui paie le plus cher. C'est celui qui rend ton aventure inevitable."
+        },
+        bleu: {
+            these: "Si la dilution etait sans cout, pourquoi tant de fondateurs regrettent-ils leur premier tour ? Si les VCs creaient toujours de la valeur, pourquoi 80% des fonds sous-performent ? Si bootstrap etait inferieur, pourquoi Mailchimp, Patagonia, Basecamp ?",
+            stats: ["80% des VCs sous-performent l'index public", "Le regret #1 des fondateurs: 'leve trop tot, dilue trop fort'", "Bootstrapped exits >100M: rarement evoques, souvent superieurs"],
+            cloture: "Avant de dire 'je dois lever', as-tu serieusement etudie pourquoi tu pourrais ne pas lever ?"
         }
     },
     "masculinite-feminisme": {
