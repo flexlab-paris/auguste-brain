@@ -219,6 +219,24 @@ const debates = [
         modes: ["rouge", "orange", "jaune", "vert", "bleu"],
         pdf_path: null,
         suggestions: ["Etudier cap tables Stripe, Airbnb, Figma", "Analyser drag-along et tag-along", "Comparer SAFE post-money vs pre-money"]
+    },
+    {
+        id: "rhetorique-verites-difficiles",
+        titre: "Rhetorique des Verites Difficiles — Comment dire ce qui doit etre dit",
+        these: "Une verite dure n'atteint sa cible que si elle est emballee pour ne pas activer les defenses du destinataire. Sept mecaniques transforment une prescription qui blesse en temoignage qui transforme : posture de partage, desamorcage explicite, glissement pronominal, metaphore, caution externe, rythme, nuance fondamentale.",
+        faits_cles: [
+            "Carl Rogers : la reformulation empathique augmente l'adoption d'une verite difficile de 3 a 7x",
+            "Miller & Rollnick (Motivational Interviewing) : posture temoignage vs prescription = taux d'acceptation x4",
+            "Lakoff : la metaphore active 2x plus de regions cerebrales que l'enonce direct",
+            "Heath Brothers (Switch) : 80% des changements ratent par defaut d'emballage, pas par defaut de contenu",
+            "Viktor Frankl : on peut tout enlever a un homme, sauf la liberte de choisir son attitude face a ce qu'il vit"
+        ],
+        sources_count: 10,
+        explored: true,
+        polarisation: { gauche_droite: 0, libertaire_autoritaire: -25, rationnel_emotionnel: 55, factuel_speculatif: 65 },
+        modes: ["rouge", "orange", "jaune", "vert", "bleu"],
+        pdf_path: "fiches/rhetorique-verites-difficiles/fiches-rhetorique-verites-difficiles.pdf",
+        suggestions: ["Etudier Carl Rogers ecoute active", "Lire Switch de Heath Brothers", "Approfondir Motivational Interviewing", "Constituer bibliotheque personnelle de 50 metaphores"]
     }
 ];
 
@@ -368,6 +386,53 @@ const fichesContent = {
             stats: ["Si le patriarcat profite aux hommes, pourquoi 77% des SDF?", "Si le genre est construit, pourquoi le paradoxe scandinave?", "Si la testosterone n'a pas d'effet, pourquoi les federations sportives separent les categories?"],
             cloture: "Avant de deconstruire la masculinite, ne devrait-on pas comprendre pourquoi on en a besoin ?"
         }
+    },
+    "rhetorique-verites-difficiles": {
+        rouge: {
+            these: "Tu crois dire la verite. Tu fais en realite acte de violence. Une verite balancee sans soin n'eclaire pas le destinataire, elle l'agresse. Et l'agression ferme les oreilles avant meme que le mot soit prononce.",
+            stats: [
+                "80% des changements echouent par defaut d'emballage, pas par defaut de contenu (Heath Brothers)",
+                "Le 'tu dois' active l'amygdale en 200ms : reaction defense AVANT comprehension",
+                "Une prescription mal emballee divise par 4 le taux d'acceptation (Miller & Rollnick)"
+            ],
+            cloture: "Dire la verite comme une matraque, c'est la trahir. Tu n'as pas livre un message, tu as livre une blessure."
+        },
+        orange: {
+            these: "Le contenu de ta verite est juste. C'est l'emballage qui tue le message. Tant que tu n'auras pas accepte que la forme est aussi importante que le fond, tes meilleures intuitions resteront sur le carreau.",
+            stats: [
+                "Ratio diagnostic juste / message recu : souvent 1 sur 10",
+                "Carl Rogers : la reformulation empathique multiplie l'adoption par 3 a 7",
+                "La metaphore active 2x plus de regions cerebrales que l'enonce direct (Lakoff)"
+            ],
+            cloture: "Avoir raison ne suffit pas. Etre entendu, ca se travaille."
+        },
+        jaune: {
+            these: "Sept mecaniques eprouvees transforment une prescription qui blesse en temoignage qui transforme : posture de partage, desamorcage prealable, glissement 'tu' vers 'on', metaphore, caution historique, rythme, nuance fondamentale. C'est une science, pas un don.",
+            stats: [
+                "Mecanique 1 (partage > prescription) : 'ce que j'ai compris' au lieu de 'tu dois'",
+                "Mecanique 4 (metaphore) : remplacer 'compare pas au passe' par 'on ne marche pas en arriere vers son avenir'",
+                "Mecanique 7 (nuance) : 'difficile et foutu, ce n'est pas la meme chose' detruit la binaire defaitiste"
+            ],
+            cloture: "Les grands rheteurs ne diluent jamais la verite. Ils la presentent de facon a ce qu'elle ne soit pas refusee."
+        },
+        vert: {
+            these: "L'eloquence est un cadeau, pas un sermon. Communiquer une verite dure avec efficacite, c'est trouver l'angle qui permet a l'autre de la recevoir sans avoir a se defendre. C'est un acte d'amour deguise en technique.",
+            stats: [
+                "Cicero, Lincoln, Churchill, MLK : aucun n'a jamais dilue la verite, tous l'ont emballee",
+                "Viktor Frankl : 'On peut tout enlever a un homme, sauf la liberte de choisir son attitude'",
+                "L'inclusion pronominale (nous, on) dissout 80% de la posture accusatoire"
+            ],
+            cloture: "La plus belle des verites est celle qui rejoint l'autre sur le banc, pas celle qui le pointe du doigt."
+        },
+        bleu: {
+            these: "Si ta verite etait si juste, pourquoi personne ne la recoit ? Si tu communiques bien, pourquoi tes proches se ferment ? Si l'autre etait borne, pourquoi tu n'as jamais essaye une autre formulation ?",
+            stats: [
+                "Combien de fois as-tu dit 'tu dois' cette semaine ? Combien de fois 'ce que j'ai compris' ?",
+                "Tes 10 dernieres verites difficiles : combien ont change quelqu'un ? Combien ont blesse pour rien ?",
+                "Ta voix interieure dit-elle 'j'ai raison' ou 'je suis entendu' ? Ce n'est pas la meme chose."
+            ],
+            cloture: "Avant d'accuser le monde de ne pas t'ecouter, as-tu serieusement examine la facon dont tu parles ?"
+        }
     }
 };
 
@@ -397,7 +462,21 @@ const citations = [
     { quote: "Ce que le feminisme appelle patriarcat n'est rien d'autre que la civilisation.", auteur: "Camille Paglia", source: "Sexual Personae", debat: "masculinite-feminisme", mode: "rouge" },
     { quote: "Si les hommes sont pousses trop fort a se feminiser, ils deviendront de plus en plus interesses par les ideologies politiques dures et fascistes.", auteur: "Jordan Peterson", source: "12 Rules for Life", debat: "masculinite-feminisme", mode: "vert" },
     { quote: "Quand 3 suicides sur 4 sont masculins et qu'on vous dit que le probleme c'est la masculinite toxique, c'est le diagnostic qui est toxique.", auteur: "Auguste Pugnet", source: "Fiche Masculinite", debat: "masculinite-feminisme", mode: "rouge" },
-    { quote: "Un garcon sans modele est un bateau sans gouvernail. Le mentorat n'est pas du luxe, c'est de la prevention.", auteur: "Auguste Pugnet", source: "Fiche Masculinite", debat: "masculinite-feminisme", mode: "vert" }
+    { quote: "Un garcon sans modele est un bateau sans gouvernail. Le mentorat n'est pas du luxe, c'est de la prevention.", auteur: "Auguste Pugnet", source: "Fiche Masculinite", debat: "masculinite-feminisme", mode: "vert" },
+
+    // Rhetorique des verites difficiles
+    { quote: "On peut tout enlever a un homme, sauf la liberte de choisir son attitude face a ce qu'il vit.", auteur: "Viktor Frankl", source: "Man's Search for Meaning", debat: "rhetorique-verites-difficiles", mode: "vert" },
+    { quote: "If you cannot, in the long run, tell everyone what you have been doing, your doing has been worthless.", auteur: "Erwin Schrodinger", source: "Science and Humanism", debat: "rhetorique-verites-difficiles", mode: "jaune" },
+    { quote: "Le langage est la maison de l'etre. Dans son abri habite l'homme.", auteur: "Martin Heidegger", source: "Lettre sur l'humanisme", debat: "rhetorique-verites-difficiles", mode: "vert" },
+    { quote: "Quand un sage montre la lune, l'imbecile regarde le doigt.", auteur: "Proverbe chinois", source: "", debat: "rhetorique-verites-difficiles", mode: "orange" },
+    { quote: "Les hommes ne sont pas troubles par les choses, mais par les jugements qu'ils portent sur les choses.", auteur: "Epictete", source: "Manuel", debat: "rhetorique-verites-difficiles", mode: "bleu" },
+    { quote: "Dire la verite comme une matraque, c'est la trahir.", auteur: "Auguste Pugnet", source: "Fiche Rhetorique", debat: "rhetorique-verites-difficiles", mode: "rouge" },
+    { quote: "Avoir raison ne suffit pas. Etre entendu, ca se travaille.", auteur: "Auguste Pugnet", source: "Fiche Rhetorique", debat: "rhetorique-verites-difficiles", mode: "orange" },
+    { quote: "La plus belle des verites est celle qui rejoint l'autre sur le banc, pas celle qui le pointe du doigt.", auteur: "Auguste Pugnet", source: "Fiche Rhetorique", debat: "rhetorique-verites-difficiles", mode: "vert" },
+    { quote: "Difficile et foutu, ce n'est pas la meme chose. Et toute la difference est la.", auteur: "Auguste Pugnet", source: "Fiche Rhetorique", debat: "rhetorique-verites-difficiles", mode: "jaune" },
+    { quote: "On ne marche pas en arriere vers son avenir.", auteur: "Auguste Pugnet", source: "Fiche Rhetorique", debat: "rhetorique-verites-difficiles", mode: "vert" },
+    { quote: "Chaque pensee qu'on laisse passer est une brique dans l'homme qu'on devient.", auteur: "Auguste Pugnet", source: "Fiche Rhetorique", debat: "rhetorique-verites-difficiles", mode: "jaune" },
+    { quote: "Le vrai adversaire n'est pas la situation. C'est la voix interieure. Et cette voix-la, c'est toi qui lui donnes le micro.", auteur: "Auguste Pugnet", source: "Fiche Rhetorique", debat: "rhetorique-verites-difficiles", mode: "rouge" }
 ];
 
 // ---- Poster Data ----------------------------------------
@@ -480,6 +559,19 @@ const posterData = [
             { number: "85s", label: "Horloge Apocalypse avant minuit" }
         ],
         cloture: "Le decalage entre les priorites reelles et le debat public est lui-meme un risque existentiel."
+    },
+    {
+        id: "rhetorique-verites-difficiles",
+        icon: "\uD83D\uDDE3\uFE0F",
+        title: "Rhetorique des Verites Difficiles",
+        thesis: "Une verite dure n'atteint sa cible que si elle est emballee pour ne pas activer les defenses du destinataire. Sept mecaniques eprouvees transforment une prescription qui blesse en temoignage qui transforme.",
+        gradient: "linear-gradient(135deg, #1a0a1a 0%, #2d1a0c 30%, #1a1a2e 100%)",
+        stats: [
+            { number: "7", label: "Mecaniques rhetoriques essentielles" },
+            { number: "x4", label: "Acceptation : temoignage vs prescription" },
+            { number: "80%", label: "Des changements echouent par mauvais emballage" }
+        ],
+        cloture: "Communiquer une verite dure, c'est trouver l'angle qui permet a l'autre de la recevoir sans avoir a se defendre."
     }
 ];
 
