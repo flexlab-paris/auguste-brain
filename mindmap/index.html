@@ -3,133 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auguste Brain — Carte des Debats</title>
+    <title>Auguste Brain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header id="header">
-        <div class="header-left">
-            <h1>Auguste Brain</h1>
-            <p class="subtitle">Carte des Debats</p>
-        </div>
-        <div class="header-center" id="polarisation-dashboard">
-            <div class="gauge-row">
-                <div class="gauge" data-axis="gauche_droite">
-                    <span class="gauge-label-left">Gauche</span>
-                    <div class="gauge-bar"><div class="gauge-fill" id="gauge-gd"></div><div class="gauge-marker" id="marker-gd"></div></div>
-                    <span class="gauge-label-right">Droite</span>
-                </div>
-                <div class="gauge" data-axis="libertaire_autoritaire">
-                    <span class="gauge-label-left">Libertaire</span>
-                    <div class="gauge-bar"><div class="gauge-fill" id="gauge-la"></div><div class="gauge-marker" id="marker-la"></div></div>
-                    <span class="gauge-label-right">Autoritaire</span>
-                </div>
-                <div class="gauge" data-axis="rationnel_emotionnel">
-                    <span class="gauge-label-left">Rationnel</span>
-                    <div class="gauge-bar"><div class="gauge-fill" id="gauge-re"></div><div class="gauge-marker" id="marker-re"></div></div>
-                    <span class="gauge-label-right">Emotionnel</span>
-                </div>
-                <div class="gauge" data-axis="factuel_speculatif">
-                    <span class="gauge-label-left">Factuel</span>
-                    <div class="gauge-bar"><div class="gauge-fill" id="gauge-fs"></div><div class="gauge-marker" id="marker-fs"></div></div>
-                    <span class="gauge-label-right">Speculatif</span>
-                </div>
+
+<div id="shell">
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-mark">AB</div>
+            <div class="brand-text">
+                <h1 class="brand-title">Auguste Brain</h1>
+                <p class="brand-sub">Carte des débats</p>
             </div>
         </div>
-        <div class="header-right">
-            <div class="objectivity-score">
-                <div class="score-circle" id="objectivity-circle">
+
+        <nav class="sidebar-nav">
+            <p class="nav-label">Explorer</p>
+            <button class="nav-btn tab-btn active" data-tab="carte">
+                <span class="nav-icon">◐</span>
+                <span class="nav-text">Carte</span>
+            </button>
+            <button class="nav-btn tab-btn" data-tab="fiches">
+                <span class="nav-icon">▤</span>
+                <span class="nav-text">Fiches</span>
+            </button>
+            <button class="nav-btn tab-btn" data-tab="citations">
+                <span class="nav-icon">❝</span>
+                <span class="nav-text">Citations</span>
+            </button>
+            <button class="nav-btn tab-btn" data-tab="posters">
+                <span class="nav-icon">◫</span>
+                <span class="nav-text">Posters</span>
+            </button>
+
+            <p class="nav-label">Corpus</p>
+            <button class="nav-btn tab-btn" data-tab="andrew-tate">
+                <span class="nav-icon">✦</span>
+                <span class="nav-text">Andrew Tate</span>
+                <span class="nav-badge">8</span>
+            </button>
+            <button class="nav-btn tab-btn" data-tab="apprentissage">
+                <span class="nav-icon">✎</span>
+                <span class="nav-text">Apprentissage</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="https://auguste-brain.vercel.app" class="footer-link">auguste-brain.vercel.app</a>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main id="main">
+
+        <!-- Page header (contextual) -->
+        <header id="page-header">
+            <div class="page-header-left">
+                <p class="page-eyebrow" id="page-eyebrow">Exploration</p>
+                <h2 class="page-title" id="page-title">Carte des débats</h2>
+            </div>
+            <div class="page-header-right">
+                <button class="header-action" id="btn-search" title="Rechercher">⌕</button>
+                <button class="header-action" id="btn-info" title="Légende">ⓘ</button>
+            </div>
+        </header>
+
+        <!-- Rhetorical modes legend (collapsible) -->
+        <div id="legend-strip">
+            <span class="legend-label">Modes rhétoriques</span>
+            <span class="legend-pill" data-mode="rouge"><span class="dot"></span>Abrasif</span>
+            <span class="legend-pill" data-mode="orange"><span class="dot"></span>Combatif</span>
+            <span class="legend-pill" data-mode="jaune"><span class="dot"></span>Persuasif</span>
+            <span class="legend-pill" data-mode="vert"><span class="dot"></span>Inspirant</span>
+            <span class="legend-pill" data-mode="bleu"><span class="dot"></span>Socratique</span>
+        </div>
+
+        <!-- Tab Panels -->
+        <div id="tab-panels">
+
+            <!-- Tab 1: Carte D3 -->
+            <div class="tab-panel active" id="panel-carte">
+                <div id="graph-container">
+                    <svg id="graph"></svg>
+                </div>
+            </div>
+
+            <!-- Tab 2: Fiches -->
+            <div class="tab-panel" id="panel-fiches">
+                <div class="panel-inner">
+                    <div class="fiches-grid" id="fiches-grid"></div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Citations -->
+            <div class="tab-panel" id="panel-citations">
+                <div class="panel-inner">
+                    <div class="citations-header">
+                        <input type="text" id="citations-search" placeholder="Rechercher une citation, un auteur, un débat…" />
+                    </div>
+                    <div class="citations-grid" id="citations-grid"></div>
+                </div>
+            </div>
+
+            <!-- Tab 4: Posters -->
+            <div class="tab-panel" id="panel-posters">
+                <div class="panel-inner">
+                    <div class="posters-grid" id="posters-grid"></div>
+                </div>
+            </div>
+
+            <!-- Tab 5: Andrew Tate -->
+            <div class="tab-panel" id="panel-andrew-tate">
+                <div class="panel-inner">
+                    <div class="tate-hero">
+                        <p class="hero-eyebrow">Corpus d'étude — rhétorique</p>
+                        <h1 class="hero-title">Andrew Tate — Décomposition profonde</h1>
+                        <p class="hero-lead">Huit vidéos analysées. Chaque fiche : résumé exécutif, cours en 8-12 leçons, structure narrative, 15-30 points-clés avec citations, recueil de quotes classées, analyse rhétorique complète, exemples & analogies, frameworks opérationnels, drills, limites critiques.</p>
+                    </div>
+                    <div class="tate-grid" id="tate-grid"></div>
+                </div>
+            </div>
+
+            <!-- Tab 6: Apprentissage -->
+            <div class="tab-panel" id="panel-apprentissage">
+                <div class="learning-shell">
+                    <aside class="learning-sidebar">
+                        <p class="learning-sidebar-label">Modules</p>
+                        <button class="learning-nav-btn active" data-module="dankoe-1day">Dan Koe — Fix your life in 1 day</button>
+                        <button class="learning-nav-btn" data-module="dankoe-human3">Dan Koe — HUMAN 3.0</button>
+                        <button class="learning-nav-btn" data-module="tate-patterns">Andrew Tate — Patterns rhétoriques</button>
+                        <button class="learning-nav-btn" data-module="tate-drills">Andrew Tate — Drills de réécriture</button>
+                    </aside>
+                    <main class="learning-content" id="learning-content"></main>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</div>
+
+<!-- ==================== DETAIL PANEL (debate deep dive) ==================== -->
+<div id="detail-panel" class="panel-hidden">
+    <button id="panel-close" aria-label="Fermer">×</button>
+
+    <div class="detail-hero">
+        <p class="detail-eyebrow">Débat</p>
+        <h2 id="panel-title"></h2>
+    </div>
+
+    <div class="detail-section">
+        <p class="section-label">Thèse principale</p>
+        <p id="panel-thesis" class="detail-thesis"></p>
+    </div>
+
+    <div class="detail-section">
+        <p class="section-label">Polarisation</p>
+        <div class="polarisation-block">
+            <div class="gauge-line" data-axis="gauche_droite">
+                <span class="axis-label-left">Gauche</span>
+                <div class="axis-bar"><div class="axis-fill" id="gauge-gd"></div><div class="axis-marker" id="marker-gd"></div></div>
+                <span class="axis-label-right">Droite</span>
+            </div>
+            <div class="gauge-line" data-axis="libertaire_autoritaire">
+                <span class="axis-label-left">Libertaire</span>
+                <div class="axis-bar"><div class="axis-fill" id="gauge-la"></div><div class="axis-marker" id="marker-la"></div></div>
+                <span class="axis-label-right">Autoritaire</span>
+            </div>
+            <div class="gauge-line" data-axis="rationnel_emotionnel">
+                <span class="axis-label-left">Rationnel</span>
+                <div class="axis-bar"><div class="axis-fill" id="gauge-re"></div><div class="axis-marker" id="marker-re"></div></div>
+                <span class="axis-label-right">Émotionnel</span>
+            </div>
+            <div class="gauge-line" data-axis="factuel_speculatif">
+                <span class="axis-label-left">Factuel</span>
+                <div class="axis-bar"><div class="axis-fill" id="gauge-fs"></div><div class="axis-marker" id="marker-fs"></div></div>
+                <span class="axis-label-right">Spéculatif</span>
+            </div>
+            <div class="objectivity-line">
+                <div class="score-mini">
                     <svg viewBox="0 0 120 120">
                         <circle class="score-bg" cx="60" cy="60" r="52" />
                         <circle class="score-fg" id="score-arc" cx="60" cy="60" r="52" />
                     </svg>
-                    <span class="score-value" id="objectivity-value">--</span>
+                    <span class="score-num" id="objectivity-value">--</span>
                 </div>
-                <span class="score-label">Objectivite</span>
+                <div class="objectivity-text">
+                    <p class="obj-label">Score d'objectivité</p>
+                    <p class="obj-desc">Position moyenne sur les 4 axes de polarisation</p>
+                </div>
             </div>
-        </div>
-    </header>
-
-    <!-- Legend -->
-    <div id="legend">
-        <span class="legend-title">Modes rhetoriques :</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#DC143C"></span>Abrasif</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#FF8C00"></span>Combatif</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#DAA520"></span>Persuasif</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#228B22"></span>Inspirant</span>
-        <span class="legend-item"><span class="legend-dot" style="background:#4169E1"></span>Socratique</span>
-    </div>
-
-    <!-- Tab Navigation -->
-    <nav id="tab-bar">
-        <button class="tab-btn active" data-tab="carte">Carte</button>
-        <button class="tab-btn" data-tab="fiches">Fiches</button>
-        <button class="tab-btn" data-tab="citations">Citations</button>
-        <button class="tab-btn" data-tab="posters">Posters</button>
-    </nav>
-
-    <!-- Tab Panels -->
-    <div id="tab-panels">
-        <!-- Tab 1: Carte (existing mindmap) -->
-        <div class="tab-panel active" id="panel-carte">
-            <div id="graph-container">
-                <svg id="graph"></svg>
-            </div>
-        </div>
-
-        <!-- Tab 2: Fiches -->
-        <div class="tab-panel" id="panel-fiches">
-            <div class="fiches-grid" id="fiches-grid"></div>
-        </div>
-
-        <!-- Tab 3: Citations -->
-        <div class="tab-panel" id="panel-citations">
-            <div class="citations-header">
-                <input type="text" id="citations-search" placeholder="Rechercher une citation, un auteur, un debat..." />
-            </div>
-            <div class="citations-grid" id="citations-grid"></div>
-        </div>
-
-        <!-- Tab 4: Posters -->
-        <div class="tab-panel" id="panel-posters">
-            <div class="posters-grid" id="posters-grid"></div>
         </div>
     </div>
 
-    <!-- Detail panel -->
-    <div id="detail-panel" class="panel-hidden">
-        <button id="panel-close">&times;</button>
-        <h2 id="panel-title"></h2>
-        <div class="panel-section">
-            <h3>These principale</h3>
-            <p id="panel-thesis"></p>
-        </div>
-        <div class="panel-section">
-            <h3>Chiffres cles</h3>
-            <ul id="panel-facts"></ul>
-        </div>
-        <div class="panel-section">
-            <h3>Polarisation</h3>
-            <div class="radar-container">
-                <canvas id="radar-chart" width="280" height="280"></canvas>
-            </div>
-        </div>
-        <div class="panel-section">
-            <h3>Fiche PDF</h3>
-            <a id="panel-pdf" href="#" target="_blank" class="pdf-link">Telecharger la fiche</a>
-        </div>
-        <div class="panel-section">
-            <h3>Pistes a explorer</h3>
-            <ul id="panel-suggestions" class="suggestions-list"></ul>
+    <div class="detail-section">
+        <p class="section-label">Chiffres clés</p>
+        <ul id="panel-facts" class="facts-list"></ul>
+    </div>
+
+    <div class="detail-section">
+        <p class="section-label">Radar rhétorique</p>
+        <div class="radar-container">
+            <canvas id="radar-chart" width="280" height="280"></canvas>
         </div>
     </div>
 
-    <!-- Overlay for closing panel on outside click -->
-    <div id="overlay" class="overlay-hidden"></div>
+    <div class="detail-section">
+        <p class="section-label">Ressources</p>
+        <a id="panel-pdf" href="#" target="_blank" class="pdf-link">↓ Télécharger la fiche PDF</a>
+    </div>
 
-    <script src="app.js"></script>
+    <div class="detail-section">
+        <p class="section-label">Pistes à explorer</p>
+        <ul id="panel-suggestions" class="suggestions-list"></ul>
+    </div>
+</div>
+
+<div id="overlay" class="overlay-hidden"></div>
+
+<script src="app.js"></script>
+<script src="learning.js"></script>
+
+<script>
+// Andrew Tate corpus data + renderer (self-contained)
+const TATE_CORPUS = [
+    { id: "LFJAHZlizAg", slug: "never-tired-when-winning", title: "You're Never Tired When You're Winning", theme: "Fatigue, dépression, purpose, univers giving", tag: "NEW · DEEP", tag_type: "deep",
+      snippet: "Aphorisme d'ouverture, retournements en cascade sur la dépression, doctrine de l'univers giving." },
+    { id: "P4rkjwaa6so", slug: "tate-podcast-competition-money-purpose", title: "Compétition, Argent, Purpose (long-form)", theme: "100 % accountability, speed, network, argent, attention, trauma", tag: "NEW · DEEP", tag_type: "deep",
+      snippet: "18 mouvements, 28 concepts, 48 quotes, 10 frameworks. Interview long-format complète." },
+    { id: "h9wod4mPHZw", slug: "high-value-man", title: "How to Become a High Value Man", theme: "Diagnostic, meurtre du soi ancien, coda théologique", tag: "à upgrader", tag_type: "todo",
+      snippet: "Sermon motivationnel générique. Structure en 7 mouvements. 10 points-clés." },
+    { id: "KPbnzSGlAP4", slug: "version-qui-tattend", title: "The Version Of You That's Waiting", theme: "Version multiverse, discipline, guerre, mental aikido", tag: "à upgrader", tag_type: "todo",
+      snippet: "Multivers-self, discipline comme essence masculine, tout est guerre, mental aikido." },
+    { id: "AG1vvPVkHC8", slug: "AG1vvPVkHC8", title: "Don't Waste Your Life", theme: "Pression, action brute, humour comme masque", tag: "à upgrader", tag_type: "todo",
+      snippet: "Raw action solves all, « Good » comme mantra, sérieux total + rire continu." },
+    { id: "Gv39IoU5Z5s", slug: "Gv39IoU5Z5s", title: "Educate Yourself Daily", theme: "Capital humain, sortie du salariat, YouTube > université", tag: "à upgrader", tag_type: "todo",
+      snippet: "Éducation décentralisée, apprentissage quotidien, sortie du 9-5." },
+    { id: "cZwULaBA9Bw", slug: "cZwULaBA9Bw", title: "Obsession & Pinnacle", theme: "Être un peu fou pour dominer un domaine", tag: "à upgrader", tag_type: "todo",
+      snippet: "Être « a little bit gone » pour atteindre le pinnacle. Focus monomaniaque." },
+    { id: "d8FH8K7n0GE", slug: "d8FH8K7n0GE", title: "Live for Something Bigger", theme: "Bataille du purpose masculin", tag: "à upgrader", tag_type: "todo",
+      snippet: "Vivre pour quelque chose de plus grand que soi. Devoir masculin de la bataille." }
+];
+
+function renderTate() {
+    const grid = document.getElementById('tate-grid');
+    if (!grid) return;
+    grid.innerHTML = TATE_CORPUS.map(v => `
+        <article class="tate-card">
+            <div class="tate-card-head">
+                <span class="tate-tag ${v.tag_type}">${v.tag}</span>
+                <span class="tate-id">${v.id}</span>
+            </div>
+            <h3 class="tate-card-title">${v.title}</h3>
+            <p class="tate-card-theme">${v.theme}</p>
+            <p class="tate-card-snippet">${v.snippet}</p>
+            <div class="tate-card-actions">
+                <a href="https://youtu.be/${v.id}" target="_blank" class="tate-btn tate-btn-ghost">↗ Vidéo</a>
+                <a href="../fiches/andrew-tate/fiche-${v.slug}.md" target="_blank" class="tate-btn tate-btn-primary">Lire la fiche →</a>
+            </div>
+        </article>
+    `).join('');
+}
+
+// Update page header when tab changes
+const PAGE_META = {
+    'carte':         { eyebrow: 'Exploration',           title: 'Carte des débats' },
+    'fiches':        { eyebrow: 'Synthèses',             title: 'Fiches' },
+    'citations':     { eyebrow: 'Corpus',                title: 'Citations' },
+    'posters':       { eyebrow: 'Visuels',               title: 'Posters' },
+    'andrew-tate':   { eyebrow: 'Corpus d\'étude',       title: 'Andrew Tate' },
+    'apprentissage': { eyebrow: 'Formation',             title: 'Apprentissage' }
+};
+
+// app.js already handles panel switching via .tab-btn; we augment with header text + Tate lazy render
+document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        const meta = PAGE_META[tab];
+        if (meta) {
+            document.getElementById('page-eyebrow').textContent = meta.eyebrow;
+            document.getElementById('page-title').textContent = meta.title;
+        }
+        if (tab === 'andrew-tate') renderTate();
+    });
+});
+// pre-render Tate for direct-link access
+renderTate();
+</script>
+
 </body>
 </html>
