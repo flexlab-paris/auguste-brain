@@ -55,8 +55,8 @@ const TATE_CORPUS = [
         title: "How to Become a High Value Man",
         theme: "Meurtre du soi ancien · Coda théologique · Homme forgé au feu",
         thesis: "Un homme de haute valeur n'est pas né, il est forgé dans le feu (douleur, discipline). Le confort est l'ennemi de la grandeur. Le regret est plus terrifiant que l'échec.",
-        tag: "STANDARD",
-        depth: "115 lignes — à upgrader",
+        tag: "DEEP",
+        depth: "35 quotes · 10 fallacies · 5 frameworks · 5 drills",
         quotes: [
             { text: "A high value man isn't born. He is forged in fire. And that fire is pain, rejection, pressure, discipline.", tag: "Métaphore métallurgique" },
             { text: "Discipline is the highest form of self-respect.", tag: "Discipline = self-respect" },
@@ -71,8 +71,8 @@ const TATE_CORPUS = [
         title: "The Version Of You That's Waiting",
         theme: "Multivers-self · Discipline · Guerre · Mental aikido",
         thesis: "Il existe une version de toi qui n'a jamais lâché. La discipline (faire ce qui doit être fait indépendamment de ce qu'on ressent) est l'essence de la masculinité. Tout est guerre.",
-        tag: "STANDARD",
-        depth: "142 lignes — à upgrader",
+        tag: "DEEP",
+        depth: "34 quotes · 10 fallacies · 5 frameworks · 5 drills",
         quotes: [
             { text: "There's a version of you that never sleeps in, never skips training, never wastes time.", tag: "Multivers-self" },
             { text: "You are not stupid, you are not incompetent, you are lazy and arrogant.", tag: "Diagnostic protecteur" },
@@ -87,8 +87,8 @@ const TATE_CORPUS = [
         title: "Don't Waste Your Life",
         theme: "Pression · Action brute · Humour comme masque",
         thesis: "La vie d'un homme se mesure à la pression supportée et à la douleur transmutée en carburant — tout en gardant l'humour nécessaire pour en rire.",
-        tag: "STANDARD",
-        depth: "117 lignes — à upgrader",
+        tag: "DEEP",
+        depth: "28 quotes · 7 fallacies · 4 frameworks · 4 drills",
         quotes: [
             { text: "True status is shown via competence. And competence cannot be faked.", tag: "Statut = compétence" },
             { text: "When bad things happen to me, my first answer is good.", tag: "Mantra Good." },
@@ -102,8 +102,8 @@ const TATE_CORPUS = [
         title: "Educate Yourself Daily",
         theme: "Capital humain · Sortie du salariat · YouTube > université",
         thesis: "L'éducation est décentralisée. Apprentissage quotidien + sortie du 9-5. Chaque jour où tu n'apprends pas, ta compétition prend de l'avance.",
-        tag: "STANDARD",
-        depth: "124 lignes — à upgrader",
+        tag: "DEEP",
+        depth: "22 quotes · 7 fallacies · 3 frameworks · 3 drills",
         quotes: [
             { text: "Educate yourself daily.", tag: "Discipline d'apprentissage" }
         ]
@@ -111,11 +111,11 @@ const TATE_CORPUS = [
     {
         id: "cZwULaBA9Bw",
         slug: "cZwULaBA9Bw",
-        title: "Obsession & Pinnacle",
+        title: "Obsession & Pinnacle (Conor McGregor)",
         theme: "Être un peu fou pour dominer un domaine",
-        thesis: "Le sommet d'un domaine exige d'être « a little bit gone to it » — presque insane à son craft.",
-        tag: "STANDARD",
-        depth: "98 lignes — à upgrader",
+        thesis: "Le sommet d'un domaine exige d'être « a little bit gone to it » — presque insane à son craft. Conor McGregor sur l'obsession comme condition d'excellence.",
+        tag: "DEEP",
+        depth: "21 quotes · 6 fallacies · 3 frameworks · McGregor, pas Tate",
         quotes: [
             { text: "To be at the pinnacle of any game, you've got to be a little bit gone to it.", tag: "Insanity clause" }
         ]
@@ -126,8 +126,8 @@ const TATE_CORPUS = [
         title: "Live for Something Bigger",
         theme: "Purpose masculin · Bataille comme sacré",
         thesis: "Comme homme, vivre pour quelque chose de plus grand que soi. La bataille est le devoir masculin.",
-        tag: "STANDARD",
-        depth: "112 lignes — à upgrader",
+        tag: "DEEP",
+        depth: "24 quotes · 8 fallacies · 3 frameworks · 4 drills",
         quotes: [
             { text: "As a man, you should always live for something bigger than yourself.", tag: "Impératif masculin" }
         ]
@@ -140,6 +140,7 @@ const state = {
     debateId: null,
     subtab: 'fiche',           // 'fiche' | 'citations' | 'posters'
     tateVideoId: null,
+    tateDisplay: 'rich',       // 'rich' | 'poster'
     search: ''
 };
 
@@ -511,9 +512,13 @@ function renderTateVideo() {
     const t = TATE_CORPUS.find(x => x.id === state.tateVideoId);
     if (!t) return '<div class="empty-state">Vidéo introuvable</div>';
 
-    // If rich content is loaded, render deep view
+    // If rich content is loaded, render deep view or poster
     const rich = (window.CONTENT_REGISTRY || {})[state.tateVideoId];
-    if (rich) return renderTateVideoRich(t, rich);
+    if (rich) {
+        return state.tateDisplay === 'poster'
+            ? renderTateVideoPoster(t, rich)
+            : renderTateVideoRich(t, rich);
+    }
 
     // Fallback: light view (as before)
     const quotesHtml = (t.quotes || []).map(q => `
@@ -810,7 +815,11 @@ function renderTateVideoRich(base, c) {
                         <span class="vd-thesis-label">Thèse centrale</span>
                         ${escape(c.thesis || base.thesis)}
                     </div>
-                    <div class="main-meta" style="margin-top:20px;padding:0">
+                    <div class="vd-display-toggle">
+                        <button class="vd-display-btn active" data-display="rich">Vue complète</button>
+                        <button class="vd-display-btn" data-display="poster">Poster / Résumé</button>
+                    </div>
+                    <div class="main-meta" style="margin-top:16px;padding:0">
                         <a href="https://youtu.be/${base.id}" target="_blank" class="tate-link">↗ Voir la vidéo YouTube</a>
                         <a href="../fiches/andrew-tate/fiche-${base.slug}.md" target="_blank" class="tate-link">Lire la fiche .md complète</a>
                     </div>
@@ -938,6 +947,165 @@ function renderTateVideoRich(base, c) {
     `;
 }
 
+// ---- TATE video POSTER view ---------------------------
+function renderTateVideoPoster(base, c) {
+    const topQuotes = (c.quotes || [])
+        .slice()
+        .sort((a, b) => (b.power_score || 0) - (a.power_score || 0))
+        .slice(0, 5);
+    const topStats = (c.stats || []).slice(0, 6);
+    const topFallacies = (c.fallacies || [])
+        .filter(f => f.severity === 'high')
+        .slice(0, 2)
+        .concat((c.fallacies || []).filter(f => f.severity !== 'high').slice(0, 1))
+        .slice(0, 2);
+    const bestComparison = (c.comparisons || [])[0];
+    const bestFramework = (c.frameworks || [])[0];
+
+    // Simple text bar for stats
+    const maxNumVal = topStats.reduce((max, s) => {
+        const n = parseFloat(String(s.number).replace(/[^0-9.]/g, '')) || 0;
+        return Math.max(max, n);
+    }, 1);
+
+    const statsHtml = topStats.map(s => {
+        const n = parseFloat(String(s.number).replace(/[^0-9.]/g, '')) || 0;
+        const pct = maxNumVal > 0 ? Math.min(100, (n / maxNumVal) * 100) : 0;
+        return `
+            <div class="poster-stat">
+                <div class="poster-stat-head">
+                    <div class="poster-stat-n">${escape(s.number)}</div>
+                    <div class="poster-stat-l">${escape(s.label)}</div>
+                </div>
+                <div class="poster-stat-bar"><div class="poster-stat-bar-fill" style="width:${pct}%"></div></div>
+                <div class="poster-stat-s">${escape(s.source || '')}</div>
+            </div>
+        `;
+    }).join('');
+
+    const quotesHtml = topQuotes.map(q => {
+        let quoteHtml = escape(q.text);
+        (q.highlight_words || []).forEach(w => {
+            const re = new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+            quoteHtml = quoteHtml.replace(re, '<mark>$1</mark>');
+        });
+        return `
+            <div class="poster-quote">
+                <div class="poster-quote-power">${q.power_score || 0}</div>
+                <div class="poster-quote-body">
+                    <div class="poster-quote-text">« ${quoteHtml} »</div>
+                    <div class="poster-quote-meta">${escape(q.rhetorical_device || '')} · ${(q.tags||[]).map(t=>escape(t)).join(' · ')}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    const comparisonHtml = bestComparison ? `
+        <div class="poster-section">
+            <div class="poster-section-label">Le contraste central</div>
+            <div class="poster-comparison">
+                <div class="poster-comp-title">${escape(bestComparison.title)}</div>
+                <div class="poster-comp-cols">
+                    <div class="poster-comp-col" data-side="left">
+                        <div class="poster-comp-col-lbl">${escape(bestComparison.left.label)}</div>
+                        ${bestComparison.left.items.map(i => `<div class="poster-comp-item">${escape(i)}</div>`).join('')}
+                    </div>
+                    <div class="poster-comp-vs">VS</div>
+                    <div class="poster-comp-col" data-side="right">
+                        <div class="poster-comp-col-lbl">${escape(bestComparison.right.label)}</div>
+                        ${bestComparison.right.items.map(i => `<div class="poster-comp-item">${escape(i)}</div>`).join('')}
+                    </div>
+                </div>
+            </div>
+        </div>
+    ` : '';
+
+    const fallaciesHtml = topFallacies.map(f => `
+        <div class="poster-fallacy" data-sev="${f.severity || 'medium'}">
+            <div class="poster-fallacy-type">${escape(f.fallacy_type || '')} · ${escape(f.severity || '')}</div>
+            <div class="poster-fallacy-claim">« ${escape(f.original_claim)} »</div>
+            <div class="poster-fallacy-nuance"><strong>Nuance :</strong> ${escape(f.nuance || '')}</div>
+            <div class="poster-fallacy-counter"><strong>Contre :</strong> ${escape(f.counter_argument || '')}</div>
+        </div>
+    `).join('');
+
+    const frameworkHtml = bestFramework ? `
+        <div class="poster-section">
+            <div class="poster-section-label">Framework à appliquer</div>
+            <div class="poster-framework">
+                <div class="poster-fw-name">${escape(bestFramework.name)}</div>
+                <div class="poster-fw-when">${escape(bestFramework.when_to_use || '')}</div>
+                <ol class="poster-fw-steps">
+                    ${(bestFramework.steps || []).slice(0, 5).map(s => `<li>${escape(s)}</li>`).join('')}
+                </ol>
+            </div>
+        </div>
+    ` : '';
+
+    const closureQuote = (c.chapters || []).slice(-1)[0]?.key_quote || '';
+
+    return `
+        <div class="main-header">
+            <div class="main-breadcrumb">
+                <span data-action="go-home" style="cursor:pointer">Accueil</span>
+                <span class="crumb-sep">›</span>
+                <span data-action="go-tate" style="cursor:pointer">Corpus Tate</span>
+                <span class="crumb-sep">›</span>
+                <span class="crumb-current">${escape(base.title)} — Poster</span>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="content-wrap" style="max-width:960px">
+
+                <div class="poster-view">
+                    <div class="poster-head">
+                        <div class="poster-eyebrow">${escape(c.speaker || 'Andrew Tate')} · ${escape(c.format || '')} · ${c.word_count ? c.word_count.toLocaleString() + ' mots' : ''}</div>
+                        <h1 class="poster-hook">${escape(c.hook || base.title)}</h1>
+                        <div class="poster-thesis">
+                            <span class="poster-thesis-label">Thèse centrale</span>
+                            ${escape(c.thesis || base.thesis)}
+                        </div>
+                        <div class="vd-display-toggle" style="margin-top:16px">
+                            <button class="vd-display-btn" data-display="rich">Vue complète</button>
+                            <button class="vd-display-btn active" data-display="poster">Poster / Résumé</button>
+                        </div>
+                    </div>
+
+                    ${statsHtml ? `<div class="poster-section">
+                        <div class="poster-section-label">Data — ${topStats.length} chiffres à retenir</div>
+                        <div class="poster-stats-grid">${statsHtml}</div>
+                    </div>` : ''}
+
+                    ${quotesHtml ? `<div class="poster-section">
+                        <div class="poster-section-label">Top 5 quotes par puissance</div>
+                        <div class="poster-quotes">${quotesHtml}</div>
+                    </div>` : ''}
+
+                    ${comparisonHtml}
+
+                    ${fallaciesHtml ? `<div class="poster-section">
+                        <div class="poster-section-label">Points fallacieux à ne PAS reprendre tels quels</div>
+                        <div class="poster-fallacies">${fallaciesHtml}</div>
+                    </div>` : ''}
+
+                    ${frameworkHtml}
+
+                    ${closureQuote ? `<div class="poster-closure">
+                        <div class="poster-closure-label">Clôture</div>
+                        <div class="poster-closure-text">« ${escape(closureQuote)} »</div>
+                    </div>` : ''}
+
+                    <div class="poster-footer">
+                        <div>${(c.key_takeaways || []).length} take-aways · ${(c.quotes || []).length} quotes · ${(c.fallacies || []).length} fallacies · ${(c.frameworks || []).length} frameworks</div>
+                        <button class="poster-print-btn" onclick="window.print()">↓ Imprimer</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    `;
+}
+
 // Recursive argument tree renderer
 function renderArgTree(node, level = 0) {
     if (!node) return '';
@@ -1012,6 +1180,12 @@ function attachMainEvents() {
     document.querySelectorAll('#main .subtab').forEach(btn => {
         btn.addEventListener('click', () => {
             state.subtab = btn.dataset.subtab;
+            render();
+        });
+    });
+    document.querySelectorAll('#main .vd-display-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            state.tateDisplay = btn.dataset.display;
             render();
         });
     });
