@@ -511,6 +511,11 @@ function renderTateVideo() {
     const t = TATE_CORPUS.find(x => x.id === state.tateVideoId);
     if (!t) return '<div class="empty-state">Vidéo introuvable</div>';
 
+    // If rich content is loaded, render deep view
+    const rich = (window.CONTENT_REGISTRY || {})[state.tateVideoId];
+    if (rich) return renderTateVideoRich(t, rich);
+
+    // Fallback: light view (as before)
     const quotesHtml = (t.quotes || []).map(q => `
         <div class="tate-quote">
             <div class="tate-quote-text">« ${escape(q.text)} »</div>
@@ -550,6 +555,412 @@ function renderTateVideo() {
                 </div>
             </div>
         </div>
+    `;
+}
+
+// ---- TATE rich view (deep content) ---------------------
+function renderTateVideoRich(base, c) {
+    // c is the rich CONTENT_{ID} object matching schema
+
+    const takeaways = (c.key_takeaways || []).map((k, i) => `
+        <div class="takeaway">
+            <span class="takeaway-num">${String(i+1).padStart(2,'0')}</span>
+            <span class="takeaway-text">${escape(k)}</span>
+        </div>
+    `).join('');
+
+    const chapters = (c.chapters || []).map(ch => `
+        <div class="chapter">
+            <div class="chapter-idx">${String(ch.idx).padStart(2,'0')}</div>
+            <div class="chapter-body">
+                <div class="chapter-title">${escape(ch.title)}</div>
+                <div class="chapter-summary">${escape(ch.summary || '')}</div>
+                ${ch.key_quote ? `<div class="chapter-quote">« ${escape(ch.key_quote)} »</div>` : ''}
+            </div>
+        </div>
+    `).join('');
+
+    const argTree = c.argument_tree ? renderArgTree(c.argument_tree.root) : '';
+
+    const quotes = (c.quotes || []).map(q => {
+        let quoteHtml = escape(q.text);
+        if (Array.isArray(q.highlight_words)) {
+            q.highlight_words.forEach(w => {
+                const re = new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+                quoteHtml = quoteHtml.replace(re, '<mark>$1</mark>');
+            });
+        }
+        const tags = (q.tags || []).map(t => `<span class="quote-tag">${escape(t)}</span>`).join('');
+        return `
+            <div class="quote-card">
+                <div class="quote-text">« ${quoteHtml} »</div>
+                <div class="quote-meta">
+                    ${q.rhetorical_device ? `<span class="quote-device">${escape(q.rhetorical_device)}</span>` : ''}
+                    ${tags}
+                    ${q.power_score ? `<span class="quote-power">⚡ ${q.power_score}/10</span>` : ''}
+                </div>
+                ${q.context ? `<div class="quote-context">${escape(q.context)}</div>` : ''}
+            </div>
+        `;
+    }).join('');
+
+    // Argumentation kit
+    const kit = c.argumentation_kit || {};
+    const defendCards = (kit.how_to_defend || []).map(d => `
+        <div class="arg-kit-card" data-type="defend">
+            <div class="arg-kit-label">Si l'on te challenge…</div>
+            <div class="arg-kit-challenge">${escape(d.challenge)}</div>
+            <div class="arg-kit-response">${escape(d.response)}</div>
+            ${d.technique ? `<div class="arg-kit-technique">Technique : ${escape(d.technique)}</div>` : ''}
+            ${d.example_response_text ? `<div class="arg-kit-example">« ${escape(d.example_response_text)} »</div>` : ''}
+        </div>
+    `).join('');
+
+    const attackCards = (kit.how_to_attack || []).map(a => `
+        <div class="arg-kit-card" data-type="attack">
+            <div class="arg-kit-label">Point faible à attaquer</div>
+            <div class="arg-kit-challenge">${escape(a.target_claim)}</div>
+            <div class="arg-kit-response">${escape(a.attack)}</div>
+            ${a.angle ? `<div class="arg-kit-technique">Angle : ${escape(a.angle)}</div>` : ''}
+        </div>
+    `).join('');
+
+    const rephraseCards = (kit.how_to_rephrase || []).map(r => `
+        <div class="arg-kit-card" data-type="rephrase">
+            <div class="arg-kit-label">Comment reformuler</div>
+            <div class="rephrase-original"><strong>Version originale :</strong> ${escape(r.original)}</div>
+            <div class="rephrase-variants">
+                ${r.softer ? `<div class="rephrase-variant" data-tone="softer"><span class="rephrase-variant-label">Softer</span>${escape(r.softer)}</div>` : ''}
+                ${r.harder ? `<div class="rephrase-variant" data-tone="harder"><span class="rephrase-variant-label">Harder</span>${escape(r.harder)}</div>` : ''}
+                ${r.academic ? `<div class="rephrase-variant" data-tone="academic"><span class="rephrase-variant-label">Academic</span>${escape(r.academic)}</div>` : ''}
+            </div>
+        </div>
+    `).join('');
+
+    const askCards = (kit.if_asked || []).map(q => `
+        <div class="arg-kit-card" data-type="ask">
+            <div class="arg-kit-label">Si on te pose cette question</div>
+            <div class="arg-kit-challenge">${escape(q.question)}</div>
+            <div class="arg-kit-response">${escape(q.best_response)}</div>
+            ${Array.isArray(q.followup_moves) && q.followup_moves.length ? `
+                <div class="arg-kit-technique">Follow-up : ${q.followup_moves.map(m => escape(m)).join(' · ')}</div>
+            ` : ''}
+        </div>
+    `).join('');
+
+    // Fallacies
+    const fallacies = (c.fallacies || []).map(f => `
+        <div class="fallacy-card" data-sev="${f.severity || 'medium'}">
+            <div class="fallacy-head">
+                <div class="fallacy-type">${escape(f.fallacy_type || 'sophisme')}</div>
+                <div class="fallacy-severity" data-sev="${f.severity || 'medium'}">${escape(f.severity || 'medium')}</div>
+            </div>
+            <div class="fallacy-original">« ${escape(f.original_claim)} »</div>
+            <div class="fallacy-block" data-kind="why">
+                <span class="fallacy-block-label">Pourquoi c'est fallacieux</span>
+                <div class="fallacy-block-text">${escape(f.why_fallacious || '')}</div>
+            </div>
+            ${f.steelman ? `
+                <div class="fallacy-block" data-kind="steelman">
+                    <span class="fallacy-block-label">Steelman — la version la plus forte</span>
+                    <div class="fallacy-block-text">${escape(f.steelman)}</div>
+                </div>` : ''}
+            ${f.nuance ? `
+                <div class="fallacy-block" data-kind="nuance">
+                    <span class="fallacy-block-label">Nuance</span>
+                    <div class="fallacy-block-text">${escape(f.nuance)}</div>
+                </div>` : ''}
+            ${f.counter_argument ? `
+                <div class="fallacy-block" data-kind="counter">
+                    <span class="fallacy-block-label">Contre-argument à utiliser</span>
+                    <div class="fallacy-block-text">${escape(f.counter_argument)}</div>
+                </div>` : ''}
+        </div>
+    `).join('');
+
+    // Stats
+    const stats = (c.stats || []).map(s => `
+        <div class="stat-card">
+            <div class="stat-num">${escape(s.number)}</div>
+            <div class="stat-lbl">${escape(s.label)}</div>
+            ${s.context ? `<div class="stat-ctx">${escape(s.context)}</div>` : ''}
+            <div class="stat-src">${escape(s.source || '')}</div>
+        </div>
+    `).join('');
+
+    // Comparisons
+    const comparisons = (c.comparisons || []).map(cp => `
+        <div class="compare-block">
+            <div class="compare-title">${escape(cp.title)}</div>
+            <div class="compare-grid">
+                <div class="compare-side" data-side="left">
+                    <div class="compare-side-label">${escape(cp.left.label)}</div>
+                    ${cp.left.items.map(i => `<div class="compare-item">${escape(i)}</div>`).join('')}
+                </div>
+                <div class="compare-vs">VS</div>
+                <div class="compare-side" data-side="right">
+                    <div class="compare-side-label">${escape(cp.right.label)}</div>
+                    ${cp.right.items.map(i => `<div class="compare-item">${escape(i)}</div>`).join('')}
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    // Devices
+    const devices = (c.devices || []).map(d => `
+        <div class="device-card">
+            <div class="device-name">${escape(d.name)}</div>
+            <div class="device-example">« ${escape(d.example_text)} »</div>
+            <div class="device-effect">${escape(d.effect || '')}</div>
+            ${d.why_it_works ? `<div class="device-why">${escape(d.why_it_works)}</div>` : ''}
+        </div>
+    `).join('');
+
+    // Analogies
+    const analogies = (c.analogies || []).map(a => `
+        <div class="analogy-card">
+            <div class="analogy-src">${escape(a.source)} ${a.strength ? `<span class="analogy-strength">${a.strength}/10</span>` : ''}</div>
+            <div class="analogy-use">${escape(a.used_for)}</div>
+            ${a.why_it_works ? `<div class="analogy-why">${escape(a.why_it_works)}</div>` : ''}
+        </div>
+    `).join('');
+
+    // Frameworks
+    const frameworks = (c.frameworks || []).map(f => `
+        <div class="framework-card">
+            <div class="framework-name">${escape(f.name)}</div>
+            <div class="framework-when">Quand : ${escape(f.when_to_use || 'à définir')}</div>
+            <ol class="framework-steps">
+                ${(f.steps || []).map(s => `<li>${escape(s)}</li>`).join('')}
+            </ol>
+            ${f.warning ? `<div class="framework-warning">${escape(f.warning)}</div>` : ''}
+        </div>
+    `).join('');
+
+    // Drills
+    const drills = (c.drills || []).map(d => `
+        <div class="drill-card">
+            <div class="drill-body">
+                <div class="drill-name">${escape(d.name)}</div>
+                <div class="drill-duration">Durée : ${escape(d.duration || '?')}</div>
+                <ul class="drill-instr">
+                    ${(d.instructions || []).map(i => `<li>${escape(i)}</li>`).join('')}
+                </ul>
+            </div>
+            <div class="drill-difficulty">
+                <div class="drill-diff-num">${d.difficulty || '?'}</div>
+                <div class="drill-diff-lbl">/ 5</div>
+            </div>
+        </div>
+    `).join('');
+
+    // Related content
+    const relatedVids = (c.related && c.related.videos || []).map(vid => {
+        const rt = TATE_CORPUS.find(x => x.id === vid);
+        if (!rt) return '';
+        return `<a class="related-card" data-action="select-tate" data-id="${vid}">
+            <span class="related-kind">Vidéo · Tate</span>
+            <span class="related-title">${escape(rt.title)}</span>
+        </a>`;
+    }).join('');
+    const relatedDebs = (c.related && c.related.debates || []).map(did => {
+        const dd = debates.find(x => x.id === did);
+        if (!dd) return '';
+        return `<a class="related-card" data-action="select-debate" data-id="${did}">
+            <span class="related-kind">Débat</span>
+            <span class="related-title">${escape(dd.titre)}</span>
+        </a>`;
+    }).join('');
+
+    // Sticky in-page nav
+    const tabs = [
+        { id: 'takeaways',   label: 'À retenir',       count: (c.key_takeaways || []).length },
+        { id: 'chapters',    label: 'Chapitres',       count: (c.chapters || []).length },
+        { id: 'tree',        label: 'Arbre argument.', count: c.argument_tree ? 1 : 0 },
+        { id: 'quotes',      label: 'Quotes',          count: (c.quotes || []).length },
+        { id: 'kit',         label: 'Kit argument.',   count: (kit.how_to_defend||[]).length + (kit.how_to_attack||[]).length + (kit.if_asked||[]).length },
+        { id: 'fallacies',   label: 'Sophismes',       count: (c.fallacies || []).length },
+        { id: 'stats',       label: 'Data',            count: (c.stats || []).length },
+        { id: 'comparisons', label: 'Contrastes',      count: (c.comparisons || []).length },
+        { id: 'devices',     label: 'Procédés',        count: (c.devices || []).length },
+        { id: 'analogies',   label: 'Analogies',       count: (c.analogies || []).length },
+        { id: 'frameworks',  label: 'Frameworks',      count: (c.frameworks || []).length },
+        { id: 'drills',      label: 'Drills',          count: (c.drills || []).length },
+        { id: 'related',     label: 'Voir aussi',      count: (relatedVids.length + relatedDebs.length) > 0 ? 1 : 0 }
+    ];
+    const tabsHtml = tabs.filter(t => t.count > 0).map(t => `<a href="#s-${t.id}" class="vd-tab"><span>${t.label}</span><span class="vd-tab-count">${t.count}</span></a>`).join('');
+
+    return `
+        <div class="main-header">
+            <div class="main-breadcrumb">
+                <span data-action="go-home" style="cursor:pointer">Accueil</span>
+                <span class="crumb-sep">›</span>
+                <span data-action="go-tate" style="cursor:pointer">Corpus Tate</span>
+                <span class="crumb-sep">›</span>
+                <span class="crumb-current">${escape(base.title)}</span>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="content-wrap" style="max-width:960px">
+
+                <div class="vd-hero">
+                    ${c.speaker ? `<div class="vd-hero-tag">${escape(c.speaker)} · ${escape(c.format || '')} · ${c.word_count ? c.word_count.toLocaleString() + ' mots' : ''}</div>` : ''}
+                    <h1 class="vd-hook">${escape(c.hook || base.title)}</h1>
+                    <div class="vd-thesis">
+                        <span class="vd-thesis-label">Thèse centrale</span>
+                        ${escape(c.thesis || base.thesis)}
+                    </div>
+                    <div class="main-meta" style="margin-top:20px;padding:0">
+                        <a href="https://youtu.be/${base.id}" target="_blank" class="tate-link">↗ Voir la vidéo YouTube</a>
+                        <a href="../fiches/andrew-tate/fiche-${base.slug}.md" target="_blank" class="tate-link">Lire la fiche .md complète</a>
+                    </div>
+                </div>
+
+                <nav class="vd-tabs">${tabsHtml}</nav>
+
+                ${takeaways ? `<div class="vd-section" id="s-takeaways">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">À retenir</div>
+                        <div class="vd-section-meta">${(c.key_takeaways||[]).length} take-aways</div>
+                    </div>
+                    <div class="takeaways-grid">${takeaways}</div>
+                </div>` : ''}
+
+                ${chapters ? `<div class="vd-section" id="s-chapters">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Chapitres</div>
+                        <div class="vd-section-meta">${(c.chapters||[]).length} sections</div>
+                    </div>
+                    <p class="vd-section-desc">Structure narrative de la vidéo, avec la citation-clé de chaque chapitre.</p>
+                    <div class="chapters-list">${chapters}</div>
+                </div>` : ''}
+
+                ${argTree ? `<div class="vd-section" id="s-tree">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Arbre d'argumentation</div>
+                        <div class="vd-section-meta">tree map</div>
+                    </div>
+                    <p class="vd-section-desc">La thèse racine → branches d'argument. Chaque noeud est coloré selon son type : premise (orange), evidence (vert), analogy (bleu), example (jaune).</p>
+                    <div class="arg-tree">${argTree}</div>
+                </div>` : ''}
+
+                ${quotes ? `<div class="vd-section" id="s-quotes">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Quotes marquantes</div>
+                        <div class="vd-section-meta">${(c.quotes||[]).length} extraits</div>
+                    </div>
+                    <p class="vd-section-desc">Quotes taggées, avec procédé rhétorique, score de puissance et surlignage des mots-clés.</p>
+                    <div class="quotes-grid">${quotes}</div>
+                </div>` : ''}
+
+                ${(defendCards || attackCards || rephraseCards || askCards) ? `<div class="vd-section" id="s-kit">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Kit d'argumentation</div>
+                        <div class="vd-section-meta">defend · attack · rephrase · if-asked</div>
+                    </div>
+                    <p class="vd-section-desc">Comment défendre la thèse si on te challenge, comment l'attaquer, comment la reformuler (softer / harder / academic), et comment répondre aux questions courantes.</p>
+                    <div class="arg-kit">
+                        ${askCards}
+                        ${defendCards}
+                        ${attackCards}
+                        ${rephraseCards}
+                    </div>
+                </div>` : ''}
+
+                ${fallacies ? `<div class="vd-section" id="s-fallacies">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Sophismes & nuances</div>
+                        <div class="vd-section-meta">${(c.fallacies||[]).length} points fallacieux</div>
+                    </div>
+                    <p class="vd-section-desc">Chaque sophisme : le claim original + son type + steelman (charitable read) + nuance + contre-argument à utiliser. Sévérité codée en couleur.</p>
+                    <div class="fallacies-list">${fallacies}</div>
+                </div>` : ''}
+
+                ${stats ? `<div class="vd-section" id="s-stats">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Data & infographies</div>
+                        <div class="vd-section-meta">${(c.stats||[]).length} data points</div>
+                    </div>
+                    <div class="stats-grid">${stats}</div>
+                </div>` : ''}
+
+                ${comparisons ? `<div class="vd-section" id="s-comparisons">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Contrastes binaires</div>
+                        <div class="vd-section-meta">${(c.comparisons||[]).length}</div>
+                    </div>
+                    <p class="vd-section-desc">Les structures d'opposition que Tate utilise pour forcer un choix identitaire.</p>
+                    ${comparisons}
+                </div>` : ''}
+
+                ${devices ? `<div class="vd-section" id="s-devices">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Procédés rhétoriques</div>
+                        <div class="vd-section-meta">${(c.devices||[]).length}</div>
+                    </div>
+                    <div class="devices-grid">${devices}</div>
+                </div>` : ''}
+
+                ${analogies ? `<div class="vd-section" id="s-analogies">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Analogies & exemples</div>
+                        <div class="vd-section-meta">${(c.analogies||[]).length}</div>
+                    </div>
+                    <div class="analogies-grid">${analogies}</div>
+                </div>` : ''}
+
+                ${frameworks ? `<div class="vd-section" id="s-frameworks">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Frameworks opérationnels</div>
+                        <div class="vd-section-meta">${(c.frameworks||[]).length}</div>
+                    </div>
+                    <p class="vd-section-desc">Modèles mentaux prêts à appliquer, avec étapes numérotées et warning quand pertinent.</p>
+                    <div class="frameworks-list">${frameworks}</div>
+                </div>` : ''}
+
+                ${drills ? `<div class="vd-section" id="s-drills">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Drills — exercices d'intériorisation</div>
+                        <div class="vd-section-meta">${(c.drills||[]).length}</div>
+                    </div>
+                    <div class="drills-list">${drills}</div>
+                </div>` : ''}
+
+                ${(relatedVids || relatedDebs) ? `<div class="vd-section" id="s-related">
+                    <div class="vd-section-head">
+                        <div class="vd-section-title">Voir aussi</div>
+                    </div>
+                    <div class="related-grid">${relatedVids}${relatedDebs}</div>
+                </div>` : ''}
+
+            </div>
+        </div>
+    `;
+}
+
+// Recursive argument tree renderer
+function renderArgTree(node, level = 0) {
+    if (!node) return '';
+    const strength = node.strength ? `<span class="arg-node-strength">${node.strength}/10</span>` : '';
+    const type = node.type ? `<span class="arg-node-type">${escape(node.type)}</span>` : '';
+    const evidence = Array.isArray(node.evidence) && node.evidence.length
+        ? `<div class="arg-node-evidence">→ ${node.evidence.map(e => escape(e)).join(' · ')}</div>`
+        : '';
+    const children = Array.isArray(node.children) && node.children.length
+        ? `<div class="arg-branch">${node.children.map(ch => renderArgTree(ch, level + 1)).join('')}</div>`
+        : '';
+    if (level === 0) {
+        return `
+            <div class="arg-root">${escape(node.claim)}</div>
+            ${node.children ? node.children.map(ch => `<div class="arg-branch">${renderArgTree(ch, 1)}</div>`).join('') : ''}
+        `;
+    }
+    return `
+        <div class="arg-node" data-type="${escape(node.type || 'premise')}">
+            ${type}${escape(node.claim)}${strength}
+            ${evidence}
+        </div>
+        ${children}
     `;
 }
 
