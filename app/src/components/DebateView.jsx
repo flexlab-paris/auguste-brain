@@ -5,8 +5,11 @@ import {
 import { getDebates, getCitations, getPosterData, getFichesContent, debateRegistry, modeColor, modeLabel } from '../corpus.js';
 import {
   Takeaways, QuoteCards, ArgumentKit, Fallacies, StatCards, Comparisons,
-  Devices, Analogies, Frameworks, Drills, Related, ArgGraph, VSection
+  Devices, Analogies, Frameworks, Drills, Related, VSection
 } from './RichSections.jsx';
+import { GitBranch } from 'lucide-react';
+import MindMap from './MindMap.jsx';
+import { buildDebateMap, buildArgMap, MAP_LEGEND } from './mapBuilders.jsx';
 
 function ModeAccordion({ debateId, modes }) {
   const [open, setOpen] = useState(null);
@@ -72,6 +75,9 @@ export default function DebateView({ id, navigate }) {
           <button className={`subtab ${tab === 'fiche' ? 'active' : ''}`} onClick={() => setTab('fiche')}>
             Fiche complète {rich && <span className="subtab-count">deep</span>}
           </button>
+          <button className={`subtab ${tab === 'carte' ? 'active' : ''}`} onClick={() => setTab('carte')}>
+            Carte {rich && <span className="subtab-count">interactive</span>}
+          </button>
           <button className={`subtab ${tab === 'citations' ? 'active' : ''}`} onClick={() => setTab('citations')}>
             Citations <span className="subtab-count">{cits.length}</span>
           </button>
@@ -107,7 +113,11 @@ export default function DebateView({ id, navigate }) {
                     </VSection>
                   )}
                   <Takeaways items={rich.key_takeaways} />
-                  {rich.argument_tree?.root && <ArgGraph root={rich.argument_tree.root} />}
+                  {rich.argument_tree?.root && (
+                    <VSection id="tree" icon={GitBranch} title="Arbre d'argumentation" meta="clique un nœud — panneau détaillé">
+                      <MindMap tree={buildArgMap(rich.argument_tree.root)} height="540px" />
+                    </VSection>
+                  )}
                   <QuoteCards items={rich.quotes} onTag={onTag} />
                   <ArgumentKit kit={rich.argumentation_kit} />
                   <Fallacies items={rich.fallacies} />
@@ -130,6 +140,11 @@ export default function DebateView({ id, navigate }) {
                 </div>
               )}
             </>
+          )}
+
+          {tab === 'carte' && (
+            rich ? <MindMap tree={buildDebateMap(rich, d)} legend={MAP_LEGEND} height="calc(100dvh - 330px)" />
+              : <div className="empty">Carte disponible quand l'analyse riche est chargée.</div>
           )}
 
           {tab === 'citations' && (

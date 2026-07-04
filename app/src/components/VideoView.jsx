@@ -3,8 +3,11 @@ import { User, ExternalLink, FileText, Printer } from 'lucide-react';
 import { TATE_CORPUS, videoRegistry } from '../corpus.js';
 import {
   Highlight, Takeaways, Chapters, QuoteCards, ArgumentKit, Fallacies,
-  StatCards, Comparisons, Devices, Analogies, Frameworks, Drills, Related, ArgGraph
+  StatCards, Comparisons, Devices, Analogies, Frameworks, Drills, Related, VSection
 } from './RichSections.jsx';
+import { GitBranch } from 'lucide-react';
+import MindMap from './MindMap.jsx';
+import { buildVideoMap, buildArgMap, MAP_LEGEND } from './mapBuilders.jsx';
 
 function SectionTabs({ counts }) {
   const [active, setActive] = useState(null);
@@ -187,7 +190,8 @@ export default function VideoView({ id, navigate }) {
             <div className="vd-actions">
               <div className="toggle">
                 <button className={display === 'rich' ? 'active' : ''} onClick={() => setDisplay('rich')}>Vue complète</button>
-                <button className={display === 'poster' ? 'active' : ''} onClick={() => setDisplay('poster')}>Poster / Résumé</button>
+                <button className={display === 'map' ? 'active' : ''} onClick={() => setDisplay('map')}>Carte</button>
+                <button className={display === 'poster' ? 'active' : ''} onClick={() => setDisplay('poster')}>Poster</button>
               </div>
               <a className="btn" href={`https://youtu.be/${id}`} target="_blank" rel="noreferrer"><ExternalLink className="icon-sm" /> Vidéo YouTube</a>
               <a className="btn" href={`/fiches/andrew-tate/fiche-${base.slug}.md`} target="_blank" rel="noreferrer"><FileText className="icon-sm" /> Fiche .md</a>
@@ -198,12 +202,21 @@ export default function VideoView({ id, navigate }) {
 
           {c && display === 'poster' && <PosterView base={base} c={c} />}
 
+          {c && display === 'map' && (
+            <MindMap tree={buildVideoMap(c, base)} legend={MAP_LEGEND} height="calc(100dvh - 320px)" />
+          )}
+
           {c && display === 'rich' && (
             <>
               <SectionTabs counts={counts} />
               <Takeaways items={c.key_takeaways} />
               <Chapters items={c.chapters} />
-              {c.argument_tree?.root && <ArgGraph root={c.argument_tree.root} />}
+              {c.argument_tree?.root && (
+                <VSection id="tree" icon={GitBranch} title="Arbre d'argumentation" meta="clique un nœud — panneau détaillé"
+                  desc="Carte interactive : clique pour déplier les branches et lire chaque argument avec ses appuis.">
+                  <MindMap tree={buildArgMap(c.argument_tree.root)} height="540px" />
+                </VSection>
+              )}
               <QuoteCards items={c.quotes} onTag={onTag} />
               <ArgumentKit kit={c.argumentation_kit} />
               <Fallacies items={c.fallacies} />
