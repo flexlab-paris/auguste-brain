@@ -2639,3 +2639,136 @@ a { color: inherit; text-decoration: none; }
     color: var(--accent);
     transform: translateX(3px);
 }
+
+/* =========================================================
+   Explorer view — Cytoscape graph
+   ========================================================= */
+
+#explorer-graph {
+    width: 100%;
+    height: 100%;
+    background: var(--surface-2);
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(234, 88, 12, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.04) 0%, transparent 40%);
+}
+
+.explorer-legend {
+    padding: 12px 32px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    background: var(--surface-2);
+    flex-wrap: wrap;
+}
+.explorer-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 0;
+}
+.ex-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px currentColor;
+}
+.explorer-controls {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+}
+.explorer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--dur) var(--ease);
+}
+.explorer-btn:hover {
+    background: var(--surface-3);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow);
+}
+
+/* =========================================================
+   Argument tree — interactive graph inside fiches
+   ========================================================= */
+
+.arg-graph-container {
+    height: 480px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+}
+.arg-graph-header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none;
+}
+.arg-graph-header .arg-graph-legend {
+    display: inline-flex;
+    gap: 12px;
+    padding: 6px 12px;
+    background: white;
+    border-radius: var(--r-sm);
+    box-shadow: var(--shadow-sm);
+    pointer-events: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0;
+}
+.arg-graph-header .arg-graph-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.arg-graph-header .arg-graph-legend .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.arg-graph-btn {
+    padding: 5px 10px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+    pointer-events: auto;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease);
+}
+.arg-graph-btn:hover { background: var(--surface-3); }
+
+.arg-graph-cy {
+    width: 100%;
+    height: 100%;
+}

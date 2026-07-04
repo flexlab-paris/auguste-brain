@@ -136,7 +136,7 @@ const TATE_CORPUS = [
 
 // ---- State ---------------------------------------------
 const state = {
-    view: 'home',              // 'home' | 'debate' | 'tate' | 'tate-video' | 'learning'
+    view: 'home',              // 'home' | 'debate' | 'tate' | 'tate-video' | 'learning' | 'explorer'
     debateId: null,
     subtab: 'fiche',           // 'fiche' | 'citations' | 'posters'
     tateVideoId: null,
@@ -199,6 +199,7 @@ function renderSidebar() {
     const activeTateHome = state.view === 'tate';
     const activeTateVideo = state.view === 'tate-video' && state.tateVideoId;
     const activeLearning = state.view === 'learning';
+    const activeExplorer = state.view === 'explorer';
     const activeHome = state.view === 'home';
 
     // Map debate id to a Lucide icon
@@ -276,8 +277,12 @@ function renderSidebar() {
 
             <div class="sb-section">
                 <div class="sb-section-label">
-                    <span>${icon('graduation-cap', 'sm')} Ressources</span>
+                    <span>${icon('compass', 'sm')} Exploration</span>
                 </div>
+                <button class="sb-item ${activeExplorer ? 'active' : ''}" data-action="go-explorer">
+                    ${icon('network', 'sm')}
+                    <span class="sb-item-text">Graphe du corpus</span>
+                </button>
                 <button class="sb-item ${activeLearning ? 'active' : ''}" data-action="go-learning">
                     ${icon('book-open', 'sm')}
                     <span class="sb-item-text">Apprentissage</span>
@@ -302,6 +307,7 @@ function renderSidebar() {
             if (act === 'go-home')     { state.view = 'home'; }
             if (act === 'go-tate')     { state.view = 'tate'; }
             if (act === 'go-learning') { state.view = 'learning'; }
+            if (act === 'go-explorer') { state.view = 'explorer'; }
             if (act === 'select-debate') {
                 state.view = 'debate';
                 state.debateId = btn.dataset.id;
@@ -326,6 +332,7 @@ function renderMain() {
     else if (state.view === 'tate')       html = renderTateHome();
     else if (state.view === 'tate-video') html = renderTateVideo();
     else if (state.view === 'learning')   html = renderLearningShell();
+    else if (state.view === 'explorer')   html = renderExplorer();
 
     main.innerHTML = html;
     attachMainEvents();
@@ -761,7 +768,7 @@ function renderTateVideoRich(base, c) {
         </div>
     `).join('');
 
-    const argTree = c.argument_tree ? renderArgTree(c.argument_tree.root) : '';
+    const argTree = c.argument_tree ? renderArgGraph(c.argument_tree.root) : '';
 
     const quotes = (c.quotes || []).map(q => {
         let quoteHtml = escape(q.text);
@@ -985,7 +992,7 @@ function renderTateVideoRich(base, c) {
             <div class="content-wrap" style="max-width:1400px">
 
                 <div class="vd-hero">
-                    ${c.speaker ? `<div class="vd-hero-tag">${escape(c.speaker)} · ${escape(c.format || '')} · ${c.word_count ? c.word_count.toLocaleString() + ' mots' : ''}</div>` : ''}
+                    ${c.speaker ? `<div class="vd-hero-tag">${icon('user','sm')} ${escape(c.speaker)} · ${escape(c.format || '')} · ${c.word_count ? c.word_count.toLocaleString() + ' mots · ' + Math.max(1, Math.round(c.word_count / 250)) + ' min de lecture' : ''}</div>` : ''}
                     <h1 class="vd-hook">${escape(c.hook || base.title)}</h1>
                     <div class="vd-thesis">
                         <span class="vd-thesis-label">Thèse centrale</span>
@@ -1282,6 +1289,246 @@ function renderTateVideoPoster(base, c) {
     `;
 }
 
+// ---- EXPLORER — Obsidian-style corpus graph ------------
+function renderExplorer() {
+    return `
+        <div class="main-header">
+            <div class="main-breadcrumb">
+                <span data-action="go-home" style="cursor:pointer">Accueil</span>
+                <span class="crumb-sep">›</span>
+                <span class="crumb-current">Graphe du corpus</span>
+            </div>
+            <div class="main-title-wrap">
+                <h1 class="main-title">${icon('network', 'lg')} Graphe du corpus</h1>
+                <p class="main-subtitle">15 débats et vidéos, reliés par leurs cross-links. Zoom, drag les nœuds, clique pour ouvrir.</p>
+            </div>
+            <div class="explorer-legend">
+                <span class="explorer-legend-item"><span class="ex-dot" style="background:var(--accent)"></span>Débat</span>
+                <span class="explorer-legend-item"><span class="ex-dot" style="background:var(--info)"></span>Vidéo Tate</span>
+                <span class="explorer-legend-item"><span class="ex-dot" style="background:var(--quote)"></span>Thème</span>
+                <div class="explorer-controls">
+                    <button class="explorer-btn" id="ex-fit">${icon('maximize-2','sm')} Recentrer</button>
+                    <button class="explorer-btn" id="ex-shuffle">${icon('shuffle','sm')} Réorganiser</button>
+                </div>
+            </div>
+        </div>
+        <div class="main-content" style="padding:0;height:calc(100vh - 200px);overflow:hidden">
+            <div id="explorer-graph"></div>
+        </div>
+    `;
+}
+
+// Build corpus graph elements for Cytoscape
+function buildCorpusGraph() {
+    const R_DEB = window.CONTENT_DEBATES_REGISTRY || {};
+    const R_VID = window.CONTENT_REGISTRY || {};
+
+    const nodes = [];
+    const edges = [];
+
+    // Debate nodes
+    debates.forEach(d => {
+        const c = R_DEB[d.id];
+        const quoteCount = c ? (c.quotes || []).length : 0;
+        nodes.push({
+            data: {
+                id: 'debate-' + d.id,
+                label: d.titre,
+                type: 'debate',
+                targetId: d.id,
+                weight: 20 + quoteCount * 0.8
+            }
+        });
+    });
+
+    // Video nodes
+    TATE_CORPUS.forEach(t => {
+        const c = R_VID[t.id];
+        const quoteCount = c ? (c.quotes || []).length : 0;
+        nodes.push({
+            data: {
+                id: 'video-' + t.id,
+                label: t.title,
+                type: 'video',
+                targetId: t.id,
+                weight: 20 + quoteCount * 0.5
+            }
+        });
+    });
+
+    // Edges from cross-links
+    debates.forEach(d => {
+        const c = R_DEB[d.id];
+        if (!c || !c.related) return;
+        (c.related.videos || []).forEach(vid => {
+            const target = TATE_CORPUS.find(x => x.id === vid);
+            if (target) edges.push({ data: { id: `e-${d.id}-${vid}`, source: 'debate-' + d.id, target: 'video-' + vid } });
+        });
+        (c.related.debates || []).forEach(did => {
+            if (did === d.id) return;
+            const target = debates.find(x => x.id === did);
+            if (target) edges.push({ data: { id: `e-${d.id}-${did}`, source: 'debate-' + d.id, target: 'debate-' + did } });
+        });
+    });
+    TATE_CORPUS.forEach(t => {
+        const c = R_VID[t.id];
+        if (!c || !c.related) return;
+        (c.related.videos || []).forEach(vid => {
+            if (vid === t.id) return;
+            const target = TATE_CORPUS.find(x => x.id === vid);
+            if (target) edges.push({ data: { id: `e-${t.id}-${vid}`, source: 'video-' + t.id, target: 'video-' + vid } });
+        });
+        (c.related.debates || []).forEach(did => {
+            const target = debates.find(x => x.id === did);
+            if (target) edges.push({ data: { id: `e-${t.id}-${did}`, source: 'video-' + t.id, target: 'debate-' + did } });
+        });
+    });
+
+    // De-dupe edges (bidirectional cross-links)
+    const seen = new Set();
+    const uniq = edges.filter(e => {
+        const key = [e.data.source, e.data.target].sort().join('|');
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    });
+
+    return { nodes, edges: uniq };
+}
+
+// Initialize Cytoscape after explorer is rendered
+function initExplorer() {
+    if (typeof cytoscape === 'undefined') return;
+    const el = document.getElementById('explorer-graph');
+    if (!el) return;
+
+    const g = buildCorpusGraph();
+
+    const css = getComputedStyle(document.documentElement);
+    const COLOR_DEBATE = css.getPropertyValue('--accent').trim() || '#ea580c';
+    const COLOR_VIDEO  = css.getPropertyValue('--info').trim()   || '#2563eb';
+    const COLOR_BG     = css.getPropertyValue('--surface-2').trim() || '#fbfaf5';
+    const COLOR_BORDER = css.getPropertyValue('--border').trim()  || '#e8e2d3';
+    const COLOR_TEXT   = css.getPropertyValue('--text').trim()    || '#171613';
+
+    el.style.background = COLOR_BG;
+
+    const cy = cytoscape({
+        container: el,
+        elements: [...g.nodes, ...g.edges],
+        style: [
+            {
+                selector: 'node',
+                style: {
+                    'background-color': '#fff',
+                    'border-width': 3,
+                    'border-color': COLOR_DEBATE,
+                    'label': 'data(label)',
+                    'font-family': 'Inter, sans-serif',
+                    'font-size': 12,
+                    'font-weight': 600,
+                    'color': COLOR_TEXT,
+                    'text-valign': 'bottom',
+                    'text-margin-y': 8,
+                    'text-wrap': 'wrap',
+                    'text-max-width': 140,
+                    'width': 'data(weight)',
+                    'height': 'data(weight)',
+                    'transition-property': 'background-color, border-color, width, height',
+                    'transition-duration': 200
+                }
+            },
+            {
+                selector: 'node[type="video"]',
+                style: { 'border-color': COLOR_VIDEO }
+            },
+            {
+                selector: 'edge',
+                style: {
+                    'width': 1.5,
+                    'line-color': COLOR_BORDER,
+                    'curve-style': 'bezier',
+                    'target-arrow-shape': 'none',
+                    'opacity': 0.6
+                }
+            },
+            {
+                selector: 'node:hover',
+                style: {
+                    'background-color': COLOR_DEBATE,
+                    'color': '#fff'
+                }
+            },
+            {
+                selector: 'node[type="video"]:hover',
+                style: { 'background-color': COLOR_VIDEO, 'color': '#fff' }
+            },
+            {
+                selector: 'node:selected',
+                style: {
+                    'border-width': 5,
+                    'background-color': COLOR_DEBATE,
+                    'color': '#fff'
+                }
+            },
+            {
+                selector: 'node[type="video"]:selected',
+                style: { 'background-color': COLOR_VIDEO, 'color': '#fff' }
+            }
+        ],
+        layout: {
+            name: 'cose',
+            animate: true,
+            animationDuration: 800,
+            nodeRepulsion: 12000,
+            idealEdgeLength: 140,
+            edgeElasticity: 100,
+            gravity: 60,
+            numIter: 1500,
+            fit: true,
+            padding: 60
+        },
+        minZoom: 0.3,
+        maxZoom: 3,
+        wheelSensitivity: 0.2
+    });
+
+    // Click to navigate
+    cy.on('tap', 'node', (evt) => {
+        const n = evt.target.data();
+        if (n.type === 'debate') {
+            state.view = 'debate';
+            state.debateId = n.targetId;
+            state.subtab = 'fiche';
+            render();
+        } else if (n.type === 'video') {
+            state.view = 'tate-video';
+            state.tateVideoId = n.targetId;
+            state.tateDisplay = 'rich';
+            render();
+        }
+    });
+
+    // Controls
+    document.getElementById('ex-fit')?.addEventListener('click', () => {
+        cy.fit(null, 60);
+    });
+    document.getElementById('ex-shuffle')?.addEventListener('click', () => {
+        cy.layout({
+            name: 'cose',
+            animate: true,
+            animationDuration: 600,
+            nodeRepulsion: 15000 + Math.random() * 5000,
+            idealEdgeLength: 120 + Math.random() * 40,
+            gravity: 50 + Math.random() * 30,
+            fit: true,
+            padding: 60
+        }).run();
+    });
+
+    window._cy_explorer = cy;
+}
+
 // ---- Rich debate sections (reusable for debate fiche view) ---
 function renderRichDebateSections(base, c) {
     if (!c) return '';
@@ -1290,7 +1537,7 @@ function renderRichDebateSections(base, c) {
         <div class="takeaway"><span class="takeaway-num">${String(i+1).padStart(2,'0')}</span><span class="takeaway-text">${escape(k)}</span></div>
     `).join('');
 
-    const argTree = c.argument_tree ? renderArgTree(c.argument_tree.root) : '';
+    const argTree = c.argument_tree ? renderArgGraph(c.argument_tree.root) : '';
 
     const quotes = (c.quotes || []).map(q => {
         let quoteHtml = escape(q.text);
@@ -1492,7 +1739,145 @@ function renderRichDebateSections(base, c) {
     `;
 }
 
-// Recursive argument tree renderer
+// ---- Interactive argument graph (Cytoscape) ------------
+let _argGraphSeq = 0;
+function renderArgGraph(rootNode) {
+    if (!rootNode) return '';
+    const gid = 'arg-graph-' + (++_argGraphSeq);
+    const treeJson = JSON.stringify(rootNode).replace(/'/g, '&#39;');
+    return `
+        <div class="arg-graph-container" data-tree='${treeJson}' id="${gid}">
+            <div class="arg-graph-header">
+                <div class="arg-graph-legend">
+                    <span><span class="dot" style="background:var(--accent)"></span>Root</span>
+                    <span><span class="dot" style="background:var(--warning)"></span>Premise</span>
+                    <span><span class="dot" style="background:var(--success)"></span>Evidence</span>
+                    <span><span class="dot" style="background:var(--info)"></span>Analogy</span>
+                    <span><span class="dot" style="background:var(--danger)"></span>Counter</span>
+                </div>
+                <button class="arg-graph-btn" data-graph-fit="${gid}">Recentrer</button>
+            </div>
+            <div class="arg-graph-cy"></div>
+        </div>
+    `;
+}
+
+function initArgGraphs() {
+    if (typeof cytoscape === 'undefined') return;
+    document.querySelectorAll('.arg-graph-container').forEach(container => {
+        if (container.dataset.initialized) return;
+        container.dataset.initialized = '1';
+        let tree;
+        try { tree = JSON.parse(container.dataset.tree); } catch (e) { return; }
+
+        const nodes = [];
+        const edges = [];
+        let counter = 0;
+        (function walk(n, parentId, depth) {
+            const id = 'n' + (counter++);
+            const type = depth === 0 ? 'root' : (n.type || 'premise');
+            const label = n.claim || n.text || '';
+            nodes.push({
+                data: {
+                    id,
+                    label: label.length > 90 ? label.slice(0, 87) + '…' : label,
+                    fullLabel: label,
+                    type,
+                    strength: n.strength || 0
+                }
+            });
+            if (parentId) edges.push({ data: { source: parentId, target: id } });
+            (n.children || []).forEach(ch => walk(ch, id, depth + 1));
+        })(tree, null, 0);
+
+        const css = getComputedStyle(document.documentElement);
+        const CTEXT = css.getPropertyValue('--text').trim();
+        const CBORDER = css.getPropertyValue('--border-strong').trim();
+        const CACCENT = css.getPropertyValue('--accent').trim();
+        const CWARN = css.getPropertyValue('--warning').trim();
+        const CSUCC = css.getPropertyValue('--success').trim();
+        const CINFO = css.getPropertyValue('--info').trim();
+        const CDANG = css.getPropertyValue('--danger').trim();
+        const COLORS = {
+            root:     { bg: CACCENT, fg: 'white' },
+            premise:  { bg: CWARN,   fg: 'white' },
+            evidence: { bg: CSUCC,   fg: 'white' },
+            analogy:  { bg: CINFO,   fg: 'white' },
+            example:  { bg: '#ffffff', fg: CTEXT },
+            counter:  { bg: CDANG,   fg: 'white' }
+        };
+        const cyEl = container.querySelector('.arg-graph-cy');
+        const cy = cytoscape({
+            container: cyEl,
+            elements: [...nodes, ...edges],
+            style: [
+                {
+                    selector: 'node',
+                    style: {
+                        'background-color': (ele) => (COLORS[ele.data('type')] || COLORS.premise).bg,
+                        'color': (ele) => (COLORS[ele.data('type')] || COLORS.premise).fg,
+                        'label': 'data(label)',
+                        'text-wrap': 'wrap',
+                        'text-max-width': 160,
+                        'text-valign': 'center',
+                        'text-halign': 'center',
+                        'font-family': 'Inter, sans-serif',
+                        'font-size': 11,
+                        'font-weight': 500,
+                        'padding': '10px',
+                        'shape': 'roundrectangle',
+                        'width': 'label',
+                        'height': 'label',
+                        'border-width': 1,
+                        'border-color': CBORDER
+                    }
+                },
+                {
+                    selector: 'node[type="root"]',
+                    style: { 'font-size': 13, 'font-weight': 700, 'padding': '14px', 'text-max-width': 220 }
+                },
+                {
+                    selector: 'edge',
+                    style: {
+                        'width': 1.5,
+                        'line-color': CBORDER,
+                        'target-arrow-shape': 'triangle',
+                        'target-arrow-color': CBORDER,
+                        'curve-style': 'bezier',
+                        'opacity': 0.7
+                    }
+                },
+                {
+                    selector: 'node:selected',
+                    style: { 'border-width': 3, 'border-color': CACCENT }
+                }
+            ],
+            layout: {
+                name: 'breadthfirst',
+                directed: true,
+                roots: ['n0'],
+                spacingFactor: 1.4,
+                padding: 30,
+                animate: true,
+                animationDuration: 500,
+                fit: true
+            },
+            minZoom: 0.4,
+            maxZoom: 3,
+            wheelSensitivity: 0.2
+        });
+
+        cy.on('mouseover', 'node', (evt) => {
+            const el = cyEl.parentElement;
+            el.title = evt.target.data('fullLabel');
+        });
+
+        const btn = document.querySelector(`[data-graph-fit="${container.id}"]`);
+        if (btn) btn.addEventListener('click', () => cy.fit(null, 40));
+    });
+}
+
+// Recursive argument tree renderer (legacy, kept as fallback)
 function renderArgTree(node, level = 0) {
     if (!node) return '';
     const strength = node.strength ? `<span class="arg-node-strength">${node.strength}/10</span>` : '';
@@ -1581,6 +1966,60 @@ function attachMainEvents() {
         // reset init flag so listeners re-attach after DOM re-render
         if (typeof learningInitialized !== 'undefined') { learningInitialized = false; }
         setTimeout(renderLearning, 10);
+    }
+    if (state.view === 'explorer') {
+        setTimeout(initExplorer, 50);
+    }
+    // Init argument tree cytoscape graphs (identified by class .arg-graph-container)
+    setTimeout(initArgGraphs, 50);
+    // Init scroll-aware section highlighting on vd-tabs
+    setTimeout(initScrollHighlight, 100);
+}
+
+// Highlight current section in vd-tabs as user scrolls
+function initScrollHighlight() {
+    const tabs = document.querySelectorAll('.vd-tab');
+    if (!tabs.length) return;
+    const sections = Array.from(document.querySelectorAll('.vd-section[id]'));
+    if (!sections.length) return;
+    const scroller = document.querySelector('.main-content') || document.querySelector('.tab-panel.active') || document.body;
+
+    const tabById = {};
+    tabs.forEach(t => {
+        const href = t.getAttribute('href');
+        if (href && href.startsWith('#')) tabById[href.slice(1)] = t;
+    });
+
+    const setActive = (id) => {
+        tabs.forEach(t => t.classList.remove('active'));
+        if (tabById[id]) tabById[id].classList.add('active');
+    };
+
+    // Smooth scroll on tab click
+    tabs.forEach(t => {
+        t.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = t.getAttribute('href');
+            if (!href || !href.startsWith('#')) return;
+            const target = document.getElementById(href.slice(1));
+            if (target && scroller) {
+                scroller.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Observe section visibility
+    if (typeof IntersectionObserver === 'function') {
+        const io = new IntersectionObserver((entries) => {
+            const visible = entries.filter(e => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+            if (visible.length) setActive(visible[0].target.id);
+        }, {
+            root: scroller,
+            rootMargin: '-80px 0px -50% 0px',
+            threshold: 0
+        });
+        sections.forEach(s => io.observe(s));
+        window._sectionObserver = io;
     }
 }
 
