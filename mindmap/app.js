@@ -141,8 +141,52 @@ const state = {
     subtab: 'fiche',           // 'fiche' | 'citations' | 'posters'
     tateVideoId: null,
     tateDisplay: 'rich',       // 'rich' | 'poster'
-    search: ''
+    search: '',
+    filterTag: null            // when set, home shows quotes filtered by this tag
 };
+
+// ---- Global quote index (built once) -------------------
+function buildGlobalQuoteIndex() {
+    const R = window.CONTENT_REGISTRY || {};
+    const index = [];
+    // Tate video quotes
+    for (const id of Object.keys(R)) {
+        const c = R[id];
+        const vid = TATE_CORPUS.find(t => t.id === id);
+        (c.quotes || []).forEach(q => {
+            index.push({
+                text: q.text,
+                tags: q.tags || [],
+                device: q.rhetorical_device || '',
+                power: q.power_score || 0,
+                highlights: q.highlight_words || [],
+                sourceType: 'tate',
+                sourceId: id,
+                sourceTitle: vid ? vid.title : id
+            });
+        });
+    }
+    // Debate citations
+    if (typeof citations !== 'undefined') {
+        citations.forEach(c => {
+            const deb = debates.find(d => d.id === c.debat);
+            index.push({
+                text: c.quote,
+                tags: [c.auteur, c.mode].filter(Boolean),
+                device: c.source || '',
+                power: 0,
+                highlights: [],
+                sourceType: 'debate',
+                sourceId: c.debat,
+                sourceTitle: deb ? deb.titre : c.debat,
+                author: c.auteur,
+                mode: c.mode
+            });
+        });
+    }
+    return index;
+}
+let GLOBAL_QUOTES = [];
 
 // ---- Utils ---------------------------------------------
 const escape = (s) => (s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -275,7 +319,26 @@ function renderMain() {
 
 // ---- HOME ----------------------------------------------
 function renderHome() {
+    if (!GLOBAL_QUOTES.length) GLOBAL_QUOTES = buildGlobalQuoteIndex();
+
     const filter = state.search.toLowerCase().trim();
+    const tagFilter = state.filterTag;
+
+    // If tag filter active → dedicated view
+    if (tagFilter) return renderTagFilter(tagFilter);
+
+    // Compute corpus counters from CONTENT_REGISTRY
+    const R = window.CONTENT_REGISTRY || {};
+    const totals = { quotes: 0, chapters: 0, fallacies: 0, stats: 0, frameworks: 0, drills: 0 };
+    Object.values(R).forEach(c => {
+        totals.quotes    += (c.quotes    || []).length;
+        totals.chapters  += (c.chapters  || []).length;
+        totals.fallacies += (c.fallacies || []).length;
+        totals.stats     += (c.stats     || []).length;
+        totals.frameworks+= (c.frameworks|| []).length;
+        totals.drills    += (c.drills    || []).length;
+    });
+
     const filtered = filter
         ? debates.filter(d =>
             d.titre.toLowerCase().includes(filter) ||
@@ -291,6 +354,21 @@ function renderHome() {
             t.thesis.toLowerCase().includes(filter)
           )
         : TATE_CORPUS;
+
+    // If searching, also find matching quotes
+    const matchingQuotes = filter
+        ? GLOBAL_QUOTES.filter(q =>
+            q.text.toLowerCase().includes(filter) ||
+            q.tags.some(t => t.toLowerCase().includes(filter)) ||
+            (q.device || '').toLowerCase().includes(filter)
+          ).slice(0, 12)
+        : [];
+
+    // Top quotes across corpus (by power_score)
+    const topQuotes = GLOBAL_QUOTES
+        .filter(q => q.power >= 8)
+        .sort((a, b) => b.power - a.power)
+        .slice(0, 6);
 
     const debateList = filtered.map((d, i) => `
         <div class="home-item" data-action="select-debate" data-id="${d.id}">
@@ -308,7 +386,7 @@ function renderHome() {
         </div>
     `).join('');
 
-    const tateList = tateFiltered.slice(0, 5).map((t, i) => `
+    const tateList = tateFiltered.map((t, i) => `
         <div class="home-item" data-action="select-tate" data-id="${t.id}">
             <div class="home-item-num">${String(i+1).padStart(2, '0')}</div>
             <div class="home-item-body">
@@ -323,12 +401,39 @@ function renderHome() {
         </div>
     `).join('');
 
+    const quoteResultsHtml = matchingQuotes.map(q => `
+        <div class="quote-result" data-action="select-${q.sourceType === 'tate' ? 'tate' : 'debate'}" data-id="${q.sourceId}">
+            <div class="quote-result-text">« ${escape(q.text.length > 200 ? q.text.slice(0, 200) + '…' : q.text)} »</div>
+            <div class="quote-result-src">
+                <span class="quote-result-kind">${q.sourceType === 'tate' ? 'Vidéo Tate' : 'Débat'}</span>
+                <span>${escape(q.sourceTitle)}</span>
+                ${q.power ? `<span class="quote-result-power">⚡ ${q.power}/10</span>` : ''}
+            </div>
+        </div>
+    `).join('');
+
     return `
         <div class="home-hero">
             <div class="home-hero-eyebrow">Corpus intellectuel</div>
-            <h1>Débats, fiches, citations, posters. Un seul endroit.</h1>
-            <p>Chaque débat est décomposé en cinq modes rhétoriques. Chaque prise est sourcée. Chaque citation est attribuée. Chaque poster imprimable.</p>
+            <h1>Débats, fiches, quotes, sophismes. Un seul endroit.</h1>
+            <p>7 débats décomposés en cinq modes rhétoriques. 8 vidéos Andrew Tate analysées en profondeur avec argumentation kit, sophismes et frameworks. Tout indexé, tout sourcé.</p>
+            <div class="home-stats">
+                <div class="home-stat"><div class="home-stat-n">${debates.length}</div><div class="home-stat-l">débats</div></div>
+                <div class="home-stat"><div class="home-stat-n">${TATE_CORPUS.length}</div><div class="home-stat-l">vidéos</div></div>
+                <div class="home-stat"><div class="home-stat-n">${totals.quotes}</div><div class="home-stat-l">quotes</div></div>
+                <div class="home-stat"><div class="home-stat-n">${totals.fallacies}</div><div class="home-stat-l">sophismes</div></div>
+                <div class="home-stat"><div class="home-stat-n">${totals.frameworks}</div><div class="home-stat-l">frameworks</div></div>
+                <div class="home-stat"><div class="home-stat-n">${totals.stats}</div><div class="home-stat-l">data points</div></div>
+            </div>
         </div>
+
+        ${matchingQuotes.length ? `<div class="home-section">
+            <div class="home-section-head">
+                <div class="home-section-title">Quotes trouvées pour « ${escape(filter)} »</div>
+                <div class="home-section-count">${matchingQuotes.length} extraits</div>
+            </div>
+            <div class="quote-results">${quoteResultsHtml}</div>
+        </div>` : ''}
 
         <div class="home-section">
             <div class="home-section-head">
@@ -344,6 +449,57 @@ function renderHome() {
                 <div class="home-section-count">${tateFiltered.length} / ${TATE_CORPUS.length}</div>
             </div>
             <div class="home-list">${tateList}</div>
+        </div>
+
+        ${!filter && topQuotes.length ? `<div class="home-section">
+            <div class="home-section-head">
+                <div class="home-section-title">Top quotes du corpus · power ≥ 8/10</div>
+                <div class="home-section-count">${topQuotes.length} extraits</div>
+            </div>
+            <div class="quote-results">${topQuotes.map(q => `
+                <div class="quote-result" data-action="select-tate" data-id="${q.sourceId}">
+                    <div class="quote-result-text">« ${escape(q.text)} »</div>
+                    <div class="quote-result-src">
+                        <span class="quote-result-kind">Vidéo Tate</span>
+                        <span>${escape(q.sourceTitle)}</span>
+                        <span class="quote-result-power">⚡ ${q.power}/10</span>
+                    </div>
+                </div>
+            `).join('')}</div>
+        </div>` : ''}
+    `;
+}
+
+// ---- Tag-filtered view ----------------------------------
+function renderTagFilter(tag) {
+    if (!GLOBAL_QUOTES.length) GLOBAL_QUOTES = buildGlobalQuoteIndex();
+    const matches = GLOBAL_QUOTES.filter(q => q.tags.some(t => t.toLowerCase() === tag.toLowerCase()));
+    const html = matches.map(q => `
+        <div class="quote-result" data-action="select-${q.sourceType === 'tate' ? 'tate' : 'debate'}" data-id="${q.sourceId}">
+            <div class="quote-result-text">« ${escape(q.text)} »</div>
+            <div class="quote-result-src">
+                <span class="quote-result-kind">${q.sourceType === 'tate' ? 'Vidéo Tate' : 'Débat'}</span>
+                <span>${escape(q.sourceTitle)}</span>
+                ${q.power ? `<span class="quote-result-power">⚡ ${q.power}/10</span>` : ''}
+                ${q.device ? `<span>${escape(q.device)}</span>` : ''}
+            </div>
+        </div>
+    `).join('');
+    return `
+        <div class="home-hero">
+            <div class="home-hero-eyebrow">Filtre par tag</div>
+            <h1>« ${escape(tag)} »</h1>
+            <p>${matches.length} quote${matches.length > 1 ? 's' : ''} taguée${matches.length > 1 ? 's' : ''} avec ce mot dans le corpus.</p>
+            <div style="margin-top:20px">
+                <button class="tate-link" data-action="clear-tag">← Retour à l'accueil</button>
+            </div>
+        </div>
+        <div class="home-section">
+            <div class="home-section-head">
+                <div class="home-section-title">Résultats</div>
+                <div class="home-section-count">${matches.length}</div>
+            </div>
+            <div class="quote-results">${html || '<div class="empty-state">Aucune quote trouvée pour ce tag.</div>'}</div>
         </div>
     `;
 }
@@ -595,7 +751,7 @@ function renderTateVideoRich(base, c) {
                 quoteHtml = quoteHtml.replace(re, '<mark>$1</mark>');
             });
         }
-        const tags = (q.tags || []).map(t => `<span class="quote-tag">${escape(t)}</span>`).join('');
+        const tags = (q.tags || []).map(t => `<span class="quote-tag" data-action="filter-tag" data-tag="${escape(t)}" style="cursor:pointer">${escape(t)}</span>`).join('');
         return `
             <div class="quote-card">
                 <div class="quote-text">« ${quoteHtml} »</div>
@@ -1167,10 +1323,12 @@ function attachMainEvents() {
         el.addEventListener('click', (e) => {
             e.stopPropagation();
             const act = el.dataset.action;
-            if (act === 'go-home')      { state.view = 'home'; render(); }
+            if (act === 'go-home')      { state.view = 'home'; state.filterTag = null; render(); }
             if (act === 'go-tate')      { state.view = 'tate'; render(); }
-            if (act === 'select-debate') { state.view = 'debate'; state.debateId = el.dataset.id; state.subtab = 'fiche'; render(); }
-            if (act === 'select-tate')   { state.view = 'tate-video'; state.tateVideoId = el.dataset.id; render(); }
+            if (act === 'select-debate') { state.view = 'debate'; state.debateId = el.dataset.id; state.subtab = 'fiche'; state.filterTag = null; render(); }
+            if (act === 'select-tate')   { state.view = 'tate-video'; state.tateVideoId = el.dataset.id; state.tateDisplay = 'rich'; state.filterTag = null; render(); }
+            if (act === 'clear-tag')     { state.filterTag = null; render(); }
+            if (act === 'filter-tag')    { state.view = 'home'; state.filterTag = el.dataset.tag; render(); }
             if (act === 'toggle-mode') {
                 const parent = el.closest('.fiche-mode');
                 parent.classList.toggle('open');

@@ -2254,3 +2254,99 @@ a { color: inherit; text-decoration: none; }
     transition: background var(--dur) var(--ease);
 }
 .poster-print-btn:hover { background: var(--accent-hover); }
+
+/* =========================================================
+   Home enrichment — stats bar, quote results, tag filter
+   ========================================================= */
+
+.home-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+    padding: 24px 28px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+}
+.home-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+}
+.home-stat-n {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.8px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+.home-stat-l {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+/* Quote result cards (home / search / tag filter) */
+.quote-results {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.quote-result {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 22px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--quote);
+    border-radius: var(--r);
+    cursor: pointer;
+    transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.quote-result:hover {
+    background: var(--surface-2);
+    border-color: var(--border-strong);
+}
+.quote-result-text {
+    font-size: 15.5px;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+    letter-spacing: -0.2px;
+}
+.quote-result-src {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0;
+}
+.quote-result-kind {
+    padding: 2px 8px;
+    background: var(--surface-3);
+    color: var(--accent);
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 10px;
+    font-weight: 600;
+}
+.quote-result-power {
+    color: var(--warning);
+    font-weight: 600;
+}
+
+/* Interactive quote tags */
+.quote-tag[data-action="filter-tag"]:hover {
+    background: var(--accent);
+    color: var(--bg);
+}
