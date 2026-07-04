@@ -1,0 +1,8 @@
+node_modules
+public/content
+public/content-debates
+public/content-elections
+public/fiches
+public/data.js
+public/learning.js
+public/elections-manifest.js

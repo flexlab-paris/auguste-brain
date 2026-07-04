@@ -1,5 +1,5 @@
 {
-  "outputDirectory": "mindmap",
+  "outputDirectory": "app/dist",
   "buildCommand": "",
   "installCommand": ""
 }

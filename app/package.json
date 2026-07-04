@@ -1,0 +1,22 @@
+{
+  "name": "auguste-brain-app",
+  "private": true,
+  "version": "5.0.0",
+  "type": "module",
+  "scripts": {
+    "sync": "node scripts/sync-static.mjs",
+    "dev": "npm run sync && vite",
+    "build": "npm run sync && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "cytoscape": "^3.30.4",
+    "lucide-react": "^0.454.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
+  }
+}

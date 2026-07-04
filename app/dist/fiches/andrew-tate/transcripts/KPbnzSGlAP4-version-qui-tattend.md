@@ -1,0 +1,145 @@
+# Transcript — version-qui-tattend (KPbnzSGlAP4)
+
+Source : https://youtu.be/KPbnzSGlAP4
+
+---
+
+There's a version of you that never sleeps in, never skips training, never wastes time. There's a version of you who never fails. It is waiting for you. Genuinely ask yourself a question, you at home. If you had done those things for the last 2 years, you never skipped a training, you never wasted time, you never scrolled TikTok, you never sat aimlessly on the internet typing in garbage, never played video games, you never wasted time.
+
+You never skipped training, you were training every single day. You never slept in, you were never lazy. There's this version of you. Imagine the person you would be. Genuinely imagine what you would look like.
+
+Imagine where you would live. Imagine the car you would drive. Imagine how much your woman would respect you. Imagine the love you would see in her eyes when she looks at you with adoration like a king. Imagine your existence.
+
+That person is waiting for you and the only thing that's stopping you from being that person is your monumental laziness. You can have it. The universe is very giving, it will give you anything you work for. I've never seen somebody try for something with all of their might and not get it. The only people who do not have the things they want are the people who do not try for them.
+
+I've never seen a person wake up and say my only dedication in life is to solve a Rubik's Cube and fail. You are not stupid, you are not incompetent, you are lazy and arrogant. It's extremely important you understand that that person is waiting for you and you are declining that version of yourself. In the multiverse, in the many different versions of the universe that exist, there is a version of you that does those exact things and he is a greater person than you can even fathom. You can transform yourself into that guy.
+
+You can be a top G. That's exactly what I did. I knew who I was going to have to end up being before I became that person. My brother and I are not from rich families, we are not from advantaged beginnings, but I knew I had to be a big, strong, fighting billionaire. That's what I knew I had to be.
+
+Discipline is the key to success. If you cannot force yourself to do something you don't want to do, how are you ever going to put yourself through the suffering required for greatness? If you cannot force yourself to train when you do not want to train, if you cannot force yourself to work when you don't want to work, if you can't force yourself to not log into Pornhub, or force yourself to eat right, how can you possibly ever become a monumentally successful person if you cannot control yourself long enough to do what must be done as opposed to what you feel like doing? The only people who get to live their lives based on how they feel are women and children. Children can cry cuz they feel like crying, as can a woman.
+
+A woman can start an argument cuz she feels like arguing, as can a child. A man must do what he is supposed to do regardless irrespective of how he feels. That is the key component to masculinity is discipline. If you do not have the discipline to dedicate yourself to anything, you are going to fail and be crushed by the people who can. If you only go to the gym when you feel like going to the gym, you're going to not ever going to be as strong as the people who go to the gym when they don't feel like going to the gym.
+
+That is the reality of life. So, I train every single day. I've actually heard from some people saying, "You overtrain." And I explained to them, one, I don't believe in rest. I'm not you. I'm not [expletive] and I'm not broke like you are, Mr.
+
+fitness trainer standing around the gym teaching people for $50 an hour. I don't need to listen to you. Secondly, I don't train because I want to get bigger. I train every day because it is difficult to train every day. It hurts.
+
+I don't want to. I wake up and I'm busy. I have other things to do. I don't feel like doing it, so I force myself to do it 7 days a week, 365 days a year, so that I know I'm the kind of person who can do what he doesn't want to do when it needs to be done. I am that man, and it is more of a mental exercise than a physical exercise at this point.
+
+How can you ever outcompete me if I can force myself to do the things I don't want to do and you cannot? Discipline is absolutely essential for success, and you need to get very comfortable and very used to the idea of understanding that. On your path to greatness, there are going to be long periods of time where you hate what you are doing, where you are dissatisfied with the actions you must undertake, where you are tired, where you are stressed. That is why it is difficult. That is why most people won't make it.
+
+If the path was easy, everybody would walk it and it would lead nowhere. 100 people start the path, 99 fall off because it is difficult and the 1% makes it to the end gets the gold. If all 100 made it to the end and the gold was divided by 100, it wouldn't even be worth anything. The difficulty gives it value. The fact that it is difficult to do is the key component into the fact you want to in the first place.
+
+If it wasn't difficult, everyone would have it and you wouldn't want it because no one would respect it. It's supposed to be hard. Life is supposed to be hard. You're supposed to think this is terrible. You're supposed to suffer and smile through the pain regardless.
+
+Discipline is the key to success in all realms as a man and if you lack it, you stand no chance. You can give most people a road map to success. You can give them a Ferrari with a full tank of gas and a lot of people still wouldn't make the destination because they would say the drive is too far away. Quitters, they don't have the discipline. You can tell them exactly how to do it.
+
+You can give them the mechanism to get there, but they don't have the discipline to complete the drive and end up at the destination. That is the majority of Earth. This is your competition. People who even if they are told what to do and people tell them exactly how to do it and help them do it, still quit, still fail because they lack discipline. Even me with my monumental powers, I can't make a quitter successful.
+
+It doesn't matter how good I am. It doesn't matter how easily I make it for them to succeed. It doesn't matter how compendious and concise and powerful the real world is. It doesn't matter how much I text them and motivate them, how many emergency meetings I do to try and talk to them and hype them up, how much motivation I give them. It doesn't matter what I do.
+
+If they are a quitter, guess what they're going to do? They're going to quit. No matter how simple the map is to read, no matter how fast the Ferrari is, somewhere along the drive the sun's going to get in their eyes. Me. Me.
+
+And they're going to sit there and go, "This is I don't like this. This is hard." And they're going to quit. Quitters are the number one type of people that nobody can help. If you're a quitter, I can't help you. LIFE CAN'T HELP YOU.
+
+GOD HIMSELF CANNOT HELP a quitter. So, if you lack discipline, you lack the very basic building block to any type of success which exists on the planet. By every single metric which can be measured with science, you are going to stay a loser and a failure. The key is to keep training. If you train hard every single day, you don't have to worry about a little bit of vitamin C.
+
+It's true. If you don't train and you don't smoke, you're still going to be a [expletive] Yes. The answer is always hard work. As soon as you are granted life, you are guaranteed death. What you do in between is up to you.
+
+You are all conscious. That could end tomorrow. That could end in a hundred years. But, the time between the beginning of your consciousness and the end of it is completely up to you. Training is never the wrong decision.
+
+If you're in jail, you should train. If you are free, you should train. If you are rich, you should train. If you are poor, you should train. If you smoke, you should train.
+
+If you don't smoke, you should train. If you drink, you should train. If you don't drink, you should train. You cannot escape that hard work is always the correct decision. There is no time in any scenario when working hard is going to be the wrong answer.
+
+You should always try your very best in all things. I will smoke 10 cigars a day and beat the [expletive] out of you because I train harder than you can possibly fathom. Pain is an extremely important part of the equation. Pain is the elixir of success. When people say, "This bad thing happened to me and I'm suffering." I say, "Good." It is pain which is required.
+
+It's one of the elements in the chemical reaction. If a chemical reaction requires five particular indis- uh distinct compounds and you have four and you're missing one, it simply doesn't work. Pain for a man is one of the most important elements in becoming successful. Batman is Batman because they killed his parents. If they did not kill his parents, he would not be Batman.
+
+You're supposed to suffer. You're supposed to take that pain. The worst thing that can happen to you as a man is you live a life with no pain in it. To be born into a rich family and have a nice easy life and be given money and you don't have to go to the gym and not have to train because you have bodyguards and sit around like a [expletive] up. You're going to be miserable and unhappy and a drug addict buying prostitutes.
+
+You're only going to have women who adore you. You're only going to feel confident in yourself and feel happy when you've been through hell and come out the other side. The pain is required and you'll often notice that people who are better than you are people who have suffered more than you have suffered. So, the person who is waiting for you, he requires your motivation. It also requires huge amounts of pain.
+
+So, when bad things happen to you, do not sit at home and lament. Do not feel sorry for yourself. Instead, look in the mirror and say, "Thank you, God, for giving me one of the ingredients that is needed for the chemical concoction that is going to turn me into a superhero." Because pain is an extremely important one. In fact, it's one of the most important ones for a man. Everything is war.
+
+All of it. Sitting in the commute without losing your patience is war. Trying to find a way to escape your slave job is war. Keeping your wife happy and your children inspired is war. Training to become stronger than before is war.
+
+It is all war and it cannot be avoided and I'll tell you why it's war because war is two opposing sides trying to achieve the same goal. Two opposing sides want the same land or the same influence over X land. And the car you want, the Ferrari, you're not the only person who wants it. The reason it's so expensive is because others people want it. The The girl you want, the beautiful woman, everyone wants her.
+
+It is war. It is competition. Everything about life as a man is war. It is conflict because you are competing against the other men who wanted it the same, which is why discipline is such an important thing, which is why you must take the pain and add it to the concoction to become as formidable as possible. Life is war.
+
+This idea that you can go through life as a man and avoid war is probably the biggest mistake that most men make because it is impossible for you to achieve anything significant without war. Running a business is war. Running a hotel, running a restaurant, running an online company, it's war. Training is war. Life as a man is war.
+
+You need to wake up and view it exactly as what it is. Everything I want, other people want. Everything I desire, other men are trying to get. This is a war and I must outcompete them. That is the best possible mental model you can have.
+
+Even in jail, it was a war for who could stay most calm. A war who could control their mind the best. A war for who could suffer the least. That is war. I was surrounded by people who lost their minds and I refused.
+
+It was a battle and I was successful. Life in and of itself as a man is a never-ending struggle and a never-ending battle. It is the constant of the human condition. Evolution requires pain. While others complain that they do not feel happy enough, I'm happy I'm struggling.
+
+I don't want to be happy. I want to be great. This is the beauty of life as a man. Do you understand? I don't care.
+
+I'm happy to be struggling. I wanted to fight. You wanted to win. I wanted to fight. That's the difference.
+
+You're concerned with winning. I wanted to just fight. And we're fighting. That is the beauty of life as a man. To be great.
+
+If you concern yourself only with being happy, you are once again acting like a female or a child. Happiness is fleeting. It doesn't even matter if you're concerned only with the hedonism of happiness, you're going to drink alcohol and go to parties and go to festivals and take drugs. I want to be happy. Who cares?
+
+I want to be great. I want to be great all of the time. And let me ask you a question as a man at home, genuinely, truthfully. Would you rather be a loser who's always smiling, a happy loser, or would you rather be a stressed winner? Because I'll tell you something about winners.
+
+Most of them are stressed. We are stressed. We're stressed. Putin is stressed. Genghis Khan was stressed.
+
+When his messenger turned up after a 4-week ride with updates from the battle front of Iran, I'm sure he was stressed by what he read. Even if it was very good. Even if it all looked fantastic, he's starting to feel stressed. Okay, well, now maybe I need to go to Iran. How long's it going to take me to get there?
+
+Maybe we need to send more horses. Maybe we need to colonize her Iran. He would He felt stressed. Because the beauty of life as a man is to be great. So, you have to sit here and ask yourself, do you want to be a happy loser that's insignificant?
+
+Nobody knows you exist. Women don't respect you. Men don't respect you. Nobody cares if you live or die, but you get to smile all the time. Or do you want to be one of the most important people on the planet with a little bit of stress?
+
+I am brilliant because I've decided to be brilliant. And if I have to sacrifice happiness to be brilliant, then that's fine. You know what the great thing about it is? You know what's amazing what God gives, how the whole world becomes full circle? If you stop caring about being happy, and you start caring instead about being great, guess what you end up being?
+
+Great. Along with great. And you know what? You end up happy. YOU END UP HAPPY IF YOU FORGET about happiness and try to become great.
+
+You will never be successful if you're concerned about being happy, so forget about it. I like to consider myself a wise old man, and I'm trying my best to encourage and instigate a revolution amongst the youth where men take absolute self-accountability, and they believe in themselves, and they take responsibility for absolutely everything. As a man, you are most formidable if everything is your fault. If it rains outside and you get wet, that is still your fault. Can you control the rain?
+
+No. Could you have brought an umbrella? Yes. You need to blame yourself for all things, the good and the bad. And by doing this, you take absolute self-accountability, which allows you to build a mental model in which you will find solutions, one.
+
+Two, avoid trouble because you know that anything bad happens to you is your fault. And three, be the most fearsome competitor possible because we're living in a very competitive world nowadays amongst the elites. The people who understand that you're living inside of a fish tank are trying very different very hard to get out. And you have to make sure that you can outrun some of them if you want to escape. It's an age-old adage.
+
+If a bear is chasing a group of people, you do not have to be the fastest one. You just have to be faster than the slowest. The slowest person is going to die. So, as long as you're ahead of the majority of people, you stand a very good chance of avoiding slavery. Being a powerful man isn't always about furious anger and instilling fear.
+
+As enemies attempt to attack your energy and lower your vibration, understand this. Power is untouchable. Power may notice, but it doesn't care. Sometimes power is simply not giving a [expletive] Being a powerful man isn't always about furious anger and instilling fear. Meaning, sometimes it is.
+
+You need to retain the capability to instill fear with furious anger. A man who cannot do that is not a man. It is one of the cards you need to have in your deck. However, more often than not when you're in a true position of power, you will play the ultimate card which I've described here is simply not caring. How can you not give a [expletive] about things?
+
+Well, I'll tell you how. If you're filthy rich and you have a strong network of people around you who you trust, and you have a good family, and you have beautiful children, and you have women who love you, and you have beautiful supercars, you live with your best friends in a compound, you have armed guards, and you're proud of yourself, and you're strong, and you train hard every day, and you're monumentally successful, and all of your dreams come true, and if you want something you can instantly snap it up. You want a Pagani, you want a Bugatti, you want a $25 million apartment, anything you want, you buy. It's very easy to not give a [expletive] about the opinions of people who don't have one fraction of your success. And what these people are trying to do is drag me I'm using me as an example, but we can also use it for you.
+
+When you have true power, they're trying to drag you down. They're not trying to elevate themselves. They're trying to drag you down, which is a very different thing. Because it's amazing how God rewards those who are trying to build and create and elevate and how it punishes those who are simply trying to destroy and be spiteful and negative. And these people are going to dedicate hours and hours and millions of hours of their life towards a certain cause.
+
+Thank you. To try and drag people down who they cannot affect because they're already too powerful and too large. And they're wasting their own human experience and they're not progressing or advancing themselves in any way. They will stay broke-ies and we will stay rich forever. So, the lesson here is that you need to get to a position where ignoring people is a move in which you're guaranteed success.
+
+You can ignore people completely and they are benefiting you. And that comes from a position and I think a lot of you at home right now, you may not be in our position, but if you're already working hard, you're already going to the gym, you're already training you make sure that you're getting as much muscles as possible, as much money as possible, you're dedicated, you don't sleep in, you don't waste your time, you don't smoke weed, you don't play video games, you're focused on trying to become fantastic as a person, you can just ignore that girl. That girl who broke your heart or or cheated on you, just ignore her. The most powerful move you can make is ignore her. Yeah, you could yell at her, yeah, you could try and make her scared of you, blah blah blah, right?
+
+That's not going to work. The powerful move is just to completely ignore her because you're on your ascent. She is likely on her descent. She likely has no intention of improving herself, no intention of becoming richer, no intention of becoming better looking. Time is against her.
+
+As she gets older, she's going to lose her looks. You're going to continue your ascent and she's going to have to watch you for the rest of her life be the man that she could have been with, that she's no longer good enough for. The best thing you can do is simply ignore. That is the powerful move. And it's the same with also men.
+
+It's not even a gender argument. There's men who want to be your friends right now who wanted to be your friend and they did something wrong to you. And if you're on the right path doing the right things, karma, God, the universe, whatever you want to call it, is going to teach them a lesson for simply failing to be a good person to you while they had the chance. But when you have a whole bunch of money, you take care of the people you love. And that's the masculine prerogative.
+
+And even my brother and I, anyone who's been loyal to us, who's on our team, we monumentally reward. And everyone who ever dis- played cowardice or sold us out or made mistakes, massively regrets it cuz they see how well we treat the people who are close to us. If you lack somewhere, excel somewhere else. Mhm. Counter your weaknesses by honing other capabilities.
+
+If you're ugly, become filthy rich. If you're poor, be as strong as an ox. Life is unfair. The primary focus of your energies is to balance the books. And there's two different ways you can interpret that.
+
+You can, obviously, increase the attributes that you are lacking. If you If you have the ability to train, uh cuz a lot of people don't. Some people born without arms and legs, but you, with two arms and two legs, are sitting at home jerking off the Pornhub, flabby and fat. If you have the ability to train, you should be doing it. But also, you know, there are some things that some people are just better at and you can counteract that problem by teaming up with people who compensate for your weaknesses.
+
+People who are strong in areas where you are weak and you team up with people where you are strong in areas where they are weak. I don't think between the people in this house and our group of friends, we lack anything. Correct. Anything. Literally anything.
+
+We can sit as a group and have a conversation about anything with anyone in the world and give useful insight and change people's lives for the better because although I am not perfect, our team compensates one for each other. And that's the point of brotherhood. So, [snorts] excel in one area if you lack in others. I have people say to me, "Andrew, I'm short. What do I do?
+
+I'm short." Okay, God made you short. Fine. Good. Doesn't matter. You can't change it.
+
+What you can do is become as strong as an ox and become filthy rich and monumentally important and extremely influential. You can do that. I people say, "I'm poor." You should be strong. "Oh, I'm strong, but I don't have any money." Okay, then teach others to be strong. Yes.
+
+You There's always a way you can take your advantages and use them. And by teaming up with other men, other people, you can build a team in which there are no weaknesses. So, if you have a disadvantage, you also have somewhere God has given you a distinct advantage over others, and it is your duty to excel in that realm. It is your duty to become so monumentally influential and powerful within that specific criteria in which you have the capability to be brilliant that your weaknesses no longer appear because they can be simply overshadowed by your network or overshadowed by your absolute competence. By constructing the correct mindset, you can be in the exact same scenario you're currently in, living the exact same life with a different mental model in which you view the world, and you will not only feel more powerful, you will be more powerful.
+
+You will achieve more amazing things. You will be greater. You will be happier with the same car, the same woman, the same house, the same income, the same everything, but your mind changes the lens in which you view the world. Lenses change things. Rose-tinted glasses, perhaps dark glasses.
+
+You can put glasses on, change the lens, and you can view the world differently by changing how your mind is constructed and put together and the way you view the world. That is the point of mental aikido.
