@@ -1,1 +1,1 @@
-window.ELECTIONS_MANIFEST = ["attal-renaissance-2027.js","darmanin-2027.js","eelv-2027.js","lfi-2027.js","lisnard-2027.js","lr-2027.js","pcf-2027.js","philippe-horizons-2027.js","ps-2027.js","reconquete-2027.js","rn-2027.js","ruffin-2027.js","villepin-2027.js"];
+window.ELECTIONS_MANIFEST = ["_consolidated.js","attal-renaissance-2027.js","darmanin-2027.js","eelv-2027.js","lfi-2027.js","lisnard-2027.js","lr-2027.js","pcf-2027.js","philippe-horizons-2027.js","ps-2027.js","reconquete-2027.js","rn-2027.js","ruffin-2027.js","villepin-2027.js"];
