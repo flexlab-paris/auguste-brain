@@ -541,26 +541,32 @@ function renderDebate() {
         </div>
     `).join('');
 
+    // Check for rich debate content
+    const richContent = (window.CONTENT_DEBATES_REGISTRY || {})[state.debateId];
+
     let contentHtml = '';
     if (state.subtab === 'fiche') {
+        const richHtml = richContent ? renderRichDebateSections(d, richContent) : '';
         contentHtml = `
             <div class="content-wrap">
                 <div class="fiche-thesis-block">${escape(d.these)}</div>
 
                 <div class="fiche-section">
-                    <div class="fiche-section-label">Chiffres clés · ${d.faits_cles.length} data points</div>
+                    <div class="fiche-section-label">${icon('bar-chart-3', 'sm')} Chiffres clés · ${d.faits_cles.length} data points</div>
                     <ul class="fiche-facts">${factsHtml}</ul>
                 </div>
 
                 <div class="fiche-section">
-                    <div class="fiche-section-label">Décomposition en 5 modes rhétoriques</div>
+                    <div class="fiche-section-label">${icon('layers', 'sm')} Décomposition en 5 modes rhétoriques</div>
                     <div class="fiche-modes">${modesHtml}</div>
                 </div>
 
+                ${richHtml}
+
                 ${d.pdf_path ? `
                 <div class="fiche-section">
-                    <div class="fiche-section-label">Fiche complète</div>
-                    <a href="${d.pdf_path}" target="_blank" class="fiche-pdf-download">↓ Télécharger le PDF</a>
+                    <div class="fiche-section-label">${icon('file-down', 'sm')} Fiche complète</div>
+                    <a href="${d.pdf_path}" target="_blank" class="fiche-pdf-download">${icon('download', 'sm')} Télécharger le PDF</a>
                 </div>` : ''}
             </div>
         `;
@@ -1273,6 +1279,216 @@ function renderTateVideoPoster(base, c) {
 
             </div>
         </div>
+    `;
+}
+
+// ---- Rich debate sections (reusable for debate fiche view) ---
+function renderRichDebateSections(base, c) {
+    if (!c) return '';
+
+    const takeaways = (c.key_takeaways || []).map((k, i) => `
+        <div class="takeaway"><span class="takeaway-num">${String(i+1).padStart(2,'0')}</span><span class="takeaway-text">${escape(k)}</span></div>
+    `).join('');
+
+    const argTree = c.argument_tree ? renderArgTree(c.argument_tree.root) : '';
+
+    const quotes = (c.quotes || []).map(q => {
+        let quoteHtml = escape(q.text);
+        (q.highlight_words || []).forEach(w => {
+            const re = new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+            quoteHtml = quoteHtml.replace(re, '<mark>$1</mark>');
+        });
+        const tags = (q.tags || []).map(t => `<span class="quote-tag" data-action="filter-tag" data-tag="${escape(t)}" style="cursor:pointer">${escape(t)}</span>`).join('');
+        return `
+            <div class="quote-card">
+                <div class="quote-text">« ${quoteHtml} »</div>
+                <div class="quote-meta">
+                    ${q.rhetorical_device ? `<span class="quote-device">${escape(q.rhetorical_device)}</span>` : ''}
+                    ${tags}
+                    ${q.power_score ? `<span class="quote-power">⚡ ${q.power_score}/10</span>` : ''}
+                </div>
+                ${q.context ? `<div class="quote-context">${escape(q.context)}</div>` : ''}
+            </div>
+        `;
+    }).join('');
+
+    const kit = c.argumentation_kit || {};
+    const defendCards = (kit.how_to_defend || []).map(d => `
+        <div class="arg-kit-card" data-type="defend">
+            <div class="arg-kit-label">${icon('shield', 'sm')} Comment défendre</div>
+            <div class="arg-kit-challenge">${escape(d.challenge)}</div>
+            <div class="arg-kit-response">${escape(d.response)}</div>
+            ${d.technique ? `<div class="arg-kit-technique">Technique : ${escape(d.technique)}</div>` : ''}
+            ${d.example_response_text ? `<div class="arg-kit-example">« ${escape(d.example_response_text)} »</div>` : ''}
+        </div>
+    `).join('');
+
+    const attackCards = (kit.how_to_attack || []).map(a => `
+        <div class="arg-kit-card" data-type="attack">
+            <div class="arg-kit-label">${icon('sword', 'sm')} Point faible à attaquer</div>
+            <div class="arg-kit-challenge">${escape(a.target_claim)}</div>
+            <div class="arg-kit-response">${escape(a.attack)}</div>
+            ${a.angle ? `<div class="arg-kit-technique">Angle : ${escape(a.angle)}</div>` : ''}
+        </div>
+    `).join('');
+
+    const rephraseCards = (kit.how_to_rephrase || []).map(r => `
+        <div class="arg-kit-card" data-type="rephrase">
+            <div class="arg-kit-label">${icon('repeat', 'sm')} Reformuler selon le public</div>
+            <div class="rephrase-original"><strong>Original :</strong> ${escape(r.original)}</div>
+            <div class="rephrase-variants">
+                ${r.softer ? `<div class="rephrase-variant" data-tone="softer"><span class="rephrase-variant-label">Softer</span>${escape(r.softer)}</div>` : ''}
+                ${r.harder ? `<div class="rephrase-variant" data-tone="harder"><span class="rephrase-variant-label">Harder</span>${escape(r.harder)}</div>` : ''}
+                ${r.academic ? `<div class="rephrase-variant" data-tone="academic"><span class="rephrase-variant-label">Academic</span>${escape(r.academic)}</div>` : ''}
+            </div>
+        </div>
+    `).join('');
+
+    const askCards = (kit.if_asked || []).map(q => `
+        <div class="arg-kit-card" data-type="ask">
+            <div class="arg-kit-label">${icon('help-circle', 'sm')} Si on te pose cette question</div>
+            <div class="arg-kit-challenge">${escape(q.question)}</div>
+            <div class="arg-kit-response">${escape(q.best_response)}</div>
+            ${Array.isArray(q.followup_moves) && q.followup_moves.length ? `
+                <div class="arg-kit-technique">Follow-up : ${q.followup_moves.map(m => escape(m)).join(' · ')}</div>
+            ` : ''}
+        </div>
+    `).join('');
+
+    const fallacies = (c.fallacies || []).map(f => `
+        <div class="fallacy-card" data-sev="${f.severity || 'medium'}">
+            <div class="fallacy-head">
+                <div class="fallacy-type">${icon('alert-triangle', 'sm')} ${escape(f.fallacy_type || 'sophisme')}</div>
+                <div class="fallacy-severity" data-sev="${f.severity || 'medium'}">${escape(f.severity || 'medium')}</div>
+            </div>
+            <div class="fallacy-original">« ${escape(f.original_claim)} »</div>
+            <div class="fallacy-block" data-kind="why">
+                <span class="fallacy-block-label">Pourquoi c'est fallacieux</span>
+                <div class="fallacy-block-text">${escape(f.why_fallacious || '')}</div>
+            </div>
+            ${f.steelman ? `<div class="fallacy-block" data-kind="steelman"><span class="fallacy-block-label">Steelman — la version la plus forte</span><div class="fallacy-block-text">${escape(f.steelman)}</div></div>` : ''}
+            ${f.nuance ? `<div class="fallacy-block" data-kind="nuance"><span class="fallacy-block-label">Nuance</span><div class="fallacy-block-text">${escape(f.nuance)}</div></div>` : ''}
+            ${f.counter_argument ? `<div class="fallacy-block" data-kind="counter"><span class="fallacy-block-label">Contre-argument à utiliser</span><div class="fallacy-block-text">${escape(f.counter_argument)}</div></div>` : ''}
+        </div>
+    `).join('');
+
+    const stats = (c.stats || []).map(s => `
+        <div class="stat-card">
+            <div class="stat-num">${escape(s.number)}</div>
+            <div class="stat-lbl">${escape(s.label)}</div>
+            ${s.context ? `<div class="stat-ctx">${escape(s.context)}</div>` : ''}
+            <div class="stat-src">${escape(s.source || '')}</div>
+        </div>
+    `).join('');
+
+    const comparisons = (c.comparisons || []).map(cp => `
+        <div class="compare-block">
+            <div class="compare-title">${escape(cp.title)}</div>
+            <div class="compare-grid">
+                <div class="compare-side" data-side="left">
+                    <div class="compare-side-label">${escape(cp.left.label)}</div>
+                    ${cp.left.items.map(i => `<div class="compare-item">${escape(i)}</div>`).join('')}
+                </div>
+                <div class="compare-vs">VS</div>
+                <div class="compare-side" data-side="right">
+                    <div class="compare-side-label">${escape(cp.right.label)}</div>
+                    ${cp.right.items.map(i => `<div class="compare-item">${escape(i)}</div>`).join('')}
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    const devices = (c.devices || []).map(d => `
+        <div class="device-card">
+            <div class="device-name">${escape(d.name)}</div>
+            <div class="device-example">« ${escape(d.example_text)} »</div>
+            <div class="device-effect">${escape(d.effect || '')}</div>
+            ${d.why_it_works ? `<div class="device-why">${escape(d.why_it_works)}</div>` : ''}
+        </div>
+    `).join('');
+
+    const frameworks = (c.frameworks || []).map(f => `
+        <div class="framework-card">
+            <div class="framework-name">${escape(f.name)}</div>
+            <div class="framework-when">Quand : ${escape(f.when_to_use || '')}</div>
+            <ol class="framework-steps">${(f.steps || []).map(s => `<li>${escape(s)}</li>`).join('')}</ol>
+            ${f.warning ? `<div class="framework-warning">${escape(f.warning)}</div>` : ''}
+        </div>
+    `).join('');
+
+    // Related cross-links
+    const relatedVids = ((c.related && c.related.videos) || []).map(vid => {
+        const rt = TATE_CORPUS.find(x => x.id === vid);
+        if (!rt) return '';
+        return `<a class="related-card" data-action="select-tate" data-id="${vid}">
+            <span class="related-kind">${icon('play-circle', 'sm')} Vidéo Tate</span>
+            <span class="related-title">${escape(rt.title)}</span>
+        </a>`;
+    }).join('');
+    const relatedDebs = ((c.related && c.related.debates) || []).map(did => {
+        const dd = debates.find(x => x.id === did);
+        if (!dd || dd.id === base.id) return '';
+        return `<a class="related-card" data-action="select-debate" data-id="${did}">
+            <span class="related-kind">${icon('gavel', 'sm')} Débat</span>
+            <span class="related-title">${escape(dd.titre)}</span>
+        </a>`;
+    }).join('');
+
+    return `
+        ${c.hook ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('sparkles', 'sm')} Hook</div>
+            <div class="vd-hook" style="font-size:22px">${escape(c.hook)}</div>
+        </div>` : ''}
+
+        ${takeaways ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('check-circle-2', 'sm')} À retenir · ${(c.key_takeaways||[]).length} take-aways</div>
+            <div class="takeaways-grid">${takeaways}</div>
+        </div>` : ''}
+
+        ${argTree ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('git-branch', 'sm')} Arbre d'argumentation</div>
+            <div class="arg-tree">${argTree}</div>
+        </div>` : ''}
+
+        ${quotes ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('quote', 'sm')} Quotes marquantes · ${(c.quotes||[]).length}</div>
+            <div class="quotes-grid">${quotes}</div>
+        </div>` : ''}
+
+        ${(defendCards || attackCards || rephraseCards || askCards) ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('swords', 'sm')} Kit d'argumentation</div>
+            <div class="arg-kit">${askCards}${defendCards}${attackCards}${rephraseCards}</div>
+        </div>` : ''}
+
+        ${fallacies ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('alert-triangle', 'sm')} Sophismes & nuances · ${(c.fallacies||[]).length}</div>
+            <div class="fallacies-list">${fallacies}</div>
+        </div>` : ''}
+
+        ${stats ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('bar-chart-3', 'sm')} Data & chiffres sourcés · ${(c.stats||[]).length}</div>
+            <div class="stats-grid">${stats}</div>
+        </div>` : ''}
+
+        ${comparisons ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('columns-3', 'sm')} Contrastes binaires · ${(c.comparisons||[]).length}</div>
+            ${comparisons}
+        </div>` : ''}
+
+        ${devices ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('mic', 'sm')} Procédés rhétoriques · ${(c.devices||[]).length}</div>
+            <div class="devices-grid">${devices}</div>
+        </div>` : ''}
+
+        ${frameworks ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('wrench', 'sm')} Frameworks opérationnels · ${(c.frameworks||[]).length}</div>
+            <div class="frameworks-list">${frameworks}</div>
+        </div>` : ''}
+
+        ${(relatedVids || relatedDebs) ? `<div class="fiche-section">
+            <div class="fiche-section-label">${icon('link-2', 'sm')} Voir aussi</div>
+            <div class="related-grid">${relatedVids}${relatedDebs}</div>
+        </div>` : ''}
     `;
 }
 
