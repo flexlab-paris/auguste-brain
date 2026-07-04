@@ -201,9 +201,20 @@ function renderSidebar() {
     const activeLearning = state.view === 'learning';
     const activeHome = state.view === 'home';
 
+    // Map debate id to a Lucide icon
+    const DEBATE_ICON = {
+        'taxe-zucman': 'landmark',
+        'science-abondance': 'flask-conical',
+        'masculinite-feminisme': 'users',
+        'droite-gauche': 'scale',
+        'course-ia': 'cpu',
+        'risques-existentiels': 'shield-alert',
+        'rhetorique-verites-difficiles': 'message-square-quote'
+    };
+
     const debateItems = debates.map(d => `
         <button class="sb-item ${activeDebate && state.debateId === d.id ? 'active' : ''}" data-action="select-debate" data-id="${d.id}">
-            <span class="sb-item-marker"></span>
+            ${icon(DEBATE_ICON[d.id] || 'file-text')}
             <span class="sb-item-text">${escape(d.titre)}</span>
             <span class="sb-item-meta">${d.sources_count}</span>
         </button>
@@ -211,7 +222,7 @@ function renderSidebar() {
 
     const tateItems = TATE_CORPUS.map(t => `
         <button class="sb-item sub ${activeTateVideo && state.tateVideoId === t.id ? 'active' : ''}" data-action="select-tate" data-id="${t.id}">
-            <span class="sb-item-marker"></span>
+            ${icon('play-circle', 'sm')}
             <span class="sb-item-text">${escape(t.title)}</span>
             <span class="sb-item-meta">${t.tag === 'DEEP' ? '●' : '○'}</span>
         </button>
@@ -221,28 +232,31 @@ function renderSidebar() {
         <div class="sb-brand">
             <div>
                 <span class="sb-brand-name"><span class="sb-brand-dot"></span>Auguste Brain</span>
-                <div class="sb-brand-meta">v2 · corpus rhétorique</div>
+                <div class="sb-brand-meta">v4 · corpus rhétorique</div>
             </div>
         </div>
 
         <div class="sb-search">
-            <input type="text" id="sb-search-input" placeholder="Rechercher…" value="${escape(state.search)}"/>
+            <div style="position:relative">
+                ${icon('search', 'sm')}
+                <input type="text" id="sb-search-input" placeholder="Rechercher…" value="${escape(state.search)}" style="padding-left:32px"/>
+            </div>
         </div>
 
         <nav class="sb-nav">
             <div class="sb-section">
                 <div class="sb-section-label">
-                    <span>Accueil</span>
+                    <span>${icon('home', 'sm')} Accueil</span>
                 </div>
                 <button class="sb-item ${activeHome ? 'active' : ''}" data-action="go-home">
-                    <span class="sb-item-marker"></span>
-                    <span class="sb-item-text">Tous les débats</span>
+                    ${icon('layout-dashboard', 'sm')}
+                    <span class="sb-item-text">Vue d'ensemble</span>
                 </button>
             </div>
 
             <div class="sb-section">
                 <div class="sb-section-label">
-                    <span>Débats</span>
+                    <span>${icon('gavel', 'sm')} Débats</span>
                     <span class="sb-section-count">${debates.length}</span>
                 </div>
                 ${debateItems}
@@ -250,22 +264,22 @@ function renderSidebar() {
 
             <div class="sb-section">
                 <div class="sb-section-label">
-                    <span>Corpus Andrew Tate</span>
+                    <span>${icon('flame', 'sm')} Corpus Andrew Tate</span>
                     <span class="sb-section-count">${TATE_CORPUS.length}</span>
                 </div>
                 <button class="sb-item ${activeTateHome ? 'active' : ''}" data-action="go-tate">
-                    <span class="sb-item-marker"></span>
-                    <span class="sb-item-text">Vue d'ensemble</span>
+                    ${icon('list', 'sm')}
+                    <span class="sb-item-text">Toutes les vidéos</span>
                 </button>
                 ${tateItems}
             </div>
 
             <div class="sb-section">
                 <div class="sb-section-label">
-                    <span>Ressources</span>
+                    <span>${icon('graduation-cap', 'sm')} Ressources</span>
                 </div>
                 <button class="sb-item ${activeLearning ? 'active' : ''}" data-action="go-learning">
-                    <span class="sb-item-marker"></span>
+                    ${icon('book-open', 'sm')}
                     <span class="sb-item-text">Apprentissage</span>
                 </button>
             </div>
@@ -382,7 +396,7 @@ function renderHome() {
                     ${d.pdf_path ? '<span>PDF disponible</span>' : ''}
                 </div>
             </div>
-            <div class="home-item-arrow">→</div>
+            <div class="home-item-arrow">${icon('chevron-right', 'sm')}</div>
         </div>
     `).join('');
 
@@ -397,7 +411,7 @@ function renderHome() {
                     <span>${t.tag}</span>
                 </div>
             </div>
-            <div class="home-item-arrow">→</div>
+            <div class="home-item-arrow">${icon('chevron-right', 'sm')}</div>
         </div>
     `).join('');
 
@@ -429,7 +443,7 @@ function renderHome() {
 
         ${matchingQuotes.length ? `<div class="home-section">
             <div class="home-section-head">
-                <div class="home-section-title">Quotes trouvées pour « ${escape(filter)} »</div>
+                <div class="home-section-title">${icon('search', 'sm')}Quotes trouvées pour « ${escape(filter)} »</div>
                 <div class="home-section-count">${matchingQuotes.length} extraits</div>
             </div>
             <div class="quote-results">${quoteResultsHtml}</div>
@@ -437,7 +451,7 @@ function renderHome() {
 
         <div class="home-section">
             <div class="home-section-head">
-                <div class="home-section-title">Débats</div>
+                <div class="home-section-title">${icon('gavel', 'sm')}Débats</div>
                 <div class="home-section-count">${filtered.length} / ${debates.length}</div>
             </div>
             <div class="home-list">${debateList || '<div class="empty-state"><div class="empty-state-title">Rien pour cette recherche.</div>Essaie un autre terme.</div>'}</div>
@@ -445,7 +459,7 @@ function renderHome() {
 
         <div class="home-section">
             <div class="home-section-head">
-                <div class="home-section-title">Corpus Andrew Tate — vidéos analysées</div>
+                <div class="home-section-title">${icon('flame', 'sm')}Corpus Andrew Tate — vidéos analysées</div>
                 <div class="home-section-count">${tateFiltered.length} / ${TATE_CORPUS.length}</div>
             </div>
             <div class="home-list">${tateList}</div>
@@ -453,7 +467,7 @@ function renderHome() {
 
         ${!filter && topQuotes.length ? `<div class="home-section">
             <div class="home-section-head">
-                <div class="home-section-title">Top quotes du corpus · power ≥ 8/10</div>
+                <div class="home-section-title">${icon('zap', 'sm')}Top quotes du corpus · power ≥ 8/10</div>
                 <div class="home-section-count">${topQuotes.length} extraits</div>
             </div>
             <div class="quote-results">${topQuotes.map(q => `
@@ -496,7 +510,7 @@ function renderTagFilter(tag) {
         </div>
         <div class="home-section">
             <div class="home-section-head">
-                <div class="home-section-title">Résultats</div>
+                <div class="home-section-title">${icon('filter', 'sm')}Résultats</div>
                 <div class="home-section-count">${matches.length}</div>
             </div>
             <div class="quote-results">${html || '<div class="empty-state">Aucune quote trouvée pour ce tag.</div>'}</div>
@@ -600,10 +614,10 @@ function renderDebate() {
                 <p class="main-subtitle">${escape(d.these)}</p>
             </div>
             <div class="main-meta">
-                <span class="meta-chip"><strong>${d.sources_count}</strong> sources</span>
-                <span class="meta-chip"><strong>${d.faits_cles.length}</strong> chiffres</span>
-                <span class="meta-chip"><strong>${cits.length}</strong> citations</span>
-                ${d.pdf_path ? '<span class="meta-chip">PDF</span>' : ''}
+                <span class="meta-chip">${icon('book', 'sm')}<strong>${d.sources_count}</strong> sources</span>
+                <span class="meta-chip">${icon('bar-chart-3', 'sm')}<strong>${d.faits_cles.length}</strong> chiffres</span>
+                <span class="meta-chip">${icon('quote', 'sm')}<strong>${cits.length}</strong> citations</span>
+                ${d.pdf_path ? `<span class="meta-chip">${icon('file-down', 'sm')}PDF</span>` : ''}
             </div>
             <div class="subtabs">
                 <button class="subtab ${state.subtab === 'fiche' ? 'active' : ''}" data-subtab="fiche">Fiche<span class="subtab-count">${d.faits_cles.length + d.modes.length}</span></button>
@@ -641,7 +655,7 @@ function renderTateHome() {
                     <span>${escape(t.depth)}</span>
                 </div>
             </div>
-            <div class="home-item-arrow">→</div>
+            <div class="home-item-arrow">${icon('chevron-right', 'sm')}</div>
         </div>
     `).join('');
 
@@ -962,7 +976,7 @@ function renderTateVideoRich(base, c) {
             </div>
         </div>
         <div class="main-content">
-            <div class="content-wrap" style="max-width:960px">
+            <div class="content-wrap" style="max-width:1400px">
 
                 <div class="vd-hero">
                     ${c.speaker ? `<div class="vd-hero-tag">${escape(c.speaker)} · ${escape(c.format || '')} · ${c.word_count ? c.word_count.toLocaleString() + ' mots' : ''}</div>` : ''}
@@ -1211,7 +1225,7 @@ function renderTateVideoPoster(base, c) {
             </div>
         </div>
         <div class="main-content">
-            <div class="content-wrap" style="max-width:960px">
+            <div class="content-wrap" style="max-width:1400px">
 
                 <div class="poster-view">
                     <div class="poster-head">
@@ -1354,10 +1368,20 @@ function attachMainEvents() {
     }
 }
 
+// ---- Icon helper (Lucide) -------------------------------
+function icon(name, size) {
+    const cls = size ? `icon icon-${size}` : 'icon';
+    return `<i data-lucide="${name}" class="${cls}"></i>`;
+}
+
 // ---- Render ---------------------------------------------
 function render() {
     renderSidebar();
     renderMain();
+    // inject Lucide SVGs after each render
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        try { window.lucide.createIcons(); } catch(e) { /* ignore */ }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', render);

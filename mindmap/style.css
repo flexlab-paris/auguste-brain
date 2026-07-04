@@ -1,47 +1,49 @@
 /* =========================================================
-   Auguste Brain — V3
-   Warmer dark · color language · rich UI components
+   Auguste Brain — V4 LIGHT
+   Warm paper background · rich color language · full width
    ========================================================= */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    /* Surfaces — warmer, softer than pure black */
-    --bg:              #0e1013;
-    --surface-1:       #14171c;
-    --surface-2:       #1a1e25;
-    --surface-3:       #22262f;
-    --hover:           #2a2f39;
+    /* Surfaces — warm off-white paper */
+    --bg:              #f7f5ef;
+    --surface-1:       #ffffff;
+    --surface-2:       #fbfaf5;
+    --surface-3:       #f0ede4;
+    --hover:           #ede9dd;
 
-    /* Text */
-    --text:            #ecedee;
-    --text-secondary:  #a3aab6;
-    --text-muted:      #6c7382;
-    --text-faint:      #3f4451;
+    /* Text — high contrast black */
+    --text:            #171613;
+    --text-secondary:  #4a4741;
+    --text-muted:      #78746a;
+    --text-faint:      #b2ada0;
 
-    /* Borders */
-    --border:          #22262f;
-    --border-strong:   #333844;
+    /* Borders — fine hairlines */
+    --border:          #e8e2d3;
+    --border-strong:   #d0c9b6;
 
-    /* Accent (primary — orange) */
-    --accent:          #ff6b35;
-    --accent-hover:    #ff8759;
-    --accent-dim:      #a83b0e;
+    /* Accent (primary — orange, works on light) */
+    --accent:          #ea580c;
+    --accent-hover:    #c2410c;
+    --accent-dim:      #fed7aa;
+    --accent-fg:       #ffffff;
 
-    /* Semantic colors — the language for content */
-    --success:         #3fb950;  /* pro / evidence / win */
-    --success-bg:      #12341a;
-    --warning:         #e3b341;  /* nuance / caveat / highlight */
-    --warning-bg:      #3d3016;
-    --danger:          #f85149;  /* fallacy / con / risk */
-    --danger-bg:       #3d1717;
-    --info:            #58a6ff;  /* context / neutral / reference */
-    --info-bg:         #0f2745;
-    --quote:           #d4b3ff;  /* quote / rhetoric */
-    --quote-bg:        #241a3a;
+    /* Semantic colors — vivid on light background */
+    --success:         #16a34a;
+    --success-bg:      #dcfce7;
+    --warning:         #d97706;
+    --warning-bg:      #fef3c7;
+    --danger:          #dc2626;
+    --danger-bg:       #fee2e2;
+    --info:            #2563eb;
+    --info-bg:         #dbeafe;
+    --quote:           #7c3aed;
+    --quote-bg:        #ede9fe;
 
     /* Fonts */
     --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Fraunces', Georgia, serif;
     --font-mono:  'JetBrains Mono', ui-monospace, monospace;
 
     /* Motion */
@@ -49,9 +51,14 @@
     --dur:  160ms;
 
     /* Radius */
-    --r-sm: 4px;
-    --r:    8px;
-    --r-lg: 12px;
+    --r-sm: 6px;
+    --r:    10px;
+    --r-lg: 14px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(23, 22, 19, 0.04);
+    --shadow:    0 4px 12px rgba(23, 22, 19, 0.06);
+    --shadow-lg: 0 12px 32px rgba(23, 22, 19, 0.10);
 }
 
 html, body {
@@ -75,13 +82,18 @@ button, input, textarea {
 }
 button { cursor: pointer; }
 a { color: inherit; text-decoration: none; }
-::selection { background: var(--accent); color: var(--bg); }
+::selection { background: var(--accent); color: white; }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #1c1c1c; }
-::-webkit-scrollbar-thumb:hover { background: #2e2e2e; }
+::-webkit-scrollbar-thumb { background: #d0c9b6; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #a99d80; }
+
+/* Icons */
+.icon { width: 16px; height: 16px; stroke-width: 2; flex-shrink: 0; }
+.icon-sm { width: 14px; height: 14px; }
+.icon-lg { width: 20px; height: 20px; }
 
 /* ==================== APP SHELL ==================== */
 #app {
@@ -378,7 +390,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .content-wrap {
-    max-width: 900px;
+    max-width: 1400px;
 }
 
 /* HOME view — grid of debates */
@@ -646,7 +658,7 @@ a { color: inherit; text-decoration: none; }
 }
 .fiche-pdf-download:hover {
     background: var(--accent);
-    color: var(--bg);
+    color: white;
     border-color: var(--accent);
 }
 
@@ -842,7 +854,7 @@ a { color: inherit; text-decoration: none; }
 .tate-link.primary {
     background: var(--accent);
     border-color: var(--accent);
-    color: var(--bg);
+    color: white;
 }
 .tate-link.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
@@ -1143,7 +1155,7 @@ a { color: inherit; text-decoration: none; }
 .arg-root {
     padding: 14px 18px;
     background: var(--accent);
-    color: var(--bg);
+    color: white;
     font-size: 15px;
     font-weight: 600;
     border-radius: var(--r-sm);
@@ -2207,16 +2219,17 @@ a { color: inherit; text-decoration: none; }
 .poster-closure {
     margin-top: 40px;
     padding: 28px 32px;
-    background: var(--accent-dim);
+    background: var(--accent);
     border-radius: var(--r);
-    color: #ffedd8;
+    color: white;
+    box-shadow: var(--shadow);
 }
 .poster-closure-label {
     font-family: var(--font-mono);
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: #ffd5b3;
+    color: rgba(255, 255, 255, 0.75);
     margin-bottom: 10px;
     font-weight: 600;
 }
@@ -2226,7 +2239,7 @@ a { color: inherit; text-decoration: none; }
     line-height: 1.4;
     letter-spacing: -0.3px;
     font-style: italic;
-    color: #fff5eb;
+    color: white;
 }
 
 /* Poster footer */
@@ -2245,7 +2258,7 @@ a { color: inherit; text-decoration: none; }
 .poster-print-btn {
     padding: 8px 16px;
     background: var(--accent);
-    color: var(--bg);
+    color: white;
     border-radius: var(--r-sm);
     font-family: var(--font-sans);
     font-size: 12px;
@@ -2348,5 +2361,281 @@ a { color: inherit; text-decoration: none; }
 /* Interactive quote tags */
 .quote-tag[data-action="filter-tag"]:hover {
     background: var(--accent);
-    color: var(--bg);
+    color: white;
+}
+
+/* =========================================================
+   V4 LIGHT — global elevation + card shadows
+   ========================================================= */
+
+/* Add subtle elevation to cards for depth on light bg */
+.takeaway,
+.chapter,
+.quote-card,
+.stat-card,
+.arg-kit-card,
+.fallacy-card,
+.device-card,
+.analogy-card,
+.framework-card,
+.drill-card,
+.tate-card,
+.fiche-card,
+.related-card,
+.quote-result,
+.poster-quote,
+.poster-fallacy,
+.poster-framework,
+.poster-comparison,
+.compare-block {
+    box-shadow: var(--shadow-sm);
+}
+
+.takeaway:hover,
+.chapter:hover,
+.quote-card:hover,
+.stat-card:hover,
+.tate-card:hover,
+.fiche-card:hover,
+.related-card:hover,
+.quote-result:hover {
+    box-shadow: var(--shadow);
+}
+
+/* Poster page needs stronger elevation */
+.poster-view {
+    box-shadow: var(--shadow-lg);
+    background: white;
+}
+
+/* Sidebar in light mode */
+#sidebar {
+    background: var(--surface-2);
+}
+
+/* Better nav item states in light */
+.nav-btn.active {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.sb-item.active {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Home hero softer */
+.home-hero {
+    background: linear-gradient(180deg, var(--surface-2) 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+}
+.home-stats {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Main input focus in light */
+.sb-search input {
+    background: white;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--r-sm);
+}
+#citations-search {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Meta chips in light */
+.meta-chip {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Header actions */
+.header-action {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+.header-action:hover {
+    background: var(--surface-3);
+}
+
+/* D3 graph background — light adaptation */
+#graph-container {
+    background: var(--surface-2);
+}
+.node text { fill: var(--text); }
+.link { stroke: rgba(23, 22, 19, 0.12); }
+.node circle { stroke: rgba(23, 22, 19, 0.15); }
+
+/* Home item hover more visible */
+.home-item {
+    background: white;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.home-item:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-1px);
+}
+.home-list { gap: 0; }
+
+/* Arg tree branch lines on light */
+.arg-branch::before,
+.arg-branch { border-color: var(--border-strong); }
+
+/* Poster-view section-label bullet uses accent */
+.poster-section-label::before { background: var(--accent); }
+
+/* Quote highlight mark on light bg */
+.quote-text mark,
+.poster-quote-text mark,
+.tate-quote-text mark {
+    background: var(--warning-bg);
+    color: var(--warning);
+    padding: 0 3px;
+    border-radius: 3px;
+    font-weight: 700;
+}
+
+/* Nav icons in light */
+.nav-icon {
+    color: var(--text-muted);
+}
+.nav-btn.active .nav-icon { color: var(--accent); }
+
+/* Fallacy bg blocks on light */
+.fallacy-block[data-kind="steelman"] .fallacy-block-text {
+    background: var(--success-bg);
+    color: var(--text);
+    border-left-color: var(--success);
+}
+.fallacy-block[data-kind="counter"] .fallacy-block-text {
+    background: var(--danger-bg);
+    color: var(--text);
+    border-left-color: var(--danger);
+}
+
+/* Poster fallacies on light */
+.poster-fallacy-claim {
+    background: var(--surface-3);
+    color: var(--text);
+}
+
+/* Compare items on light */
+.compare-item,
+.poster-comp-item {
+    background: var(--surface-2);
+    color: var(--text);
+}
+
+/* Cit list rows on light */
+.cit-item { background: white; padding: 20px; border: 1px solid var(--border); border-radius: var(--r); margin-bottom: 10px; box-shadow: var(--shadow-sm); }
+.cit-list { gap: 0; border: none; }
+
+/* Fiche facts on light */
+.fiche-facts li {
+    background: white;
+    box-shadow: var(--shadow-sm);
+    border-left-color: var(--accent);
+}
+.fiche-thesis-block {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Fiche modes on light */
+.fiche-modes { background: white; box-shadow: var(--shadow-sm); }
+.fiche-mode-head { background: transparent; }
+.fiche-mode-head:hover { background: var(--surface-2); }
+.fiche-mode-body { background: transparent; }
+
+/* Framework step numbers */
+.framework-steps li { background: white; box-shadow: var(--shadow-sm); }
+.drill-instr li { background: white; box-shadow: var(--shadow-sm); }
+
+/* Tate card action buttons */
+.tate-btn { border-color: var(--border); background: white; }
+.tate-btn-ghost:hover { background: var(--surface-2); color: var(--text); border-color: var(--border-strong); }
+.tate-btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+.tate-btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+/* =========================================================
+   Icons integration
+   ========================================================= */
+
+.sb-item .icon,
+.sb-item .icon-sm {
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+.sb-item:hover .icon,
+.sb-item:hover .icon-sm,
+.sb-item.active .icon,
+.sb-item.active .icon-sm {
+    color: var(--accent);
+}
+
+.sb-section-label > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.sb-section-label .icon-sm {
+    color: var(--text-faint);
+}
+
+.sb-search {
+    position: relative;
+}
+.sb-search .icon-sm {
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Section title icons */
+.vd-section-title .icon,
+.vd-section-title .icon-lg {
+    color: var(--accent);
+}
+
+/* Home section title with icon */
+.home-section-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.home-section-title .icon-sm { color: var(--accent); }
+
+/* Meta chip icons */
+.meta-chip .icon-sm {
+    color: var(--text-muted);
+    width: 12px;
+    height: 12px;
+}
+
+/* Home stat icon */
+.home-stat .icon {
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+
+/* Arrow chevron on home-item */
+.home-item-arrow .icon {
+    color: var(--text-muted);
+    transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.home-item:hover .home-item-arrow .icon {
+    color: var(--accent);
+    transform: translateX(3px);
 }
