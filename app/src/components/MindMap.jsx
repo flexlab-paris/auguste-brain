@@ -177,7 +177,7 @@ export default function MindMap({ tree, height = 'calc(100dvh - 220px)', legend 
       onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp}>
 
       <div className="fx-world" style={{ transform: `translate(${view.px}px, ${view.py}px) scale(${view.k})` }}>
-        <svg className="fx-edges">
+        <svg className="fx-edges" viewBox="-4000 -4000 8000 8000">
           {edges.map(([a, b]) => (
             <path key={a._id + '>' + b._id} d={edgePath([a, b])}
               stroke={b.color} strokeOpacity="0.3" strokeWidth={Math.max(1.2, 2.6 - b.depth * 0.45)} fill="none" />
